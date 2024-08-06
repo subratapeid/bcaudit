@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Redirect requests to non-existent .php files to their counterparts without .php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L,QSA]
+
+# Custom 404 error page
+ErrorDocument 404 /404.php
+
+# Prevent directory listing
+Options -Indexes
