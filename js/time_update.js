@@ -38,4 +38,4 @@ async function updateExactTime() {
 
 updateExactTime();
 // Update the exact time every second (1000 milliseconds)
-setInterval(updateExactTime, 1000);
+// setInterval(updateExactTime, 1000);

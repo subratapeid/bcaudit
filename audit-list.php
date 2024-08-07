@@ -366,7 +366,7 @@
                 <i class="fas fa-file-export"></i> Export Data
             </button>
           </div>
-          <div id="message"></div>
+          <!-- <div id="message"></div> -->
         </div>
       <div class="controls">
         <div class="show-pages ml-4">
@@ -1155,5 +1155,4 @@ function fetchBcaName(bcaId) {
   // });
 
     </script>
-</body>
-</html>
+
