@@ -55,10 +55,6 @@ $gpsCoordinates = isset($_POST['gpsCoordinates']) ? $_POST['gpsCoordinates'] : '
 $bcaBank = isset($_POST['bcaBank']) ? $_POST['bcaBank'] : '';
 $bcaBankBranch = isset($_POST['bcaBankBranch']) ? $_POST['bcaBankBranch'] : '';
 $bcaPointAddress = isset($_POST['bcaPointAddress']) ? $_POST['bcaPointAddress'] : '';
-// $bcaPhotoBase64 = isset($_POST['bcaPhoto']) ? $_POST['bcaPhoto'] : '';
-// $bcPointPhotoBase64 = isset($_POST['bcPointPhoto']) ? $_POST['bcPointPhoto'] : '';
-// $bcSignaturePhotoBase64 = isset($_POST['bcSignaturePhoto']) ? $_POST['bcSignaturePhoto'] : '';
-// $bcStampPhotoBase64 = isset($_POST['bcStampPhoto']) ? $_POST['bcStampPhoto'] : '';
 
     // Convert the date time for photo name
     function convertDateTime($dbDatetime) {

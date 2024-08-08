@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-info mt-2 mb-2" data-toggle="modal" data-target="#auditorModal" id="addAuditorBtn"><i class="fa-solid fa-plus"></i> Add Auditor</button>
+                    <button type="button" class="btn btn-info mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#auditorModal" id="addAuditorBtn"><i class="fa-solid fa-plus"></i> Add Auditor</button>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Select Auditors</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -122,7 +122,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title" id="signatureModalLabel">Signature for <span id="auditorName"></span></h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span class="mdi mdi-close-box-outline text-danger"></span>
                     </button>
                 </div>
@@ -131,7 +131,7 @@
                     <canvas id="signaturePad" class="signature-pad" width="auto" height="500px"></canvas>
                 </div>
                 <div class="modal-footer pt-0 pb-0 d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="iconButtons btn btn-success" id="confirmButton" title="Confirm"><i class="mdi mdi-check-circle-outline btnIcon"></i></button>
                     <button type="button" class="iconButtons btn btn-danger" id="clearBtn" title="Clear"><i class="mdi mdi-rotate-right btnIcon"></i></button>
                 </div>
@@ -236,9 +236,9 @@ getProgress();
 
             const response = await fetch('codes/fetchData/fetch_auditors_observations_saved_data.php');
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             originalData = { ...data };
-            console.log(originalData);
+            // console.log(originalData);
             // updateSubmitButtonState();
 
             if (data.inputFieldsData.length > 0) {
@@ -256,7 +256,7 @@ getProgress();
                 });
             } else {
                 // Add the logged-in user if no auditors are returned
-                selectedAuditorEmpIds = [loggedInUser.empId];
+                selectedAuditorEmpIds = [loggedInUserEmpId];
             }
         } catch (error) {
             console.error('Error fetching saved data:', error);
@@ -316,7 +316,7 @@ function hasChanges() {
     };
 
     // Log transformedOriginalData for inspection
-    console.log('transformedOriginalData:', transformedOriginalData);
+    // console.log('transformedOriginalData:', transformedOriginalData);
 
     // Compare the stringified versions of the data objects
     const hasChanged = JSON.stringify(currentData) !== JSON.stringify(transformedOriginalData);
