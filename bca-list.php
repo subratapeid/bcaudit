@@ -447,11 +447,6 @@
         <div class="modal-body">
           <form id="filterForm">
             <div class="row g-3">
-              <!-- Date Range input Field -->
-              <div class="col-md-6 position-relative">
-                <label for="dateRange" class="form-label">Created Date Range:</label>
-                <input type="text" id="dateRange" class="form-control" readonly placeholder="Select date range">
-              </div>
               <!-- State -->
               <div class="col-md-6">
                 <label for="state" class="form-label">BCA State:</label>
@@ -460,14 +455,7 @@
                   <!-- Populate state options here -->
                 </select>
               </div>
-              <!-- Location -->
-              <div class="col-md-6">
-                <label for="location" class="form-label">BCA Location:</label>
-                <select class="form-select" id="location" name="location">
-                  <option value="">Select Location</option>
-                  <!-- Populate location options here -->
-                </select>
-              </div>
+
               <!-- Bank -->
               <div class="col-md-6">
                 <label for="bank" class="form-label">BCA Bank:</label>
@@ -478,7 +466,7 @@
               </div>
               <!-- Created By -->
               <div class="col-md-6">
-                <label for="createdBy" class="form-label">Audit Created By:</label>
+                <label for="createdBy" class="form-label">BCA Created By:</label>
                 <select class="form-select" id="createdBy" name="createdBy">
                   <option value="">Select Created By</option>
                   <!-- Populate created by options here -->
@@ -486,7 +474,7 @@
               </div>
               <!-- Status -->
               <div class="col-md-6">
-                <label for="status" class="form-label">Audit Status:</label>
+                <label for="status" class="form-label">Account Status:</label>
                 <select class="form-select" id="status" name="status">
                   <option value="">Select Status</option>
                   <!-- Populate status options here -->
@@ -729,8 +717,11 @@ showOverlay('--Loading--');
                     <td>${item.formatted_date}</td>
                     <td>${item.user_full_name}</td>
                     <td>
-                    <button type="button" class="action-button" data-audit-number="${item.audit_number}" data-bca-id="${item.bca_id}" data-bca-name="${item.bca_full_name}" data-bca-state="${item.state}" data-bca-location="${item.location}">Open</button>
-                    </td>
+                    <button type="button" class="btn btn-info" data-bca-id="${item.bca_id}" title="BCA Details"><i class="fa-solid fa-circle-info"></i></button>
+                    <button type="button" class="action-button" data-bca-id="${item.bca_id}" data-bca-name="${item.bca_name}" data-bca-state="${item.state}" data-bca-location="${item.location}" title="Start Audit">New Audit</button>
+                    <button type="button" class="btn btn-warning" data-bca-id="${item.bca_id}" title="Edit BCA Data"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" class="btn btn-danger" data-bca-id="${item.bca_id}" title="Delete BCA"><i class="fa-regular fa-trash-can"></i></button>
+                </td>
                 `;
                 tbody.appendChild(row);
             });
@@ -789,40 +780,6 @@ showOverlay('--Loading--');
       }
     });
 
-    // Function to fetch BCA name via AJAX
-function fetchBcaName(bcaId) {
-  $.ajax({
-    url: '/bcaudit/codes/fetchData/validate_bca_for_new_audit.php',
-    method: 'GET',
-    data: { bca_id: bcaId },
-    dataType: 'json',
-    success: function(response) {
-      if (response.success) {
-        // console.log(response);
-        var bcaName = response.data['bca_name'];
-        var state = response.data['state'];
-        var location = response.data['location'];
-        document.getElementById('errorMessageArea').style.display = 'none';
-        $('#bcaName').val(bcaName);
-        $('#proceedBtn').prop('disabled', false);
-
-        // Enable proceed button click handler to store session data
-        $('#proceedBtn').off('click').on('click', function() {
-          storeSessionData(bcaId, bcaName, state, location);
-        });
-      } else {
-        $('#bcaName').val(response.message);
-        $('#proceedBtn').prop('disabled', true);
-        displayErrorMessage(response.message);
-      }
-    },
-    error: function() {
-      $('#bcaName').val('Error fetching name').prop('disabled', true);
-      $('#proceedBtn').prop('disabled', true);
-      displayErrorMessage('Error fetching BCA name. Please try again.');
-    }
-  });
-}
     // Function to store session data
     function storeSessionData(bcaId, bcaName, state, location, auditNumber) {
       showOverlay();
@@ -859,21 +816,18 @@ function fetchBcaName(bcaId) {
     function populateDropdowns(data) {
         const stateDropdown = document.getElementById('state');
         // const districtDropdown = document.getElementById('district');
-        const locationDropdown = document.getElementById('location');
         const bankDropdown = document.getElementById('bank');
         const createdByDropdown = document.getElementById('createdBy');
         const statusDropdown = document.getElementById('status');
 
         const states = [...new Set(data.map(item => item.state))];
         // const districts = [...new Set(data.map(item => item.district))];
-        const locations = [...new Set(data.map(item => item.location))];
         const banks = [...new Set(data.map(item => item.bca_bank))];
         const users = [...new Set(data.map(item => item.user_full_name))];
         const statuses = [...new Set(data.map(item => item.status))];
 
         populateDropdown(stateDropdown, states);
         // populateDropdown(districtDropdown, districts);
-        populateDropdown(locationDropdown, locations);
         populateDropdown(bankDropdown, banks);
         populateDropdown(createdByDropdown, users);
         populateDropdown(statusDropdown, statuses);
@@ -895,7 +849,6 @@ function fetchBcaName(bcaId) {
     // Apply Filter Function
     function applyFilters() {
       const state = document.getElementById('state').value.toLowerCase();
-      const location = document.getElementById('location').value.toLowerCase();
       const bank = document.getElementById('bank').value.toLowerCase();
       const createdBy = document.getElementById('createdBy').value.toLowerCase();
       const status = document.getElementById('status').value.toLowerCase();
@@ -908,7 +861,6 @@ function fetchBcaName(bcaId) {
       // filter count part
       let filterCount = 0;
       if (state !== '') filterCount++;
-      if (location !== '') filterCount++;
       if (bank !== '') filterCount++;
       if (createdBy !== '') filterCount++;
       if (status !== '') filterCount++;
@@ -924,7 +876,6 @@ function fetchBcaName(bcaId) {
           // filter data asper valid input
           return dateInRange &&
               (state === '' || item.state.toLowerCase().includes(state)) &&
-              (location === '' || item.location.toLowerCase().includes(location)) &&
               (bank === '' || item.bca_bank.toLowerCase().includes(bank)) &&
               (createdBy === '' || item.user_full_name.toLowerCase().includes(createdBy)) &&
               (status === '' || item.status.toLowerCase().includes(status));
@@ -961,7 +912,6 @@ function fetchBcaName(bcaId) {
     var startDate = selectedDateRange.start || '';
     var endDate = selectedDateRange.end || '';
     var state = $('#state').val();
-    var location = $('#location').val();
     var createdBy = $('#createdBy').val();
     var bank = $('#bank').val();
     var status = $('#status').val();
@@ -971,7 +921,6 @@ function fetchBcaName(bcaId) {
     if (startDate) queryParams.push('start_date=' + encodeURIComponent(startDate));
     if (endDate) queryParams.push('end_date=' + encodeURIComponent(endDate));
     if (state) queryParams.push('state=' + encodeURIComponent(state));
-    if (location) queryParams.push('location=' + encodeURIComponent(location));
     if (createdBy) queryParams.push('created_by=' + encodeURIComponent(createdBy));
     if (bank) queryParams.push('bank=' + encodeURIComponent(bank));
     if (status) queryParams.push('status=' + encodeURIComponent(status));
@@ -985,7 +934,7 @@ function fetchBcaName(bcaId) {
     // console.log("export button clicked");
 
     $.ajax({
-        url: '/bcaudit/codes/download_audit_list_csv.php' + queryString,
+        url: '/bcaudit/codes/download_bca_list_csv.php' + queryString,
         type: 'GET',
         dataType: 'json', // Expect JSON response
         success: function(response) {
