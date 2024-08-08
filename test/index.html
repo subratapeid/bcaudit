@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter and Export Data</title>
+    <style>
+        /* Simple loading message styling */
+        #loading {
+            display: none;
+            color: blue;
+            font-weight: bold;
+        }
+        #success {
+            display: none;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Filter and Export Data</h1>
+    <form id="filter-form">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state">
+        <br>
+        <label for="created_by">Created By:</label>
+        <input type="text" id="created_by" name="created_by">
+        <br>
+        <label for="bank">Bank:</label>
+        <input type="text" id="bank" name="bank">
+        <br>
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status">
+        <br>
+        <button type="button" onclick="exportCSV()">Export CSV</button>
+    </form>
+
+    <div id="loading">Your download is starting...</div>
+    <div id="success">Download started successfully!</div>
+
+    <script>
+        function exportCSV() {
+
+            // Get the form element
+            const form = document.getElementById('filter-form');
+
+            // Create a URLSearchParams object to construct the query string
+            const params = new URLSearchParams(new FormData(form));
+
+            // Construct the URL with the query string
+            const url = `../codes/download_audit_list_csv.php?${params.toString()}`;
+
+            // Open the URL in a new tab
+            const newTab = window.open(url, '_blank');
+
+            // Check if the new tab was blocked
+            if (!newTab) {
+                alert('Please allow pop-ups for this website');
+                return;
+            }
+
+            // Monitor the new tab to detect when it has been closed
+            const checkTabClosed = setInterval(() => {
+                if (newTab.closed) {
+                    clearInterval(checkTabClosed);
+                    console.log('CSV Download started successfully!');
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>

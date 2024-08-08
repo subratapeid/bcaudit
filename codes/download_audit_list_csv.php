@@ -4,7 +4,6 @@ include "../include/auth.php";
 header('Content-Type: application/json');
 require_once 'config.php';
 
-try {
     // Get request parameters and sanitize them
     $filters = [
         'start_date' => filter_input(INPUT_GET, 'start_date', FILTER_SANITIZE_STRING),
@@ -27,7 +26,7 @@ try {
             bca_and_bcpoint_details.state,
             bca_and_bcpoint_details.location,
             audit_list.status AS audit_status,
-            audit_list.created_date AS audit_date,
+            DATE_FORMAT(audit_list.created_date, '%d-%b-%Y') AS created_date,
             CONCAT(all_user_data.user_first_name, ' ', all_user_data.user_last_name) AS created_by_full_name
         FROM 
             audit_list
@@ -80,76 +79,57 @@ try {
         $params[':status'] = $filters['status'];
     }
 
-    // Prepare and execute the query
-    $stmt = $pdo->prepare($query);
+// Set headers to initiate file download
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="Audit_List_' . date('Y-m-d_H-i-s') . '.csv"');
+header('Cache-Control: no-store, no-cache');
+$output = fopen('php://output', 'w');
 
+$header = ['SL No', 'Audit Number', 'BCA ID', 'BCA Full Name', 'Mobile No', 'BCA Bank', 'State', 'Location', 'Audit Status', 'Audit Date', 'Created By'];
+fputcsv($output, $header);
+
+$limit = 1000;
+$offset = 0;
+$serialNumber = 1;
+
+while (true) {
+    // Add limit and offset to the query
+    $pagedQuery = $query . " LIMIT :limit OFFSET :offset";
+    $stmt = $pdo->prepare($pagedQuery);
+    
+    // Bind the parameters for the filters
     foreach ($params as $key => $value) {
-        $stmt->bindParam($key, $value);
+        $stmt->bindValue($key, $value);
     }
-
+    
+    // Bind the parameters for pagination
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    
     $stmt->execute();
 
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        $filename = "Audit_List_Data_" . date("Y-m-d_H-i-s") . ".csv";
-        $filePath = __DIR__ . '/../report/csv/' . $filename;
-
-        // Ensure the directory exists
-        $directory = dirname($filePath);
-        if (!is_dir($directory)) {
-            if (!mkdir($directory, 0755, true)) {
-                throw new Exception('Failed to create directory.');
-            }
+    if ($stmt->rowCount() == 0) {
+        if ($offset === 0) {
+            // If no rows are found and this is the first iteration, write "No data found"
+            fputcsv($output, ['No data found']);
         }
-
-        // Create the CSV file
-        $output = fopen($filePath, 'w');
-        if ($output === false) {
-            throw new Exception('Failed to open file for writing.');
-        }
-
-        // CSV column headings
-        fputcsv($output, ['SL No', 'Audit Number', 'BCA ID', 'BCA Full Name', 'Mobile No', 'BCA Bank', 'State', 'Location', 'Audit Status', 'Audit Date', 'Created By']);
-
-        $sl_no = 1;
-        foreach ($result as $row) {
-            // Convert the date format
-            $dbDate = new DateTime($row['audit_date']);
-            $csvDate = $dbDate->format('d-M-Y');
-            fputcsv($output, [
-                $sl_no++,
-                $row['audit_number'],
-                $row['bca_id'],
-                $row['bca_name'],
-                $row['bca_contact_no'],
-                $row['bca_bank'],
-                $row['state'],
-                $row['location'],
-                $row['audit_status'],
-                $csvDate,
-                $row['created_by_full_name']
-            ]);
-        }
-
-        fclose($output);
-
-        // Return the file download URL
-        $downloadUrl = '/bcaudit/codes/download_csv_file.php?filename=' . urlencode($filename);
-
-        echo json_encode(['success' => true, 'downloadUrl' => $downloadUrl]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'No data found.']);
+        break; // Exit the loop when no more rows are returned
     }
-} catch (Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error: ' . $e->getMessage()
-    ]);
-} finally {
-    if (isset($pdo)) {
-        unset($pdo);
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // Add the serial number to the beginning of the row
+        $row = array_merge([$serialNumber], $row);
+        fputcsv($output, $row);
+        $serialNumber++; // Increment the serial number
     }
+
+    $offset += $limit;
+    ob_flush();
+    flush();
 }
+
+fclose($output);
+$pdo = null;
+
 ?>
 

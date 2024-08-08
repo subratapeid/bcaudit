@@ -755,6 +755,7 @@ showOverlay('--Loading--');
         const paginatedData = displayedData.slice(start, end);
 
         if (paginatedData.length === 0) {
+            $('#exportData').prop('disabled', true);
             const row = document.createElement('tr');
             const cell = document.createElement('td');
             cell.colSpan = 16;
@@ -763,6 +764,7 @@ showOverlay('--Loading--');
             row.appendChild(cell);
             tbody.appendChild(row);
         } else {
+            $('#exportData').prop('disabled', false);
             paginatedData.forEach((item, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -1031,34 +1033,26 @@ function fetchBcaName(bcaId) {
     var queryString = '';
   }
     
-    // console.log("export button clicked");
+  const url = `codes/download_audit_list_csv.php${queryString}`;
+    console.log("export button clicked");
 
-    $.ajax({
-        url: '/bcaudit/codes/download_audit_list_csv.php' + queryString,
-        type: 'GET',
-        dataType: 'json', // Expect JSON response
-        success: function(response) {
-            if (response.success) {
-                // Create an invisible iframe to start the file download
-                var iframe = $('<iframe>', {
-                    src: response.downloadUrl,
-                    style: 'display:none'
-                }).appendTo('body');
-            } else {
-                $('#message').text('Download failed: ' + response.message);
-            }
-      $('#exportData').prop('disabled', false);
-        },
-        error: function(xhr, status, error) {
-      $('#exportData').prop('disabled', false);
-            $('#message').text('An error occurred: ' + xhr.statusText);
-            console.error('AJAX request error:', {
-                status: status,
-                error: error,
-                responseText: xhr.responseText
-            });
-        }
-    });
+    // Open the URL in a new tab
+    const newTab = window.open(url, '_blank');
+
+// Check if the new tab was blocked
+if (!newTab) {
+    alert('Please allow pop-ups for this website');
+    return;
+}
+
+// Monitor the new tab to detect when it has been closed
+const checkTabClosed = setInterval(() => {
+    if (newTab.closed) {
+        clearInterval(checkTabClosed);
+        console.log('CSV Download started successfully!');
+        $('#exportData').prop('disabled', false);
+    }
+}, 500);
 });
 
     // Search funtionality on rendered table data

@@ -1,124 +1,109 @@
 <?php
-include "../include/auth.php";
-// $filename = "BCA_Data_" . date("Y-m-d_H-i-s") . ".csv";
-// $filePath = __DIR__ . '/../report/csv/' . $filename;
+require_once "../include/auth.php";
+require_once "config.php";
 
-// header("Content-Disposition: attachment; filename=\"$filename\"");
+// Capture filters from URL parameters
+$filters = [
+    'state' => filter_input(INPUT_GET, 'state', FILTER_SANITIZE_STRING),
+    'created_by' => filter_input(INPUT_GET, 'created_by', FILTER_SANITIZE_STRING),
+    'bank' => filter_input(INPUT_GET, 'bank', FILTER_SANITIZE_STRING),
+    'status' => filter_input(INPUT_GET, 'status', FILTER_SANITIZE_STRING),
+];
 
+// Build the SQL query based on filters
+$query = "
+    SELECT 
+        ab.bca_id,
+        CONCAT(ab.first_name, ' ', IFNULL(ab.middle_name, ''), ' ', ab.last_name) AS bca_name,
+        ab.bca_contact_no,
+        ab.bca_bank,
+        ab.state,
+        ab.location,
+        ab.status,
+        DATE_FORMAT(ab.created_date, '%d-%b-%Y') AS created_date,
+        CONCAT(aud.user_first_name, ' ', aud.user_last_name) AS created_by
+    FROM 
+        all_bc_details ab
+    JOIN 
+        all_user_data aud 
+    ON 
+        ab.created_by_id = aud.user_id 
+    WHERE 
+        1=1
+";
 
-header('Content-Type: application/json');
-require_once 'config.php';
+$params = [];
 
-try {
-    // Get request parameters and sanitize them
-    $filters = [
-        'state' => filter_input(INPUT_GET, 'state', FILTER_SANITIZE_STRING),
-        'created_by' => filter_input(INPUT_GET, 'created_by', FILTER_SANITIZE_STRING),
-        'bank' => filter_input(INPUT_GET, 'bank', FILTER_SANITIZE_STRING),
-        'status' => filter_input(INPUT_GET, 'status', FILTER_SANITIZE_STRING),
-    ];
+if ($filters['state']) {
+    $query .= " AND ab.state = :state";
+    $params[':state'] = $filters['state'];
+}
 
-    // Build query based on filters
-    $query = "
-        SELECT *
-        FROM 
-            all_bc_details
-        WHERE 
-            1=1
-    ";
+if ($filters['created_by']) {
+    $query .= " AND CONCAT(aud.user_first_name, ' ', aud.user_last_name) = :created_by";
+    $params[':created_by'] = $filters['created_by'];
+}
 
-    $params = [];
+if ($filters['bank']) {
+    $query .= " AND ab.bca_bank = :bank";
+    $params[':bank'] = $filters['bank'];
+}
 
-    if ($filters['state']) {
-        $query .= " AND all_bc_details.state = :state";
-        $params[':state'] = $filters['state'];
-    }
+if ($filters['status']) {
+    $query .= " AND ab.status = :status";
+    $params[':status'] = $filters['status'];
+}
 
-    if ($filters['created_by']) {
-        $query .= " AND CONCAT(all_user_data.user_first_name, ' ', all_user_data.user_last_name) = :created_by";
-        $params[':created_by'] = $filters['created_by'];
-    }
+// Set headers to initiate file download
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="BCA_Data_' . date('Y-m-d_H-i-s') . '.csv"');
+header('Cache-Control: no-store, no-cache');
+$output = fopen('php://output', 'w');
 
-    if ($filters['bank']) {
-        $query .= " AND all_bc_details.bca_bank = :bank";
-        $params[':bank'] = $filters['bank'];
-    }
+$header = ['Sl No', 'BCA ID', 'Full Name', 'Mobile No', 'Bank', 'State', 'Location', 'Status', 'Created Date', 'Created By'];
+fputcsv($output, $header);
 
-    if ($filters['status']) {
-        $query .= " AND all_bc_details.status = :status";
-        $params[':status'] = $filters['status'];
-    }
+$limit = 1000;
+$offset = 0;
+$serialNumber = 1;
 
-    // Prepare and execute the query
-    $stmt = $pdo->prepare($query);
-
+while (true) {
+    // Add limit and offset to the query
+    $pagedQuery = $query . " LIMIT :limit OFFSET :offset";
+    $stmt = $pdo->prepare($pagedQuery);
+    
+    // Bind the parameters for the filters
     foreach ($params as $key => $value) {
-        $stmt->bindParam($key, $value);
+        $stmt->bindValue($key, $value);
     }
-
+    
+    // Bind the parameters for pagination
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    
     $stmt->execute();
 
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        $filename = "BCA_Data_" . date("Y-m-d_H-i-s") . ".csv";
-        $filePath = __DIR__ . '/../report/csv/' . $filename;
-
-        // Ensure the directory exists
-        $directory = dirname($filePath);
-        if (!is_dir($directory)) {
-            if (!mkdir($directory, 0755, true)) {
-                throw new Exception('Failed to create directory.');
-            }
+    if ($stmt->rowCount() == 0) {
+        if ($offset === 0) {
+            // If no rows are found and this is the first iteration, write "No data found"
+            fputcsv($output, ['No data found']);
         }
-
-        // Create the CSV file
-        // $output = fopen('php://output', 'w');
-        $output = fopen($filePath, 'w');
-        if ($output === false) {
-            throw new Exception('Failed to open file for writing.');
-        }
-
-        // CSV column headings
-        fputcsv($output, ['SL No', 'BCA ID', 'BCA Full Name', 'Mobile No', 'BCA Bank', 'State', 'Location', 'Account Status', 'Created Date', 'Created By']);
-
-        $sl_no = 1;
-        foreach ($result as $row) {
-            // Convert the date format
-            $dbDate = new DateTime($row['created_date']);
-            $csvDate = $dbDate->format('d-M-Y');
-            fputcsv($output, [
-                $sl_no++,
-                $row['bca_id'],
-                $row['first_name'],
-                $row['bca_contact_no'],
-                $row['bca_bank'],
-                $row['state'],
-                $row['location'],
-                $row['status'],
-                $csvDate,
-                $row['created_by_id']
-            ]);
-        }
-
-        fclose($output);
-
-        // Return the file download URL
-        $downloadUrl = '/bcaudit/codes/download_csv_file.php?filename=' . urlencode($filename);
-
-        echo json_encode(['success' => true, 'downloadUrl' => $downloadUrl]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'No data found.']);
+        break; // Exit the loop when no more rows are returned
     }
-} catch (Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error: ' . $e->getMessage()
-    ]);
-} finally {
-    if (isset($pdo)) {
-        unset($pdo);
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // Add the serial number to the beginning of the row
+        $row = array_merge([$serialNumber], $row);
+        fputcsv($output, $row);
+        $serialNumber++; // Increment the serial number
     }
+
+    $offset += $limit;
+    ob_flush();
+    flush();
 }
-?>
 
+fclose($output);
+$pdo = null;
+
+?>
