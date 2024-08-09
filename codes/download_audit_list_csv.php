@@ -43,16 +43,17 @@ require_once 'config.php';
     ";
 
     $params = [];
-
+    
     if ($filters['start_date']) {
         $query .= " AND audit_list.created_date >= :start_date";
-        $params[':start_date'] = $filters['start_date'];
+        $params[':start_date'] = $filters['start_date'] . ' 00:00:00'; // Start of the day
     }
-
+    
     if ($filters['end_date']) {
         $query .= " AND audit_list.created_date <= :end_date";
-        $params[':end_date'] = $filters['end_date'];
+        $params[':end_date'] = $filters['end_date'] . ' 23:59:59'; // End of the day
     }
+    
 
     if ($filters['state']) {
         $query .= " AND bca_and_bcpoint_details.state = :state";
