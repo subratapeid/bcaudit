@@ -111,7 +111,7 @@ $(document).ready(function () {
                     alert(response.message + " Retry Login After " + response.remaining_time);
                     }
                     // reset the recaptcha
-                    // grecaptcha.reset();
+                    grecaptcha.reset();
                     
                     stopLoading();
                 }
