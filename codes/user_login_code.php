@@ -180,7 +180,7 @@ function resetLoginAttempts($pdo, $username, $ip) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     $user_id = $username;
-    $recaptcha_secret = 'd';
+    $recaptcha_secret = 'Secret Key Here';
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $ip = getUserIP();
     $latitude = 12345;
