@@ -269,7 +269,7 @@
         <img id="hardwarePhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
     </div>
     <div>
-        <a class="btn btn-primary mr-2" id="openCaptureModalBtnHardware" data-toggle="modal" data-target="#photoCaptureModal">Capture Hardware's Photo</a>
+        <a class="btn btn-primary mr-2" id="openCaptureModalBtnHardware" data-bs-toggle="modal" data-bs-target="#photoCaptureModal">Capture Hardware's Photo</a>
     </div>
     <input type="hidden" id="hardwarePhotoBase64" name="hardwarePhoto" >
 </div>
@@ -307,7 +307,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="photoCaptureModalLabel">Capture Photo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span class="mdi mdi-close-box-outline text-danger"></span>
                 </button>
             </div>
@@ -322,7 +322,7 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="iconButtons btn btn-primary d-none" id="captureBtn" title="Capture"><span class="mdi mdi-camera-outline btnIcon"></span></button>
                 <button type="button" class="iconButtons btn btn-success d-none" id="confirmBtn" title="Confirm"><span class="mdi mdi-check-circle-outline btnIcon"></span></button>
                 <button type="button" class="iconButtons btn btn-danger d-none" id="retakeBtn" title="Retake"><i class="mdi mdi-camera-retake-outline btnIcon"></i></button>

@@ -27,12 +27,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['auditNumber'])) {
     echo json_encode($response);
     exit;
 }
-// Sanitize arrays
-function sanitize_array($array) {
-    return array_map(function($item) {
-        return filter_var($item, FILTER_SANITIZE_STRING);
-    }, $array);
-}
+
 
 $userId = $_SESSION['user_id'];
 $auditId = $_SESSION['auditNumber'];
@@ -40,18 +35,11 @@ $progress = 9; // progress value for this form
 $status = 'submited'; // Audit Status for this form
 
 // Extract data from JSON
-$selectedAuditorsRaw = $data['selectedAuditors'] ?? [];
-$auditorsToDeleteRaw = $data['auditorsToDelete'] ?? [];
-$signaturesRaw = $data['signatures'] ?? [];
-$conclusionRaw = $data['conclusion'] ?? '';
-$recommendationsRaw = $data['recommendations'] ?? '';
-
-// Sanitize Data
-$selectedAuditors = sanitize_array($selectedAuditorsRaw);
-$auditorsToDelete = sanitize_array($auditorsToDeleteRaw);
-$signatures = sanitize_array($signaturesRaw);
-$conclusion = filter_var($conclusionRaw, FILTER_SANITIZE_STRING);
-$recommendations = filter_var($recommendationsRaw, FILTER_SANITIZE_STRING);
+$selectedAuditors = $data['selectedAuditors'] ?? [];
+$auditorsToDelete = $data['auditorsToDelete'] ?? [];
+$signatures = $data['signatures'] ?? [];
+$conclusion = $data['conclusion'] ?? '';
+$recommendations = $data['recommendations'] ?? '';
 
 // Validate required fields
 if (empty($signatures) || empty($conclusion) || empty($recommendations)) {

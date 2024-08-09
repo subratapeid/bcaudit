@@ -107,7 +107,7 @@
             <img id="bcaPhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
         </div>
         <div>
-            <a class="btn btn-primary mr-2" id="openCaptureModalBtnBca" data-toggle="modal" data-target="#photoCaptureModal">Capture Photo With BCA</a>
+            <a class="btn btn-primary mr-2" id="openCaptureModalBtnBca" data-bs-toggle="modal" data-bs-target="#photoCaptureModal">Capture Photo With BCA</a>
         </div>
         <input type="hidden" id="bcaPhotoBase64" name="bcaPhoto" required>
     </div>
@@ -120,7 +120,7 @@
             <img id="bcPointPhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
         </div>
         <div>
-            <a class="btn btn-primary mr-2" id="openCaptureModalBtnBcPoint" data-toggle="modal" data-target="#photoCaptureModal">Capture BC Point Photo</a>
+            <a class="btn btn-primary mr-2" id="openCaptureModalBtnBcPoint" data-bs-toggle="modal" data-bs-target="#photoCaptureModal">Capture BC Point Photo</a>
         </div>
         <input type="hidden" id="bcPointPhotoBase64" name="bcPointPhoto" required>
     </div>
@@ -134,7 +134,7 @@
             <img id="bcSignaturePhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
         </div>
         <div>
-            <a class="btn btn-primary mr-2" id="openSignatureModalBtn" data-toggle="modal" data-target="#signatureModal">Take BCA Signature</a>
+            <a class="btn btn-primary mr-2" id="openSignatureModalBtn" data-bs-toggle="modal" data-bs-target="#signatureModal">Take BCA Signature</a>
         </div>
         <input type="hidden" id="bcSignaturePhotoBase64" name="bcSignaturePhoto" required>
     </div>
@@ -147,7 +147,7 @@
             <img id="bcStampPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
         </div>
         <div>
-            <a class="btn btn-primary mr-2" id="openCaptureModalBtnBcaStamp" data-toggle="modal" data-target="#photoCaptureModal">Capture BC Stamp Photo</a>
+            <a class="btn btn-primary mr-2" id="openCaptureModalBtnBcaStamp" data-bs-toggle="modal" data-bs-target="#photoCaptureModal">Capture BC Stamp Photo</a>
         </div>
         <input type="hidden" id="bcStampPhotoBase64" name="bcStampPhoto">
     </div>
@@ -175,7 +175,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="photoCaptureModalLabel">Capture Photo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span class="mdi mdi-close-box-outline text-danger"></span>
                 </button>
             </div>
@@ -190,7 +190,7 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="iconButtons btn btn-primary d-none" id="captureBtn" title="Capture"><span class="mdi mdi-camera-outline btnIcon"></span></button>
                 <button type="button" class="iconButtons btn btn-success d-none" id="confirmBtn" title="Confirm"><span class="mdi mdi-check-circle-outline btnIcon"></span></button>
                 <button type="button" class="iconButtons btn btn-danger d-none" id="retakeBtn" title="Retake"><i class="mdi mdi-camera-retake-outline btnIcon"></i></button>
@@ -218,7 +218,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="signatureModalLabel">BCA Signature Area</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span class="mdi mdi-close-box-outline text-danger"></span>
                 </button>
             </div>
@@ -227,7 +227,7 @@
                 <canvas id="signaturePad" class="signature-pad" width="auto" height="500px"></canvas>
             </div>
             <div class="modal-footer pt-2 pb-0 d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary" id="closeBtn" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="iconButtons btn btn-success" id="confirmButton" title="Confirm"><i class="mdi mdi-check-circle-outline btnIcon"></i></button>
                 <button type="button" class="iconButtons btn btn-danger" id="clearButton" title="Clear"><i class="mdi mdi-rotate-right btnIcon"></i></button>
             </div>
@@ -389,22 +389,31 @@ function startCamera() {
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
-        fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata')
-            .then(response => response.json())
-            .then(data => {
-                const kolkataTime = new Date(data.utc_datetime);
-                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-                const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
-                const formattedDate = kolkataTime.toLocaleDateString('en-IN', dateOptions);
-                const formattedTime = kolkataTime.toLocaleTimeString('en-US', timeOptions);
-                drawOnCanvas(formattedDate, formattedTime);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                const defaultDate = new Date().toLocaleDateString('en-IN', dateOptions);
-                const defaultTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-                drawOnCanvas(defaultDate, defaultTime);
-            });
+        // fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const kolkataTime = new Date(data.utc_datetime);
+        //         const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+        //         const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+        //         const formattedDate = kolkataTime.toLocaleDateString('en-IN', dateOptions);
+        //         const formattedTime = kolkataTime.toLocaleTimeString('en-US', timeOptions);
+        //         drawOnCanvas(formattedDate, formattedTime);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //         const defaultDate = new Date().toLocaleDateString('en-IN', dateOptions);
+        //         const defaultTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        //         drawOnCanvas(defaultDate, defaultTime);
+        //     });
+        const now = new Date(); // Get the current local date and time
+
+        const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+        const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+
+        const formattedDate = now.toLocaleDateString('en-IN', dateOptions);
+        const formattedTime = now.toLocaleTimeString('en-IN', timeOptions);
+
+        drawOnCanvas(formattedDate, formattedTime);
     });
 
     function drawOnCanvas(dateString, timeString) {

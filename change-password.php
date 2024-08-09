@@ -32,7 +32,7 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
                 <span class="input-group-text mdi mdi-key" id="inputGroupPrepend"></span>
                 <input type="password" class="form-control" name="oldPassword" id="oldPassword" placeholder="Enter Your Current Password" required>
                 <div class="input-group-append">
-                    <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Show Password"
+                    <span class="input-group-text" data-bs-toggle="tooltip" data-placement="top" title="Show Password"
                           onmousedown="showPassword('oldPassword')" onmouseup="hidePassword('oldPassword')" 
                           ontouchstart="showPassword('oldPassword')" ontouchend="hidePassword('oldPassword')">
                         <i class="fas fa-eye" id="toggleOldPassword"></i>
@@ -47,7 +47,7 @@ if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
                 <span class="input-group-text mdi mdi-key-variant" id="inputGroupPrepend"></span>
                 <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Enter New Password" required oninput="checkPasswordStrength()">
                 <div class="input-group-append">
-                    <span class="input-group-text" data-toggle="tooltip" data-placement="top" title="Show Password"
+                    <span class="input-group-text" data-bs-toggle="tooltip" data-placement="top" title="Show Password"
                           onmousedown="showPassword('newPassword')" onmouseup="hidePassword('newPassword')" 
                           ontouchstart="showPassword('newPassword')" ontouchend="hidePassword('newPassword')">
                         <i class="fas fa-eye" id="toggleNewPassword"></i>

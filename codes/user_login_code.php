@@ -32,7 +32,7 @@ function recordLoginAttempt($pdo, $username, $ip, $status) {
 
 function checkLoginAttempts($pdo, $username, $ip) {
     $userTimeBound = 5; // 5 minutes
-    $userLimit = 3; // 5 attempts
+    $userLimit = 3; // 3 attempts
     $ipTimeBound1 = 10; // 10 minutes
     $ipLimit1 = 10; // 10 attempts
     $ipTimeBound2 = 15; // 15 minutes
@@ -180,7 +180,7 @@ function resetLoginAttempts($pdo, $username, $ip) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     $user_id = $username;
-    $recaptcha_secret = '6Ldhux4qAAAAAINa7sj-ogBFxsiAM6CXe3IUYKdQ';
+    $recaptcha_secret = '';
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $ip = getUserIP();
     $latitude = 12345;

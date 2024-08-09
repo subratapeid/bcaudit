@@ -1,5 +1,5 @@
 <?php
-include "../../include/auth.php";
+include "../include/auth.php";
 include 'verify_audit_session.php'; // Include session verification
 require_once('config.php'); // Include database configuration
 include 'common/getDateTime.php';
@@ -224,6 +224,8 @@ $bcStampPhotoBase64 = isset($_POST['bcStampPhoto']) ? $_POST['bcStampPhoto'] : '
             "error" => "Error: " . $e->geterror()
         ]);
     }
+$pdo = null;
+
 } else {
     echo json_encode([
         "success" => false,
@@ -231,5 +233,4 @@ $bcStampPhotoBase64 = isset($_POST['bcStampPhoto']) ? $_POST['bcStampPhoto'] : '
     ]);
 }
 
-$pdo = null;
 ?>
