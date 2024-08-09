@@ -56,7 +56,7 @@
       <div class="user_menu" id="userMenu">
         <?php if (isLoggedIn()): ?> 
         <div class="user_menu_header">
-          <img src="/bcaudit/assets/images/profile.jpg" alt="Profile" />
+          <img src="/bcaudit/assets/images/profile.png" alt="Profile" />
           <div>
             <strong><?php echo($_SESSION['user_first_name']); ?></strong><br>
             <small><?php echo($_SESSION['email_id']); ?></small>
@@ -105,7 +105,7 @@
           <!-- <i class="fa-solid fa-magnifying-glass searchIcon"></i> -->
           <i class='bx bx-sun' id="darkLight"></i>
           <!-- <i class="fa-solid fa-bell"></i> -->
-          <img src="/bcaudit/assets/images/profile.jpg" alt="" class="profile" id="userImage" />
+          <img src="/bcaudit/assets/images/profile.png" alt="" class="profile" id="userImage" />
         </div>
       </nav>
     <!-- Navbar End -->
