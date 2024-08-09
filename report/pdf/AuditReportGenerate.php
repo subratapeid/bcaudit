@@ -80,22 +80,35 @@
 .bcaSignatureStampArea {
         display: flex;
         position: relative;
-        gap: 30px; /* Optional: Adds space between the images */
+        gap: 50px; /* Optional: Adds space between the images */
     }
 
     .bcaSignatureStamp {
-        max-width: 180px;
-        height: 100px;
+        max-width: 250px;
+        height: 140px;
     }
+
+    .bcaPointPhotos {
+        display: flex;
+        position: relative;
+        gap: 50px; /* Optional: Adds space between the images */
+    }
+
+    .bcaPointPhotos {
+        max-width: 370px;
+        height: 290px;
+    }
+
     .signatureInfo{
         display: block;
         position: relative;
         align-items: center;
+        min-height:100px;
     }
     .auditObservationDescriptions{
         display: block;
         position: relative;
-        min-height:200px;
+        min-height:150px;
     }
 
 /* signature area style end*/
@@ -1682,8 +1695,24 @@
     </div>
 </div>
 <!-- section 8 end -->
+<!-- Section 9 BCA Photo and BC Point Photo -->
+<div class="section">
+    <h2 class="sectionHeading"><img src="/bcaudit/assets/icons/headingIcon.png" alt="" class="headingIcon">BCA & BC Point Photos</h2>
+    <div class="innerSection">
 
-<!-- Section 9 BCA Signature and Stamp -->
+    <div class="subSection">
+
+        <div class="bcaSignatureStampArea">
+            <img src="" data-id="bca_photo_url" class="bcaPointPhotos" id="bcaPhoto">
+            <img src="" data-id="bc_point_photo_url" class="bcaPointPhotos" id="bcPointPhoto">
+        </div>
+    </div>
+
+    </div>
+    <!-- Inner section end -->
+</div>
+<!-- section 9 end -->
+<!-- Section 10 BCA Signature and Stamp -->
 <div class="section">
     <h2 class="sectionHeading"><img src="/bcaudit/assets/icons/headingIcon.png" alt="" class="headingIcon">BCA Signature & Stamp</h2>
     <div class="innerSection">
@@ -1703,9 +1732,9 @@
     </div>
     <!-- Inner section end -->
 </div>
-<!-- section 9 end -->
+<!-- section 10 end -->
 
- <!-- Section 10 Auditor observation and Signatures -->
+ <!-- Section 11 Auditor observation and Signatures -->
  <div class="section">
     <h2 class="sectionHeading"><img src="/bcaudit/assets/icons/headingIcon.png" alt="" class="headingIcon">Auditor Observation & Signatures</h2>
     <div class="innerSection">
@@ -1724,7 +1753,7 @@
     </div>
     <!-- Inner section end -->
 </div>
-<!-- section 10 end -->
+<!-- section 11 end -->
 
  
 

@@ -2,5 +2,6 @@ codes/response/
 codes/uploads/
 report/csv/
 codes/user_login_code.php
+vendor
 # git update-index --no-assume-unchanged /codes/user_login_code.php
 
