@@ -1,7 +1,8 @@
 <?php
-include "../../include/auth.php";
+include "../include/auth.php";
 // Include the database configuration file
 include 'config.php';
+include 'common/getDateTime.php';
 
 // Get JSON data sent from frontend
 $data = json_decode(file_get_contents('php://input'), true);
@@ -12,53 +13,42 @@ $auditorsToDelete = $data['auditorsToDelete'];
 $signatures = $data['signatures'];
 $conclusion = $data['conclusion'];
 $recommendations = $data['recommendations'];
-$auditId = $_SESSION['auditNumber']; // Assuming auditId is stored in session
+$register_photo_url = $data['register_photo_url'];
+$auditId = $_SESSION['auditNumber'];
 
 // Start transaction
 try {
-    // Insert or update auditors and their signatures start
-    // foreach ($signatures as $signature) {
-    //     $empId = $signature['empId'];
-    //     $dataUrl = $signature['dataUrl'];
-    //     $frontendDate = $signature['date'];
-    //     $date = convertToDatabaseFormat($frontendDate);
+   // Handle Register captured photo process
+   if (!empty($register_photo_url)) {
+    $register_photo_url = $data['register_photo_url'];
+    $register_photo_data = base64_decode($register_photo_url);
+    $registerPhotoNewName = 'RegisterPhoto_' . $auditId . '_' . uniqid() . '.png';
+    $registerPhotoPath = 'uploads/' . $registerPhotoNewName;
 
-    //     // Check if auditor already exists
-    //     $stmt = $pdo->prepare("SELECT id FROM auditor_and_signature WHERE emp_id = :empId AND audit_number = :auditId");
-    //     $stmt->bindParam(':empId', $empId);
-    //     $stmt->bindParam(':auditId', $auditId);
-    //     $stmt->execute();
-    //     $auditorId = $stmt->fetchColumn();
+    if (file_put_contents($registerPhotoPath, $register_photo_data)) {
 
-    //     if (!$auditorId) {
-    //         // Auditor does not exist, insert new auditor
-    //         $stmt = $pdo->prepare("INSERT INTO auditor_and_signature (emp_id, signature_data_url, date, audit_number) VALUES (:empId, :dataUrl, :date, :auditId)");
-    //         $stmt->bindParam(':empId', $empId);
-    //         $stmt->bindParam(':dataUrl', $dataUrl);
-    //         $stmt->bindParam(':date', $date);
-    //         $stmt->bindParam(':auditId', $auditId);
-    //         $stmt->execute();
-    //         $auditorId = $pdo->lastInsertId(); // Get the ID of the newly inserted row
-    //     } else {
-    //         // Auditor exists, update the existing record
-    //         $stmt = $pdo->prepare("UPDATE auditor_and_signature SET signature_data_url = :dataUrl, date = :date WHERE emp_id = :empId AND audit_number = :auditId");
-    //         $stmt->bindParam(':empId', $empId);
-    //         $stmt->bindParam(':dataUrl', $dataUrl);
-    //         $stmt->bindParam(':date', $date);
-    //         $stmt->bindParam(':auditId', $auditId);
-    //         $stmt->execute();
-    //     }
+        if (!empty($registerPhotoPath)) {
+            $sql = "UPDATE auditor_observation SET register_photo_url = :registerPhotoPath WHERE audit_number = :auditNumber";
+            $stmt = $pdo->prepare($sql);
+            // Bind the parameters to avoid SQL injection and execute the statement
+            $stmt->execute([
+                ':registerPhotoPath' => $registerPhotoPath,
+                ':auditNumber' => $auditId
+            ]);
+        }
         
-    // }
-    // // Insert or update auditors and their signatures End
-
-    // // Delete auditors marked for deletion
-    // foreach ($auditorsToDelete as $empId) {
-    //     $stmt = $pdo->prepare("DELETE FROM auditor_and_signature WHERE emp_id = :empId AND audit_number = :auditId");
-    //     $stmt->bindParam(':empId', $empId);
-    //     $stmt->bindParam(':auditId', $auditId);
-    //     $stmt->execute();
-    // }
+        // Delete old bcpoint photo if exists
+        $oldPhotoStmt2 = $pdo->prepare("SELECT register_photo_url FROM auditor_observation WHERE audit_number = :auditNumber");
+        $oldPhotoStmt2->execute([':auditNumber' => $auditId]);
+        $oldPhoto2 = $oldPhotoStmt2->fetch(PDO::FETCH_ASSOC)['register_photo_url'];
+        if ($oldPhoto2 && file_exists($oldPhoto2)) {
+            unlink($oldPhoto2);
+        }
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Failed to upload Register photograph.']);
+        exit();
+    }
+}
 
 
 // Function to save the image data and return the URL
@@ -81,8 +71,8 @@ function saveImageAndGetUrl($dataUrl, $empId, $auditId) {
         // Save the file
         file_put_contents($fullPath, $data);
 
-        // Generate the URL (adjust the base URL as per your server configuration)
-        $baseUrl = '/bcaudit/codes/'; // Replace with your base URL
+        // Generate the URL
+        $baseUrl = '/bcaudit/codes/';
         $url = $baseUrl . $fullPath;
 
         return $url;

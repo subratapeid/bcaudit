@@ -437,22 +437,31 @@ function startCamera() {
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
-        fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata')
-            .then(response => response.json())
-            .then(data => {
-                const kolkataTime = new Date(data.utc_datetime);
-                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-                const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
-                const formattedDate = kolkataTime.toLocaleDateString('en-IN', dateOptions);
-                const formattedTime = kolkataTime.toLocaleTimeString('en-US', timeOptions);
-                drawOnCanvas(formattedDate, formattedTime);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                const defaultDate = new Date().toLocaleDateString('en-IN', dateOptions);
-                const defaultTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-                drawOnCanvas(defaultDate, defaultTime);
-            });
+        // fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const kolkataTime = new Date(data.utc_datetime);
+        //         const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+        //         const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+        //         const formattedDate = kolkataTime.toLocaleDateString('en-IN', dateOptions);
+        //         const formattedTime = kolkataTime.toLocaleTimeString('en-US', timeOptions);
+        //         drawOnCanvas(formattedDate, formattedTime);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //         const defaultDate = new Date().toLocaleDateString('en-IN', dateOptions);
+        //         const defaultTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        //         drawOnCanvas(defaultDate, defaultTime);
+        //     });
+        const now = new Date(); // Get the current local date and time
+
+        const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+        const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+
+        const formattedDate = now.toLocaleDateString('en-IN', dateOptions);
+        const formattedTime = now.toLocaleTimeString('en-IN', timeOptions);
+
+        drawOnCanvas(formattedDate, formattedTime);
     });
 
     function drawOnCanvas(dateString, timeString) {
@@ -600,7 +609,7 @@ const getProgress = async () => {
             $('#saveButton').text("Update & Next");
             } else {
             alert("No changes detected. Go to next");
-            goToNextPage();
+            // goToNextPage();
                 console.log("No changes detected.");
             }
         

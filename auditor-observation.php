@@ -63,8 +63,23 @@
                 <label for="conclusion">2. Recommendations</label>
                 <textarea class="form-control" id="recommendations" name="recommendations" rows="6" placeholder="Enter recommendations" required></textarea>
             </div>
+                <!-- visitor Register Photo -->
+    <div class="form-group mt-4">
+        <div>
+            <label for="visitorRegisterPhotoPreview">3. visitor Register Photo</label>
+        </div>
+        <div>
+            <img id="visitorRegisterPhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
+        </div>
+        <div>
+            <a class="btn btn-primary mr-2" id="openCaptureModalBtnRegister" data-bs-toggle="modal" data-bs-target="#photoCaptureModal">Take Register Book Photo</a>
+        </div>
+        <input type="hidden" id="visitorRegisterPhotoBase64" name="visitorRegisterPhoto" required>
+    </div>
+
+
             <div class="form-group mt-4">
-                <label for="customer-list">3. Auditor Signature</label>
+                <label for="customer-list">4. Auditor Signature</label>
                 <div id="customer-list">
                 <!-- Dynamic Auditors list will be appended here -->
                 </div>
@@ -115,7 +130,36 @@
             </div>
         </div>
     </div>
-
+<!--  Modal for Photo Capture -->
+<div class="modal fade" id="photoCaptureModal" tabindex="-1" role="dialog" aria-labelledby="photoCaptureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="photoCaptureModalLabel">Capture Photo</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="mdi mdi-close-box-outline text-danger"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="photoCaptureContent">
+                    <div id="permission-message">
+                        <!-- permission message will appear here-->
+                    </div>
+                    <video id="video" width="100%" height="auto" autoplay></video>
+                    <canvas id="canvas" class="d-none"></canvas>
+                    <img id="capturedPhoto" class="mt-2 img-thumbnail d-none" src="default-image.png" alt="Captured photo">
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="iconButtons btn btn-primary d-none" id="captureBtn" title="Capture"><span class="mdi mdi-camera-outline btnIcon"></span></button>
+                <button type="button" class="iconButtons btn btn-success d-none" id="confirmBtn" title="Confirm"><span class="mdi mdi-check-circle-outline btnIcon"></span></button>
+                <button type="button" class="iconButtons btn btn-danger d-none" id="retakeBtn" title="Retake"><i class="mdi mdi-camera-retake-outline btnIcon"></i></button>
+                <button type="button" class="iconButtons btn btn-warning" id="toggleCameraBtn" title="Flip Camera"><span class="mdi mdi-camera-flip-outline btnIcon"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
     <!--  Modal for auditor Signature -->
     <div class="modal fade" id="signatureModal" tabindex="1" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -169,15 +213,175 @@ document.addEventListener('DOMContentLoaded', async () => {
     const noAuditorFound = document.getElementById('noAuditorFound');
     const okBtn = document.getElementById('okBtn');
     const selectedAuditors = document.getElementById('selectedAuditors');
-    const canvas = document.getElementById('signatureCanvas');
     const clearBtn = document.getElementById('clearBtn');
-    const confirmBtn = document.getElementById('confirmButton');
+    const signatureConfirmBtn = document.getElementById('confirmButton');
     const saveBtn = document.getElementById('saveButton');
     const auditorNameDisplay = document.getElementById('auditorName');
     const submitBtn = document.getElementById('submitButton');
     let loggedInUserEmpId = '<?php echo($_SESSION['emp_id']); ?>';
 
-    // Replace this with actual logged-in user data
+    const openCaptureModalBtnRegister = document.getElementById('openCaptureModalBtnRegister');
+    const captureBtn = document.getElementById('captureBtn');
+    const retakeBtn = document.getElementById('retakeBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const video = document.getElementById('video');
+
+    const canvas = document.getElementById('canvas');
+    const capturedPhoto = document.getElementById('capturedPhoto');
+    const visitorRegisterPhotoPreview = document.getElementById('visitorRegisterPhotoPreview');
+
+    const visitorRegisterPhotoBase64 = document.getElementById('visitorRegisterPhotoBase64');
+
+    const photoCaptureModalLabel = document.getElementById('photoCaptureModalLabel');
+    let currentFacingMode = 'user';
+    const toggleCameraBtn = document.getElementById('toggleCameraBtn');
+    let stream;
+    let currentPhotoType;
+
+function startCamera() {
+        toggleCameraBtn.classList.remove('d-none');
+        const constraints = { video: { facingMode: currentFacingMode } };
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function(mediaStream) {
+                stream = mediaStream;
+                video.srcObject = stream;
+                video.play().then(() => {
+                    console.log('Camera stream started successfully.');
+                }).catch(function(err) {
+                    console.error('Error playing video: ', err);
+                });
+            }).catch(function(err) {
+                console.error('Error accessing media devices.', err);
+                handlePermissionDenied();
+            });
+    }
+
+    function handlePermissionDenied() {
+        photoCaptureModalLabel.textContent = "Can't Access Camera & Location";
+        captureBtn.disabled = true;
+        retakeBtn.disabled = true;
+        confirmBtn.disabled = true;
+        toggleCameraBtn.disabled = true;
+        const container = document.getElementById('permission-message');
+        const video = document.getElementById('video');
+        video.style.display = 'none';
+        container.innerHTML = '';
+        const gif = document.createElement('img');
+        gif.src = 'assets/images/cameraAccess.gif';
+        gif.alt = 'Permission Denied';
+        container.appendChild(gif);
+    }
+
+    function stopCamera() {
+        if (stream) {
+            const tracks = stream.getTracks();
+            tracks.forEach(function(track) {
+                track.stop();
+            });
+            stream = null;
+        }
+    }
+
+    openCaptureModalBtnRegister.addEventListener('click', function() {
+        photoCaptureModalLabel.textContent = "Visitor Register Photo";
+        currentPhotoType = 'register';
+        currentFacingMode = 'environment';
+        $('#photoCaptureModal').modal('show');
+        retakeBtn.classList.add('d-none');
+        confirmBtn.classList.add('d-none');
+        captureBtn.classList.remove('d-none');
+        if (!stream) startCamera();
+        video.style.display = 'block';
+        capturedPhoto.classList.add('d-none');
+        canvas.style.display = 'none';
+    });
+
+    $('#photoCaptureModal').on('hidden.bs.modal', function() {
+        stopCamera();
+    });
+
+    toggleCameraBtn.addEventListener('click', function() {
+        currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+        if (stream) stream.getTracks().forEach(track => track.stop());
+        startCamera();
+    });
+
+    captureBtn.addEventListener('click', function() {
+        toggleCameraBtn.classList.add('d-none');
+        captureBtn.classList.add('d-none');
+        retakeBtn.classList.remove('d-none');
+        confirmBtn.classList.remove('d-none');
+        confirmBtn.disabled = true;
+
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+        const now = new Date(); // Get the current local date and time
+
+        const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+        const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+
+        const formattedDate = now.toLocaleDateString('en-IN', dateOptions);
+        const formattedTime = now.toLocaleTimeString('en-IN', timeOptions);
+
+        drawOnCanvas(formattedDate, formattedTime);
+    });
+
+    function drawOnCanvas(dateString, timeString) {
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            const rectHeight = 50;
+            context.globalAlpha = 0.5;
+            context.fillStyle = 'black';
+            context.fillRect(0, canvas.height - rectHeight, canvas.width, rectHeight);
+            context.globalAlpha = 1.0;
+            context.fillStyle = 'white';
+            context.font = '16px Arial';
+            context.fillText(`Date: ${dateString} Time: ${timeString}`, 10, canvas.height - rectHeight + 20);
+            context.fillText(`Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}`, 10, canvas.height - rectHeight + 40);
+            displayCapturedPhoto();
+        });
+    }
+
+    function displayCapturedPhoto() {
+        const photoDataUrl = canvas.toDataURL('image/png');
+        video.style.display = 'none';
+        capturedPhoto.src = photoDataUrl;
+        capturedPhoto.classList.remove('d-none');
+        canvas.classList.add('d-none');
+        confirmBtn.disabled = false;
+        
+    }
+
+    retakeBtn.addEventListener('click', function() {
+        if (!stream) startCamera();
+        video.style.display = 'block';
+        capturedPhoto.classList.add('d-none');
+        captureBtn.classList.remove('d-none');
+        retakeBtn.classList.add('d-none');
+        confirmBtn.classList.add('d-none');
+        toggleCameraBtn.classList.remove('d-none');
+    });
+
+    confirmBtn.addEventListener('click', function() {
+        const photoDataUrl = canvas.toDataURL('image/png');
+        const photoDataBase64 = photoDataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
+        if (currentPhotoType === 'register') {
+            visitorRegisterPhotoBase64.value = photoDataBase64;
+            visitorRegisterPhotoPreview.src = photoDataUrl;
+            visitorRegisterPhotoPreview.classList.remove('d-none');
+        }
+        $('#photoCaptureModal').modal('hide');
+    });
+
+    // Camera part end
+
     // const loggedInUser = { name: 'John Doe Default', empId: 'A001' };
     let selectedAuditorEmpIds = [loggedInUserEmpId];
     let currentSignatureIndex = null;
@@ -240,10 +444,11 @@ getProgress();
             originalData = { ...data };
             // console.log(originalData);
             // updateSubmitButtonState();
-
+1
             if (data.inputFieldsData.length > 0) {
                 document.getElementById('conclusion').value = data.inputFieldsData[0].conclusion;
                 document.getElementById('recommendations').value = data.inputFieldsData[0].recommendations;
+                document.getElementById('visitorRegisterPhotoPreview').src = 'codes/' + data.inputFieldsData[0].register_photo_url;
             }
 
             if (data.selectedAuditorsAndSignature.length > 0) {
@@ -293,11 +498,12 @@ function hasChanges() {
             empId, dataUrl, date
         })),
         conclusion: document.getElementById('conclusion').value,
-        recommendations: document.getElementById('recommendations').value
+        recommendations: document.getElementById('recommendations').value,
+        register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
     };
 
     // Log currentData for inspection
-    // console.log('currentData:', currentData);
+    console.log('currentData:', currentData);
 // // Validate required fields
 // const validationStatus = validateFormData(currentData);
 //     if (validationStatus === 'missingInputData') {
@@ -312,11 +518,13 @@ function hasChanges() {
             date: item.date
         })),
         conclusion: originalData.inputFieldsData[0].conclusion,
-        recommendations: originalData.inputFieldsData[0].recommendations
+        recommendations: originalData.inputFieldsData[0].recommendations,
+        register_photo_url: ""
+        
     };
 
     // Log transformedOriginalData for inspection
-    // console.log('transformedOriginalData:', transformedOriginalData);
+    console.log('transformedOriginalData:', transformedOriginalData);
 
     // Compare the stringified versions of the data objects
     const hasChanged = JSON.stringify(currentData) !== JSON.stringify(transformedOriginalData);
@@ -470,7 +678,7 @@ function updateSubmitButtonState() {
         signaturePad.clear();
     });
 
-    confirmBtn.addEventListener('click', () => {
+    signatureConfirmBtn.addEventListener('click', () => {
         if (!signaturePad.isEmpty()) {
             // updateSubmitButtonState();
             const signatureDataURL = signaturePad.toDataURL('image/png');
@@ -659,7 +867,8 @@ submitBtn.addEventListener('click', async () => {
             empId, dataUrl, date
         })),
         conclusion: document.getElementById('conclusion').value,
-        recommendations: document.getElementById('recommendations').value
+        recommendations: document.getElementById('recommendations').value,
+        register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
     };
 
     // Validate required fields
@@ -731,7 +940,7 @@ async function insertData(formData) {
         const result = await response.json();
         if (result.status == 'success') {
             alert('Auditing Data Submitted successfully.');
-            goToNextPage();
+            // goToNextPage();
 
             auditorsToDelete = [];
         } else {
@@ -780,7 +989,7 @@ async function updateData(formData) {
         // Handle next step logic here
         return;
     }
-
+// console.log(formData);
         const response = await fetch('codes/update_auditors_observations_data.php', {
             method: 'POST',
             headers: {
@@ -791,7 +1000,7 @@ async function updateData(formData) {
 
         if (response.ok) {
             alert('Auditing Data Updated successfully.');
-            goToNextPage();
+            // goToNextPage();
             auditorsToDelete = [];
         } else {
             alert('Error updating data.');

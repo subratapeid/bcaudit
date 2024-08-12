@@ -30,7 +30,7 @@ try {
     $savedData['selectedAuditorsAndSignature'] = $selectedAuditorsAndSignature;
 
     // Fetch input fields data (conclusion and recommendations)
-    $stmt = $pdo->prepare("SELECT conclusion, recommendations FROM auditor_observation
+    $stmt = $pdo->prepare("SELECT conclusion, recommendations, register_photo_url FROM auditor_observation
         WHERE audit_number = :auditNumber");
     $stmt->bindParam(':auditNumber', $auditNumber, PDO::PARAM_STR);
     $stmt->execute();
