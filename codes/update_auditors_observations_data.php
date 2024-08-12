@@ -16,6 +16,7 @@ $recommendations = $data['recommendations'];
 $register_photo_url = $data['register_photo_url'];
 $auditId = $_SESSION['auditNumber'];
 
+
 // Start transaction
 try {
    // Handle Register captured photo process
@@ -27,23 +28,20 @@ try {
 
     if (file_put_contents($registerPhotoPath, $register_photo_data)) {
 
-        if (!empty($registerPhotoPath)) {
-            $sql = "UPDATE auditor_observation SET register_photo_url = :registerPhotoPath WHERE audit_number = :auditNumber";
-            $stmt = $pdo->prepare($sql);
-            // Bind the parameters to avoid SQL injection and execute the statement
-            $stmt->execute([
-                ':registerPhotoPath' => $registerPhotoPath,
-                ':auditNumber' => $auditId
-            ]);
-        }
-        
-        // Delete old bcpoint photo if exists
+        if ($registerPhotoPath) {
+            // Delete old bcpoint photo if exists
         $oldPhotoStmt2 = $pdo->prepare("SELECT register_photo_url FROM auditor_observation WHERE audit_number = :auditNumber");
         $oldPhotoStmt2->execute([':auditNumber' => $auditId]);
         $oldPhoto2 = $oldPhotoStmt2->fetch(PDO::FETCH_ASSOC)['register_photo_url'];
         if ($oldPhoto2 && file_exists($oldPhoto2)) {
             unlink($oldPhoto2);
         }
+            $sql = "UPDATE auditor_observation SET register_photo_url = :registerPhotoPath WHERE audit_number = :auditNumber";
+            $stmt = $pdo->prepare($sql);
+            // Bind the parameters to avoid SQL injection and execute the statement
+            $stmt->execute([':registerPhotoPath' => $registerPhotoPath,':auditNumber' => $auditId]);
+        }
+        
     } else {
         echo json_encode(['success' => false, 'error' => 'Failed to upload Register photograph.']);
         exit();

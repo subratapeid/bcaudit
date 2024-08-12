@@ -205,6 +205,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
+    showOverlay("--Fetching Data--");
+
     const addAuditorBtn = document.getElementById('addAuditorBtn');
     const auditorModal = $('#auditorModal');
     const signatureModal = $('#signatureModal');
@@ -430,6 +432,8 @@ function startCamera() {
 } catch (error) {
         console.error('Error:', error);
     }
+    hideOverlay();
+
 }  // progress fetch ending part
 getProgress();
 
@@ -437,7 +441,6 @@ getProgress();
     let originalData = {};
     async function fetchSavedData() {
         try {
-
             const response = await fetch('codes/fetchData/fetch_auditors_observations_saved_data.php');
             const data = await response.json();
             // console.log(data);
@@ -459,6 +462,7 @@ getProgress();
                         date: signature.date
                     };
                 });
+
             } else {
                 // Add the logged-in user if no auditors are returned
                 selectedAuditorEmpIds = [loggedInUserEmpId];
@@ -466,6 +470,8 @@ getProgress();
         } catch (error) {
             console.error('Error fetching saved data:', error);
         }
+        hideOverlay();
+        // console.log("hide overlay after loading");
     }
 
     // Initial render data
@@ -765,6 +771,7 @@ function updateSubmitButtonState() {
         checkboxes.forEach(checkbox => {
             checkbox.checked = selectedAuditorEmpIds.includes(checkbox.value);
         });
+
     }
 
 
@@ -1014,6 +1021,5 @@ async function updateData(formData) {
 }
 
 });
-
 
 </script>

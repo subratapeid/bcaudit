@@ -40,7 +40,15 @@ $auditorsToDelete = $data['auditorsToDelete'] ?? [];
 $signatures = $data['signatures'] ?? [];
 $conclusion = $data['conclusion'] ?? '';
 $recommendations = $data['recommendations'] ?? '';
+$register_photo_url = $data['register_photo_url'] ?? '';
 
+    // Mandatory check for register photo
+    if (empty($register_photo_url)) {
+        $response['status'] = 'error';
+        $response['error'] = 'Register book photo is missing';
+        echo json_encode($response);
+    exit;
+    }
 // Validate required fields
 if (empty($signatures) || empty($conclusion) || empty($recommendations)) {
     $response['status'] = 'error';
@@ -50,6 +58,22 @@ if (empty($signatures) || empty($conclusion) || empty($recommendations)) {
 }
 
 try {
+
+// Handle Register captured photo process
+if ($register_photo_url) {
+    $register_photo_url = $data['register_photo_url'];
+    $register_photo_data = base64_decode($register_photo_url);
+    $registerPhotoNewName = 'RegisterPhoto_' . $auditId . '_' . uniqid() . '.png';
+    $registerPhotoPath = 'uploads/' . $registerPhotoNewName;
+
+    if (!file_put_contents($registerPhotoPath, $register_photo_data)) {
+        $response['status'] = 'error';
+        $response['error'] = 'Failed to upload Register book photograph.';
+        echo json_encode($response);
+        exit();
+    }
+
+}
     // Start transaction
     $pdo->beginTransaction();
 
@@ -101,11 +125,12 @@ foreach ($signatures as $signature) {
 }
 
     // Insert auditor observations
-    $stmt = $pdo->prepare("INSERT INTO auditor_observation (audit_number, conclusion, recommendations, created_by_id, created_date, last_updated_date) 
-        VALUES (:auditId, :conclusion, :recommendations, :createdById, :createdDate, :lastUpdatedDate)");
+    $stmt = $pdo->prepare("INSERT INTO auditor_observation (audit_number, conclusion, recommendations, register_photo_url, created_by_id, created_date, last_updated_date) 
+        VALUES (:auditId, :conclusion, :recommendations, :registerPhotoPath, :createdById, :createdDate, :lastUpdatedDate)");
     $stmt->bindParam(':auditId', $auditId);
     $stmt->bindParam(':conclusion', $conclusion);
     $stmt->bindParam(':recommendations', $recommendations);
+    $stmt->bindParam(':registerPhotoPath', $registerPhotoPath);
     $stmt->bindParam(':createdById', $userId);
     $stmt->bindParam(':createdDate', $dbDatetime);
     $stmt->bindParam(':lastUpdatedDate', $dbDatetime);
