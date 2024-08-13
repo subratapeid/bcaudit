@@ -1,3 +1,8 @@
+<?php
+include "../../include/auth.php";
+
+include '../../codes/verify_audit_session.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1738,16 +1743,24 @@
  <div class="section">
     <h2 class="sectionHeading"><img src="/bcaudit/assets/icons/headingIcon.png" alt="" class="headingIcon">Auditor Observation & Signatures</h2>
     <div class="innerSection">
-    <div class="subSection">
-    <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Audit Conclusion and findings:</strong></p>
+        <div class="subSection">
+        <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Audit Conclusion and findings:</strong></p>
             <p class="auditObservationDescriptions" data-id="conclusion"></p>
         </div>
-        <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Top highlighted points while auditing:</strong></p>
+        <div class="subSection">
+            <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Top highlighted points while auditing:</strong></p>
             <p class="auditObservationDescriptions" data-id="recommendations"></p>
         </div>
+        <div class="subSection">
+        <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Register Book Photo:</strong></p>
+        <img src="" data-id="register_photo_url" class="bcaPointPhotos" id="registerPhoto">
+        </div>
     </div>
-        <div class="subSection" id="signature-area">
-            <!-- Signatures will be populated here -->
+    <div class="subSection">
+        <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Auditor's Signature:</strong></p>
+            <div id="signature-area">
+                <!-- Signatures will be populated here -->
+            </div>
         </div>
 
     </div>

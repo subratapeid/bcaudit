@@ -176,6 +176,16 @@
     max-width: 180px;
     height: 100px;
 }
+.bcaPointPhotos {
+        display: flex;
+        position: relative;
+        gap: 50px; /* Optional: Adds space between the images */
+    }
+
+    .bcaPointPhotos {
+        max-width: 370px;
+        height: 290px;
+    }
 /* #bcaStamp {
     transform: rotate(90deg);
 } */
@@ -1788,7 +1798,23 @@
     </div>
 </div>
 <!-- section 8 end -->
+<!-- Section 9 BCA Selfie and bcpoint -->
+<div class="section">
+    <h2 class="sectionHeading"><img src="/bcaudit/assets/icons/headingIcon.png" alt="" class="headingIcon">BCA & BC Point Photos</h2>
+    <div class="innerSection">
 
+    <div class="subSection">
+
+    <div class="bcaSignatureStampArea">
+            <img src="" data-id="bca_photo_url" class="bcaPointPhotos" id="bcaPhoto">
+            <img src="" data-id="bc_point_photo_url" class="bcaPointPhotos" id="bcPointPhoto">
+        </div>
+    </div>
+
+    </div>
+    <!-- Inner section end -->
+</div>
+<!-- section 9 end -->
 <!-- Section 9 BCA Signature and Stamp -->
 <div class="section">
     <h2 class="sectionHeading"><img src="/bcaudit/assets/icons/headingIcon.png" alt="" class="headingIcon">BCA Signature & Stamp</h2>
@@ -1819,12 +1845,21 @@
     <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Audit Conclusion and findings:</strong></p>
             <p class="auditObservationDescriptions" data-id="conclusion"></p>
         </div>
+        <div class="subSection">
+
         <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Top highlighted points while auditing:</strong></p>
             <p class="auditObservationDescriptions" data-id="recommendations"></p>
         </div>
-    </div>
-        <div class="subSection" id="signature-area">
-            <!-- Signatures will be populated here -->
+        <div class="subSection">
+        <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Register Book Photo:</strong></p>
+        <img src="" data-id="register_photo_url" class="bcaPointPhotos" id="registerPhoto">
+        </div>
+
+        <div class="subSection">
+        <p class="questionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="questionIcon"><strong>Auditor's Signature:</strong></p>
+            <div id="signature-area">
+                <!-- Signatures will be populated here -->
+            </div>
         </div>
 
     </div>

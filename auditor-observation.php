@@ -947,7 +947,7 @@ async function insertData(formData) {
         const result = await response.json();
         if (result.status == 'success') {
             alert('Auditing Data Submitted successfully.');
-            // goToNextPage();
+            goToNextPage();
 
             auditorsToDelete = [];
         } else {
@@ -1007,7 +1007,7 @@ async function updateData(formData) {
 
         if (response.ok) {
             alert('Auditing Data Updated successfully.');
-            // goToNextPage();
+            goToNextPage();
             auditorsToDelete = [];
         } else {
             alert('Error updating data.');
