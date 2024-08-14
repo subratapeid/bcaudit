@@ -459,7 +459,7 @@ include '../../codes/verify_audit_session.php';
     </div>
     <div class="subQuestion">
         <p class="subQuestionLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="subQuestionIcon"></span>How are fees payments made?</p>
-        <p class="longAnswer" id="operatingHours" data-id="operating_hours"></p>
+        <p class="longAnswer" id="feesPaymentMode" data-id="fee_payment_mode"></p>
     </div>
     <div class="remarks">
         <p class="remarksLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt="" class="remarksIcon">Remarks:<span class="remarksAns" id="remarks5" data-id="onboarding_fee_remarks"></span></p>
