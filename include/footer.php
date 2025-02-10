@@ -16,7 +16,7 @@
 <!-- bootstrap script cdn-->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Sweet allert CDN script -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -32,32 +32,33 @@
 <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-  <!-- custom JavaScript -->
-  <script src="js/script.js"></script>
-  <script src="js/time_update.js"></script>
-  <script src="js/formScrollToBlank.js"></script>
+<!-- custom JavaScript -->
+<script src="js/script.js"></script>
+<script src="js/time_update.js"></script>
+<script src="js/formScrollToBlank.js"></script>
 
 <script>
   var logoutBtn = document.getElementById('logout_button');
-    if(logoutBtn){
-      logoutBtn.addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent the default action of the link
-          if (confirm('Are you sure you want to logout?')) {
-              // If user clicks OK, execute the logout code
-              window.location.href = 'logout.php';
-          }
-      });
-    }
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function (e) {
+      e.preventDefault(); // Prevent the default action of the link
+      if (confirm('Are you sure you want to logout?')) {
+        // If user clicks OK, execute the logout code
+        window.location.href = 'logout.php';
+      }
+    });
+  }
 
   // console audit number in allpages if it is setted
   let auditNumberPrint;
   <?php if (isset($auditNumber)) { ?>
-      auditNumberPrint = "<?php echo($auditNumber); ?>";
-      <?php } else { ?>
-        auditNumberPrint = 'not set';
-        <?php } ?>
-      console.log('audit number: ', auditNumberPrint);
+    auditNumberPrint = "<?php echo ($auditNumber); ?>";
+  <?php } else { ?>
+    auditNumberPrint = 'not set';
+  <?php } ?>
+  console.log('audit number: ', auditNumberPrint);
 </script>
 
 </body>
+
 </html>

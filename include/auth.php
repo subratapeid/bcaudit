@@ -9,7 +9,8 @@ session_start([
     'cookie_samesite' => 'Strict', // Strict same-site cookie policy
 ]);
 // Function to check if the user is logged in
-function isLoggedIn() {
+function isLoggedIn()
+{
     return isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true;
 }
 
@@ -27,4 +28,3 @@ if (isLoggedIn()) {
     }
 }
 ?>
-

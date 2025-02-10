@@ -5,32 +5,42 @@ include 'config.php';
 if (session_status() == PHP_SESSION_NONE) {
     // Secure session configuration
     session_start([
-    'cookie_lifetime' => 86400, // 1 day
-    'cookie_httponly' => true,  // Make the cookie accessible only through the HTTP protocol
-    'use_strict_mode' => true,  // Use strict session ID mode
-    'use_cookies' => true,      // Use cookies to store the session ID on the client side
-    'cookie_secure' => isset($_SERVER['HTTPS']), // Ensure the cookie is only sent over HTTPS
-    'cookie_samesite' => 'Strict', // Strict same-site cookie policy
+        'cookie_lifetime' => 86400, // 1 day
+        'cookie_httponly' => true,  // Make the cookie accessible only through the HTTP protocol
+        'use_strict_mode' => true,  // Use strict session ID mode
+        'use_cookies' => true,      // Use cookies to store the session ID on the client side
+        'cookie_secure' => isset($_SERVER['HTTPS']), // Ensure the cookie is only sent over HTTPS
+        'cookie_samesite' => 'Strict', // Strict same-site cookie policy
     ]);
 }
 
-function getUserIP() {
-    if (isset($_SERVER['HTTP_CLIENT_IP'])) return $_SERVER['HTTP_CLIENT_IP'];
-    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) return $_SERVER['HTTP_X_FORWARDED_FOR'];
-    if (isset($_SERVER['HTTP_X_FORWARDED'])) return $_SERVER['HTTP_X_FORWARDED'];
-    if (isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP'])) return $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
-    if (isset($_SERVER['HTTP_FORWARDED_FOR'])) return $_SERVER['HTTP_FORWARDED_FOR'];
-    if (isset($_SERVER['HTTP_FORWARDED'])) return $_SERVER['HTTP_FORWARDED'];
-    if (isset($_SERVER['REMOTE_ADDR'])) return $_SERVER['REMOTE_ADDR'];
+function getUserIP()
+{
+    if (isset($_SERVER['HTTP_CLIENT_IP']))
+        return $_SERVER['HTTP_CLIENT_IP'];
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    if (isset($_SERVER['HTTP_X_FORWARDED']))
+        return $_SERVER['HTTP_X_FORWARDED'];
+    if (isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
+        return $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
+    if (isset($_SERVER['HTTP_FORWARDED_FOR']))
+        return $_SERVER['HTTP_FORWARDED_FOR'];
+    if (isset($_SERVER['HTTP_FORWARDED']))
+        return $_SERVER['HTTP_FORWARDED'];
+    if (isset($_SERVER['REMOTE_ADDR']))
+        return $_SERVER['REMOTE_ADDR'];
     return 'UNKNOWN';
 }
 
-function recordLoginAttempt($pdo, $username, $ip, $status) {
+function recordLoginAttempt($pdo, $username, $ip, $status)
+{
     $stmt = $pdo->prepare("INSERT INTO login_attempts (username, ip_address, attempt_time, status) VALUES (:username, :ip, NOW(), :status)");
     $stmt->execute(['username' => $username, 'ip' => $ip, 'status' => $status]);
 }
 
-function checkLoginAttempts($pdo, $username, $ip) {
+function checkLoginAttempts($pdo, $username, $ip)
+{
     $userTimeBound = 5; // 5 minutes
     $userLimit = 3; // 3 attempts
     $ipTimeBound1 = 10; // 10 minutes
@@ -132,7 +142,8 @@ function checkLoginAttempts($pdo, $username, $ip) {
     return ['status' => 'allowed', 'remaining_attempts' => $userLimit - $failedUserAttempts - 1, 'blocked_type' => null];
 }
 
-function blockUser($pdo, $username, $timeBound) {
+function blockUser($pdo, $username, $timeBound)
+{
     $expiryTime = new DateTime();
     $expiryTime->modify("+{$timeBound} minutes");
 
@@ -145,7 +156,8 @@ function blockUser($pdo, $username, $timeBound) {
     $stmt->execute(['username' => $username, 'time_bound' => $timeBound, 'expiry_time' => $expiryTime->format('Y-m-d H:i:s')]);
 }
 
-function blockIP($pdo, $ip, $timeBound, $permanent = false) {
+function blockIP($pdo, $ip, $timeBound, $permanent = false)
+{
     if ($permanent) {
         $stmt = $pdo->prepare("
             UPDATE login_attempts 
@@ -167,7 +179,8 @@ function blockIP($pdo, $ip, $timeBound, $permanent = false) {
     $stmt->execute(['ip' => $ip]);
 }
 
-function resetLoginAttempts($pdo, $username, $ip) {
+function resetLoginAttempts($pdo, $username, $ip)
+{
     $stmt = $pdo->prepare("
         UPDATE login_attempts 
         SET is_blocked = FALSE, is_permanently_blocked = FALSE, block_expiry = NULL
@@ -180,7 +193,7 @@ function resetLoginAttempts($pdo, $username, $ip) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     $user_id = $username;
-    $recaptcha_secret = 'Secret Key Here';
+    $recaptcha_secret = '6Ldhux4qAAAAAINa7sj-ogBFxsiAM6CXe3IUYKdQ';
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $ip = getUserIP();
     $latitude = 12345;
@@ -214,13 +227,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $options = [
         'http' => [
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
             'content' => http_build_query($recaptcha_data)
         ]
     ];
 
-    $context  = stream_context_create($options);
+    $context = stream_context_create($options);
     $recaptcha_verify = file_get_contents($recaptcha_url, false, $context);
     $recaptcha_success = json_decode($recaptcha_verify)->success;
 
@@ -232,8 +245,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($_POST['password'], $user['password'])) {
             recordLoginAttempt($pdo, $username, $ip, 'success');
 
-        // Regenerate the session ID to prevent session fixation
-        session_regenerate_id(true);
+            // Regenerate the session ID to prevent session fixation
+            session_regenerate_id(true);
 
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['email_id'] = $user['email_id'];
@@ -242,7 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_first_name'] = $user['user_first_name'];
             $_SESSION['is_logged_in'] = true;
-            
+
             echo json_encode(['status' => 'success', 'message' => 'Login successful', 'redirect' => '/bcaudit/audit-list.php']);
         } else {
             recordLoginAttempt($pdo, $username, $ip, 'failed');
