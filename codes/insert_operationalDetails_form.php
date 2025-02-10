@@ -57,6 +57,12 @@ $bankOfficialVisit = $_POST['bankOfficialVisit'] ?? '';
 $bankOfficialVisitRemarks = $_POST['bankOfficialVisitRemarks'] ?? '';
 $bcVisit = $_POST['bcVisit'] ?? '';
 $bcVisitRemarks = $_POST['bcVisitRemarks'] ?? '';
+// Services (assuming services are passed as a JSON string from frontend)
+$bcaServices = isset($_POST['bcaServices']) ? $_POST['bcaServices'] : [];
+
+// Convert bcaServices to CSV (comma-separated string)
+$servicesString = implode(',', $bcaServices);
+
 
     try{
         // Start a transaction
@@ -77,6 +83,7 @@ $bcVisitRemarks = $_POST['bcVisitRemarks'] ?? '';
             abm_name,
             rm_name,
             zm_name,
+            bca_services,
             operating_hours,
             designated_location,
             designated_location_remarks,
@@ -114,6 +121,7 @@ $bcVisitRemarks = $_POST['bcVisitRemarks'] ?? '';
             :abmName,
             :rmName,
             :zmName,
+            :servicesString,
             :operatingHours,
             :operatingLocation,
             :operatingLocationRemarks,
@@ -156,6 +164,7 @@ $bcVisitRemarks = $_POST['bcVisitRemarks'] ?? '';
         $stmt->bindParam(':abmName', $abmName, PDO::PARAM_STR);
         $stmt->bindParam(':rmName', $rmName, PDO::PARAM_STR);
         $stmt->bindParam(':zmName', $zmName, PDO::PARAM_STR);
+        $stmt->bindParam(':servicesString', $servicesString, PDO::PARAM_STR);
         $stmt->bindParam(':operatingHours', $operatingHours, PDO::PARAM_STR);
         $stmt->bindParam(':operatingLocation', $operatingLocation, PDO::PARAM_STR);
         $stmt->bindParam(':operatingLocationRemarks', $operatingLocationRemarks, PDO::PARAM_STR);

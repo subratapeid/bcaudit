@@ -530,63 +530,109 @@ include "codes/verify_audit_session.php";
                 }
 
                 // convert old form data and current form data into same format before compare
+                // function formDataToObject(formData) {
+                //     var object = {};
+                //     formData.forEach((value, key) => {
+                //         if (value instanceof File && value.name) {
+                //             // For file inputs, store file name and size for comparison
+                //             object[key] = { name: value.name, size: value.size };
+                //         } else {
+                //             object[key] = value;
+                //         }
+                //     });
+                //     return object;
+                // }
+
+                // // this function will execute after click save/update button
+                // $('#operationalForm').on('submit', function (event) {
+                //     event.preventDefault();
+                //     var form = $(this);
+                //     // var button = form.find('button[type="submit"]');
+                //     var formData = new FormData(this);
+                //     var formElement = document.getElementById('operationalForm');
+                //     var formData = new FormData(formElement);
+
+                //     if (progress >= formProgress) {
+                //         console.log(progress);
+                //         // Use formOldData for comparison or other operations
+                //         var oldDataObject = formDataToObject(formOldData);
+                //         console.log(oldDataObject);
+                //         var newDataObject = formDataToObject(formData);
+                //         console.log(newDataObject);
+                //     }
+
+                //     if (progress < formProgress) {
+                //         insertData(formData); // Insert new form data
+                //     } else if (JSON.stringify(oldDataObject) !== JSON.stringify(newDataObject)) {
+                //         updateForm(formData); // Update existing form data
+                //         $('#saveButton').text("Update & Next");
+                //     } else {
+                //         alert("No changes detected. Go to next");
+                //         goToNextPage();
+                //         console.log("No changes detected.");
+                //     }
+
+                // });
+
                 function formDataToObject(formData) {
-                    var object = {};
-                    formData.forEach((value, key) => {
-                        if (value instanceof File && value.name) {
-                            // For file inputs, store file name and size for comparison
-                            object[key] = { name: value.name, size: value.size };
-                        } else {
-                            object[key] = value;
-                        }
-                    });
-                    return object;
+    var object = {};
+
+    formData.forEach((value, key) => {
+        if (value instanceof File && value.name) {
+            // For file inputs, store file name and size for comparison
+            object[key] = { name: value.name, size: value.size };
+        } else {
+            // Handle multiple values (checkboxes, multi-select inputs)
+            if (object[key]) {
+                if (!Array.isArray(object[key])) {
+                    object[key] = [object[key]]; // Convert to array if not already
                 }
+                object[key].push(value);
+            } else {
+                object[key] = value;
+            }
+        }
+    });
 
-                // this function will execute after click save/update button
+    return object;
+}
+
+
                 $('#operationalForm').on('submit', function (event) {
-                    event.preventDefault();
-                    var form = $(this);
-                    // var button = form.find('button[type="submit"]');
-                    var formData = new FormData(this);
-                    var formElement = document.getElementById('operationalForm');
-                    var formData = new FormData(formElement);
+    event.preventDefault();
+    
+    var form = $(this);
+    var formElement = document.getElementById('operationalForm');
+    var formData = new FormData(formElement);
 
-                    //     if (auditNumber == ""){
-                    //         if (!bcaPhotoBase64.value) {
-                    //     alert('Please capture and confirm the BCA photo.');
-                    //     return;
-                    //     }
-                    // if (!bcPointPhotoBase64.value) {
-                    //     alert('Please capture and confirm the BC Point photo.');
-                    //     return;
-                    //     }
-                    //     if (!bcSignaturePhotoBase64.value) {
-                    //     alert('Please Take BCA Signature.');
-                    //     return;
-                    //     }
-                    // }
-                    if (progress >= formProgress) {
-                        console.log(progress);
-                        // Use formOldData for comparison or other operations
-                        var oldDataObject = formDataToObject(formOldData);
-                        console.log(oldDataObject);
-                        var newDataObject = formDataToObject(formData);
-                        console.log(newDataObject);
-                    }
+    // Collect selected services
+    let selectedServices = [];
+    document.querySelectorAll('input[name="bcaServices[]"]:checked').forEach((checkbox) => {
+        selectedServices.push(checkbox.value);
+    });
 
-                    if (progress < formProgress) {
-                        insertData(formData); // Insert new form data
-                    } else if (JSON.stringify(oldDataObject) !== JSON.stringify(newDataObject)) {
-                        updateForm(formData); // Update existing form data
-                        $('#saveButton').text("Update & Next");
-                    } else {
-                        alert("No changes detected. Go to next");
-                        goToNextPage();
-                        console.log("No changes detected.");
-                    }
+    // Convert array to JSON string and append to formData
+    formData.append("bcaServices", JSON.stringify(selectedServices));
 
-                });
+    // Debugging logs
+    console.log("Selected Services:", selectedServices);
+
+    if (progress >= formProgress) {
+        var oldDataObject = formDataToObject(formOldData);
+        var newDataObject = formDataToObject(formData);
+    }
+
+    if (progress < formProgress) {
+        insertData(formData); // Insert new form data
+    } else if (JSON.stringify(oldDataObject) !== JSON.stringify(newDataObject)) {
+        updateForm(formData); // Update existing form data
+        $('#saveButton').text("Update & Next");
+    } else {
+        alert("No changes detected. Go to next");
+        goToNextPage();
+    }
+});
+
 
                 // progress fetch ending part
             } catch (error) {
