@@ -5,8 +5,9 @@ include 'config.php';
 
 try {
 
-    // Function to get the current count of records in the database
-    function getCurrentRecordCount($pdo) {
+    // Function to get the current count of records in the database changes
+    function getCurrentRecordCount($pdo)
+    {
         $query = "SELECT COUNT(*) as count FROM all_bc_details";
         $stmt = $pdo->query($query);
 
@@ -24,9 +25,8 @@ try {
 
 
 } catch (PDOException $e) {
-   echo ('Connection failed: ' . $e->getMessage());
+    echo ('Connection failed: ' . $e->getMessage());
 }
 unset($pdo);
 
 ?>
-
