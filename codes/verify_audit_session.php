@@ -13,7 +13,7 @@ if ($bcaId && $bcaName || $auditNumber) {
   // Redirect if any of the variables are missing or empty
   echo "<script>
           alert('Invalid Request.');
-          window.location.href = 'audit-list.php';
+          window.location.href = '/bcaudit/audit-list.php';
         </script>";
   exit; // Ensure to stop further execution after redirection
 }

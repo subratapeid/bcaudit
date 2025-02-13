@@ -629,7 +629,7 @@ include "include/navbar.php";
     document.addEventListener("DOMContentLoaded", function () {
       showOverlay('--Fetching Data--');
 
-      fetch('codes/fetchData/fetch_audit_list_data.php', {
+      fetch('/bcaudit/codes/fetchData/fetch_audit_list_data.php', {
         method: 'GET',
         headers: {
           'X-Requested-With': 'XMLHttpRequest'
@@ -889,7 +889,7 @@ include "include/navbar.php";
     // Function to fetch BCA name via AJAX
     function fetchBcaName(bcaId) {
       $.ajax({
-        url: 'codes/fetchData/validate_bca_for_new_audit.php',
+        url: '/bcaudit/codes/fetchData/validate_bca_for_new_audit.php',
         method: 'GET',
         data: { bca_id: bcaId },
         dataType: 'json',
@@ -929,7 +929,7 @@ include "include/navbar.php";
         var action = 'existingAudit';
       }
       $.ajax({
-        url: 'codes/store_session.php',
+        url: '/bcaudit/codes/store_session.php',
         type: 'POST',
         data: { bcaId: bcaId, bcaName: bcaName, auditNumber: auditNumber, action: action, state: state, location: location },
         success: function (response) {
@@ -937,7 +937,7 @@ include "include/navbar.php";
           var result = JSON.parse(response);
           if (result.success) {
             // console.log('Session data stored successfully');
-            window.location.href = 'progress.php';
+            window.location.href = '/bcaudit/progress.php';
           } else {
             console.log('Error: ' + result.message);
             alert('Error: ' + result.message);

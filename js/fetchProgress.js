@@ -4,7 +4,7 @@ async function fetchProgress(bcaId, auditNumber) {
         // Create a new Promise to handle the asynchronous operation
         const progress = await new Promise((resolve, reject) => {
             $.ajax({
-                url: 'codes/fetchData/fetch_progress.php',
+                url: '/bcaudit/codes/fetchData/fetch_progress.php',
                 type: 'GET',
                 data: {
                     bcaId: bcaId,

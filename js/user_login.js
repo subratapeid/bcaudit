@@ -19,27 +19,27 @@ $(document).ready(function () {
 
         // Store the form reference
         var $form = $(this);
-            // AJAX request
-            $.ajax({
-                type: 'POST',
-                url: 'codes/user_login_code.php',
-                data: $form.serialize(), // Use the stored form reference
-                dataType: 'json',
-                success: function (response) {
-                    // Handle the JSON response from the server
-                    if (response.status === 'success') {
-                        stopLoading();
-                        window.location.href = response.redirect;
-                    } else {
-                        alert(response.message);
-                        stopLoading();
-                    }
-                },
-                error: function (error) {
+        // AJAX request
+        $.ajax({
+            type: 'POST',
+            url: '/bcaudit/codes/user_login_code.php',
+            data: $form.serialize(), // Use the stored form reference
+            dataType: 'json',
+            success: function (response) {
+                // Handle the JSON response from the server
+                if (response.status === 'success') {
                     stopLoading();
-                    console.log('Error:', error);
+                    window.location.href = response.redirect;
+                } else {
+                    alert(response.message);
+                    stopLoading();
                 }
-            });
-        
+            },
+            error: function (error) {
+                stopLoading();
+                console.log('Error:', error);
+            }
+        });
+
     });
 });

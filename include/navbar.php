@@ -118,7 +118,7 @@ include "include/auth.php";
         <?php if (isLoggedIn()): ?>
           <li class="item">
             <!-- <a href="/bcaudit/index.php" class="nav_link"> -->
-            <a href="/audit/" class="nav_link">
+            <a href="/bcaudit/" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-home-alt"></i>
               </span>
@@ -127,7 +127,7 @@ include "include/auth.php";
           </li>
 
           <li class="item">
-            <a href="audit-list.php" class="nav_link">
+            <a href="/bcaudit/audit-list.php" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bxs-notepad"></i>
               </span>
