@@ -2,7 +2,5 @@ codes/response/
 codes/uploads/
 report/csv/
 codes/user_login_code.php
-vendor
 codes/config.php
-# git update-index --no-assume-unchanged /codes/user_login_code.php
 
