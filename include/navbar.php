@@ -135,14 +135,14 @@ include "include/auth.php";
             </a>
           </li>
 
-          <li class="item">
+          <!-- <li class="item">
             <a href="/bcaudit/customer-feedback-list.php" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bxs-user-pin"></i>
               </span>
               <span class="navlink">Customer Feedback</span>
             </a>
-          </li>
+          </li> -->
           <!-- end -->
           <!--navlink with submenu user management -->
           <li class="item">
@@ -156,9 +156,9 @@ include "include/auth.php";
 
             <ul class="menu_items submenu">
               <a href="all-users.php" class="nav_link sublink">All Users List</a>
-              <a href="create-user.php" class="nav_link sublink">Create New User</a>
+              <!-- <a href="create-user.php" class="nav_link sublink">Create New User</a>
               <a href="approve-user.php" class="nav_link sublink">Approve User</a>
-              <a href="user-bulk-upload.php" class="nav_link sublink">Bulk Upload</a>
+              <a href="user-bulk-upload.php" class="nav_link sublink">Bulk Upload</a> -->
             </ul>
           </li>
           <!-- end -->
@@ -174,8 +174,8 @@ include "include/auth.php";
 
             <ul class="menu_items submenu">
               <a href="bca-list.php" class="nav_link sublink">All BCA List</a>
-              <a href="create-bca.php" class="nav_link sublink">Create New BCA</a>
-              <a href="approve-bca.php" class="nav_link sublink">Approve BCA</a>
+              <!-- <a href="create-bca.php" class="nav_link sublink">Create New BCA</a>
+              <a href="approve-bca.php" class="nav_link sublink">Approve BCA</a> -->
               <a href="bca-bulk-upload.php" class="nav_link sublink">Bulk Upload</a>
             </ul>
           </li>

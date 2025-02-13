@@ -1,53 +1,62 @@
-<?php 
-    $pageTitle="Auditor Observation and information";
-    include "include/navbar.php";
-    include "codes/verify_audit_session.php"; 
+<?php
+$pageTitle = "Auditor Observation and information";
+include "include/navbar.php";
+include "codes/verify_audit_session.php";
 ?>
-    <style>
-        .card {
-            border: 1px solid var(--card-border);
-            border-radius: 5px;
-        }
-        .card-header{
-            background-color: var(--grey-black);
-        }
-        .card-title {
-            color: var(--black-color);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .card-body{
-            background-color: var(--card-body);
-        }
-        .card-footer{
-            background-color: var(--card-footer);
-        }
-        .customer-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            padding-right: 5px;
-            border: 1px solid #424242;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            color: #424242;
-        }
-        .customer-item span {
-            flex-grow: 1;
-        }
-        .customer-item button {
-            margin-left: 10px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 5px; 
-            margin: 0; 
-        }
-        .auditorList{
-        max-height:300px;
-        overflow-y:auto;
+<style>
+    .card {
+        border: 1px solid var(--card-border);
+        border-radius: 5px;
     }
-    </style>
+
+    .card-header {
+        background-color: var(--grey-black);
+    }
+
+    .card-title {
+        color: var(--black-color);
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-body {
+        background-color: var(--card-body);
+    }
+
+    .card-footer {
+        background-color: var(--card-footer);
+    }
+
+    .customer-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        padding-right: 5px;
+        border: 1px solid #424242;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        color: #424242;
+    }
+
+    .customer-item span {
+        flex-grow: 1;
+    }
+
+    .customer-item button {
+        margin-left: 10px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 5px;
+        margin: 0;
+    }
+
+    .auditorList {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>
 
 <div class="container-fluid mt-2 px-0">
     <div class="card shadow-sm mx-auto" style="max-width: 800px;">
@@ -55,33 +64,37 @@
             <h4 class="card-title text-center"><i class="fa-solid fa-users"></i> Auditor's Observation</h4>
         </div>
         <div class="card-body">
-        <div class="form-group">
+            <div class="form-group">
                 <label for="conclusion">1. Audit Conclusion</label>
-                <textarea class="form-control" id="conclusion" name="conclusion" rows="6" placeholder="Enter conclusion" required></textarea>
+                <textarea class="form-control" id="conclusion" name="conclusion" rows="6" placeholder="Enter conclusion"
+                    required></textarea>
             </div>
             <div class="form-group">
                 <label for="conclusion">2. Recommendations</label>
-                <textarea class="form-control" id="recommendations" name="recommendations" rows="6" placeholder="Enter recommendations" required></textarea>
+                <textarea class="form-control" id="recommendations" name="recommendations" rows="6"
+                    placeholder="Enter recommendations" required></textarea>
             </div>
-                <!-- visitor Register Photo -->
-    <div class="form-group mt-4">
-        <div>
-            <label for="visitorRegisterPhotoPreview">3. visitor Register Photo</label>
-        </div>
-        <div>
-            <img id="visitorRegisterPhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png" alt="Image preview">
-        </div>
-        <div>
-            <a class="btn btn-primary mr-2" id="openCaptureModalBtnRegister" data-bs-toggle="modal" data-bs-target="#photoCaptureModal">Take Register Book Photo</a>
-        </div>
-        <input type="hidden" id="visitorRegisterPhotoBase64" name="visitorRegisterPhoto" required>
-    </div>
+            <!-- visitor Register Photo -->
+            <div class="form-group mt-4">
+                <div>
+                    <label for="visitorRegisterPhotoPreview">3. visitor Register Photo</label>
+                </div>
+                <div>
+                    <img id="visitorRegisterPhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png"
+                        alt="Image preview">
+                </div>
+                <div>
+                    <a class="btn btn-primary mr-2" id="openCaptureModalBtnRegister" data-bs-toggle="modal"
+                        data-bs-target="#photoCaptureModal">Take Register Book Photo</a>
+                </div>
+                <input type="hidden" id="visitorRegisterPhotoBase64" name="visitorRegisterPhoto" required>
+            </div>
 
 
             <div class="form-group mt-4">
                 <label for="customer-list">4. Auditor Signature</label>
                 <div id="customer-list">
-                <!-- Dynamic Auditors list will be appended here -->
+                    <!-- Dynamic Auditors list will be appended here -->
                 </div>
 
                 <div class="container-fluid px-0">
@@ -90,7 +103,9 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-info mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#auditorModal" id="addAuditorBtn"><i class="fa-solid fa-plus"></i> Add Auditor</button>
+                    <button type="button" class="btn btn-info mt-2 mb-2" data-bs-toggle="modal"
+                        data-bs-target="#auditorModal" id="addAuditorBtn"><i class="fa-solid fa-plus"></i> Add
+                        Auditor</button>
                 </div>
             </div>
 
@@ -98,40 +113,41 @@
         <!--form submit buttons-->
         <div class="card-footer d-flex justify-content-between">
             <button type="button" class="btn btn-secondary" id="backButton">Previous</button>
-            <button id="submitButton" type="submit" class="btn btn-success" >Submit</button>
+            <button id="submitButton" type="submit" class="btn btn-success">Submit</button>
             <button type="button" class="btn btn-info pt-2 pb-2 pl-3 pr-3" id="nextButton" disabled>Next</button>
 
         </div>
     </div>
-    </div>
+</div>
 <!-- main container div end -->
 </div>
 
 <!-- Popup Modal -->
 <div id="auditorModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Select Auditors</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="searchAuditor" class="form-control" placeholder="Enter auditor name">
-                    <div class="auditorList">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Auditors</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="searchAuditor" class="form-control" placeholder="Enter auditor name">
+                <div class="auditorList">
                     <ul id="auditorList" class="list-group mt-3"></ul>
                     <p id="noAuditorFound" class="text-danger mt-3" style="display: none;">No auditors found</p>
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button id="okBtn" class="btn btn-primary">OK</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="okBtn" class="btn btn-primary">OK</button>
             </div>
         </div>
     </div>
+</div>
 <!--  Modal for Photo Capture -->
-<div class="modal fade" id="photoCaptureModal" tabindex="-1" role="dialog" aria-labelledby="photoCaptureModalLabel" aria-hidden="true">
+<div class="modal fade" id="photoCaptureModal" tabindex="-1" role="dialog" aria-labelledby="photoCaptureModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -147,436 +163,445 @@
                     </div>
                     <video id="video" width="100%" height="auto" autoplay></video>
                     <canvas id="canvas" class="d-none"></canvas>
-                    <img id="capturedPhoto" class="mt-2 img-thumbnail d-none" src="default-image.png" alt="Captured photo">
+                    <img id="capturedPhoto" class="mt-2 img-thumbnail d-none" src="default-image.png"
+                        alt="Captured photo">
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-between">
                 <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="iconButtons btn btn-primary d-none" id="captureBtn" title="Capture"><span class="mdi mdi-camera-outline btnIcon"></span></button>
-                <button type="button" class="iconButtons btn btn-success d-none" id="confirmBtn" title="Confirm"><span class="mdi mdi-check-circle-outline btnIcon"></span></button>
-                <button type="button" class="iconButtons btn btn-danger d-none" id="retakeBtn" title="Retake"><i class="mdi mdi-camera-retake-outline btnIcon"></i></button>
-                <button type="button" class="iconButtons btn btn-warning" id="toggleCameraBtn" title="Flip Camera"><span class="mdi mdi-camera-flip-outline btnIcon"></span></button>
+                <button type="button" class="iconButtons btn btn-primary d-none" id="captureBtn" title="Capture"><span
+                        class="mdi mdi-camera-outline btnIcon"></span></button>
+                <button type="button" class="iconButtons btn btn-success d-none" id="confirmBtn" title="Confirm"><span
+                        class="mdi mdi-check-circle-outline btnIcon"></span></button>
+                <button type="button" class="iconButtons btn btn-danger d-none" id="retakeBtn" title="Retake"><i
+                        class="mdi mdi-camera-retake-outline btnIcon"></i></button>
+                <button type="button" class="iconButtons btn btn-warning" id="toggleCameraBtn" title="Flip Camera"><span
+                        class="mdi mdi-camera-flip-outline btnIcon"></span></button>
             </div>
         </div>
     </div>
 </div>
-    <!--  Modal for auditor Signature -->
-    <div class="modal fade" id="signatureModal" tabindex="1" role="dialog" aria-labelledby="signatureModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="signatureModalLabel">Signature for <span id="auditorName"></span></h6>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span class="mdi mdi-close-box-outline text-danger"></span>
-                    </button>
-                </div>
-                <div class="modal-body pt-0">
-                    <div class="signature-container">
+<!--  Modal for auditor Signature -->
+<div class="modal fade" id="signatureModal" tabindex="1" role="dialog" aria-labelledby="signatureModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="signatureModalLabel">Signature for <span id="auditorName"></span></h6>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="mdi mdi-close-box-outline text-danger"></span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="signature-container">
                     <canvas id="signaturePad" class="signature-pad" width="auto" height="500px"></canvas>
                 </div>
                 <div class="modal-footer pt-0 pb-0 d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="iconButtons btn btn-success" id="confirmButton" title="Confirm"><i class="mdi mdi-check-circle-outline btnIcon"></i></button>
-                    <button type="button" class="iconButtons btn btn-danger" id="clearBtn" title="Clear"><i class="mdi mdi-rotate-right btnIcon"></i></button>
+                    <button type="button" class="iconButtons btn btn-success" id="confirmButton" title="Confirm"><i
+                            class="mdi mdi-check-circle-outline btnIcon"></i></button>
+                    <button type="button" class="iconButtons btn btn-danger" id="clearBtn" title="Clear"><i
+                            class="mdi mdi-rotate-right btnIcon"></i></button>
                 </div>
             </div>
         </div>
     </div>
 
-<style>
-    .signature-container {
-    text-align: center;
-    margin: 5px auto;
-    width: 100%;
-}
-
-.signature-pad {
-    border: 1px solid #000;
-    display: block;
-    margin: 0 auto;
-}
-.mdi-minus-circle-outline{
-    font-size: 16px;
-}
-</style>
-<?php include "include/footer.php"; ?>
-<script src ="js/common_date_time.js"></script>
-<script src ="js/fetchProgress.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    showOverlay("--Fetching Data--");
-
-    const addAuditorBtn = document.getElementById('addAuditorBtn');
-    const auditorModal = $('#auditorModal');
-    const signatureModal = $('#signatureModal');
-    const searchAuditor = document.getElementById('searchAuditor');
-    const auditorList = document.getElementById('auditorList');
-    const noAuditorFound = document.getElementById('noAuditorFound');
-    const okBtn = document.getElementById('okBtn');
-    const selectedAuditors = document.getElementById('selectedAuditors');
-    const clearBtn = document.getElementById('clearBtn');
-    const signatureConfirmBtn = document.getElementById('confirmButton');
-    const saveBtn = document.getElementById('saveButton');
-    const auditorNameDisplay = document.getElementById('auditorName');
-    const submitBtn = document.getElementById('submitButton');
-    let loggedInUserEmpId = '<?php echo($_SESSION['emp_id']); ?>';
-
-    const openCaptureModalBtnRegister = document.getElementById('openCaptureModalBtnRegister');
-    const captureBtn = document.getElementById('captureBtn');
-    const retakeBtn = document.getElementById('retakeBtn');
-    const confirmBtn = document.getElementById('confirmBtn');
-    const video = document.getElementById('video');
-
-    const canvas = document.getElementById('canvas');
-    const capturedPhoto = document.getElementById('capturedPhoto');
-    const visitorRegisterPhotoPreview = document.getElementById('visitorRegisterPhotoPreview');
-
-    const visitorRegisterPhotoBase64 = document.getElementById('visitorRegisterPhotoBase64');
-
-    const photoCaptureModalLabel = document.getElementById('photoCaptureModalLabel');
-    let currentFacingMode = 'user';
-    const toggleCameraBtn = document.getElementById('toggleCameraBtn');
-    let stream;
-    let currentPhotoType;
-
-function startCamera() {
-        toggleCameraBtn.classList.remove('d-none');
-        const constraints = { video: { facingMode: currentFacingMode } };
-        navigator.mediaDevices.getUserMedia(constraints)
-            .then(function(mediaStream) {
-                stream = mediaStream;
-                video.srcObject = stream;
-                video.play().then(() => {
-                    console.log('Camera stream started successfully.');
-                }).catch(function(err) {
-                    console.error('Error playing video: ', err);
-                });
-            }).catch(function(err) {
-                console.error('Error accessing media devices.', err);
-                handlePermissionDenied();
-            });
-    }
-
-    function handlePermissionDenied() {
-        photoCaptureModalLabel.textContent = "Can't Access Camera & Location";
-        captureBtn.disabled = true;
-        retakeBtn.disabled = true;
-        confirmBtn.disabled = true;
-        toggleCameraBtn.disabled = true;
-        const container = document.getElementById('permission-message');
-        const video = document.getElementById('video');
-        video.style.display = 'none';
-        container.innerHTML = '';
-        const gif = document.createElement('img');
-        gif.src = 'assets/images/cameraAccess.gif';
-        gif.alt = 'Permission Denied';
-        container.appendChild(gif);
-    }
-
-    function stopCamera() {
-        if (stream) {
-            const tracks = stream.getTracks();
-            tracks.forEach(function(track) {
-                track.stop();
-            });
-            stream = null;
+    <style>
+        .signature-container {
+            text-align: center;
+            margin: 5px auto;
+            width: 100%;
         }
-    }
 
-    openCaptureModalBtnRegister.addEventListener('click', function() {
-        photoCaptureModalLabel.textContent = "Visitor Register Photo";
-        currentPhotoType = 'register';
-        currentFacingMode = 'environment';
-        $('#photoCaptureModal').modal('show');
-        retakeBtn.classList.add('d-none');
-        confirmBtn.classList.add('d-none');
-        captureBtn.classList.remove('d-none');
-        if (!stream) startCamera();
-        video.style.display = 'block';
-        capturedPhoto.classList.add('d-none');
-        canvas.style.display = 'none';
-    });
-
-    $('#photoCaptureModal').on('hidden.bs.modal', function() {
-        stopCamera();
-    });
-
-    toggleCameraBtn.addEventListener('click', function() {
-        currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
-        if (stream) stream.getTracks().forEach(track => track.stop());
-        startCamera();
-    });
-
-    captureBtn.addEventListener('click', function() {
-        toggleCameraBtn.classList.add('d-none');
-        captureBtn.classList.add('d-none');
-        retakeBtn.classList.remove('d-none');
-        confirmBtn.classList.remove('d-none');
-        confirmBtn.disabled = true;
-
-        const context = canvas.getContext('2d');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-        const now = new Date(); // Get the current local date and time
-
-        const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-        const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
-
-        const formattedDate = now.toLocaleDateString('en-IN', dateOptions);
-        const formattedTime = now.toLocaleTimeString('en-IN', timeOptions);
-
-        drawOnCanvas(formattedDate, formattedTime);
-    });
-
-    function drawOnCanvas(dateString, timeString) {
-        const context = canvas.getContext('2d');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-        navigator.geolocation.getCurrentPosition(position => {
-            const { latitude, longitude } = position.coords;
-            const rectHeight = 50;
-            context.globalAlpha = 0.5;
-            context.fillStyle = 'black';
-            context.fillRect(0, canvas.height - rectHeight, canvas.width, rectHeight);
-            context.globalAlpha = 1.0;
-            context.fillStyle = 'white';
-            context.font = '16px Arial';
-            context.fillText(`Date: ${dateString} Time: ${timeString}`, 10, canvas.height - rectHeight + 20);
-            context.fillText(`Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}`, 10, canvas.height - rectHeight + 40);
-            displayCapturedPhoto();
-        });
-    }
-
-    function displayCapturedPhoto() {
-        const photoDataUrl = canvas.toDataURL('image/png');
-        video.style.display = 'none';
-        capturedPhoto.src = photoDataUrl;
-        capturedPhoto.classList.remove('d-none');
-        canvas.classList.add('d-none');
-        confirmBtn.disabled = false;
-        
-    }
-
-    retakeBtn.addEventListener('click', function() {
-        if (!stream) startCamera();
-        video.style.display = 'block';
-        capturedPhoto.classList.add('d-none');
-        captureBtn.classList.remove('d-none');
-        retakeBtn.classList.add('d-none');
-        confirmBtn.classList.add('d-none');
-        toggleCameraBtn.classList.remove('d-none');
-    });
-
-    confirmBtn.addEventListener('click', function() {
-        const photoDataUrl = canvas.toDataURL('image/png');
-        const photoDataBase64 = photoDataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
-        if (currentPhotoType === 'register') {
-            visitorRegisterPhotoBase64.value = photoDataBase64;
-            visitorRegisterPhotoPreview.src = photoDataUrl;
-            visitorRegisterPhotoPreview.classList.remove('d-none');
+        .signature-pad {
+            border: 1px solid #000;
+            display: block;
+            margin: 0 auto;
         }
-        $('#photoCaptureModal').modal('hide');
-    });
 
-    // Camera part end
-
-    // const loggedInUser = { name: 'John Doe Default', empId: 'A001' };
-    let selectedAuditorEmpIds = [loggedInUserEmpId];
-    let currentSignatureIndex = null;
-    const signatures = {};
-    let auditorsToDelete = [];
-
-    async function fetchAuditorData() {
-        try {
-            const response = await fetch('codes/fetchData/get_auditors_list.php');
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching auditor data:', error);
-            return [];
+        .mdi-minus-circle-outline {
+            font-size: 16px;
         }
-    }
-    
+    </style>
+    <?php include "include/footer.php"; ?>
+    <script src="js/common_date_time.js"></script>
+    <script src="js/fetchProgress.js"></script>
 
-    let bcaId = "<?php echo($bcaId); ?>";
-        let bcaName = "<?php echo($bcaName); ?>";
-        let auditNumber = "<?php echo($auditNumber); ?>";
-        let formProgress = 9;
-        const nextBtn = document.getElementById('nextButton');
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            showOverlay("--Fetching Data--");
 
+            const addAuditorBtn = document.getElementById('addAuditorBtn');
+            const auditorModal = $('#auditorModal');
+            const signatureModal = $('#signatureModal');
+            const searchAuditor = document.getElementById('searchAuditor');
+            const auditorList = document.getElementById('auditorList');
+            const noAuditorFound = document.getElementById('noAuditorFound');
+            const okBtn = document.getElementById('okBtn');
+            const selectedAuditors = document.getElementById('selectedAuditors');
+            const clearBtn = document.getElementById('clearBtn');
+            const signatureConfirmBtn = document.getElementById('confirmButton');
+            const saveBtn = document.getElementById('saveButton');
+            const auditorNameDisplay = document.getElementById('auditorName');
+            const submitBtn = document.getElementById('submitButton');
+            let loggedInUserEmpId = '<?php echo ($_SESSION['emp_id']); ?>';
 
-        const getProgress = async () => {
-    try {
-        let progress = await fetchProgress(bcaId, auditNumber);
-        // console.log('Progress:', progress);
-        // Use the progress value here it is ended below
+            const openCaptureModalBtnRegister = document.getElementById('openCaptureModalBtnRegister');
+            const captureBtn = document.getElementById('captureBtn');
+            const retakeBtn = document.getElementById('retakeBtn');
+            const confirmBtn = document.getElementById('confirmBtn');
+            const video = document.getElementById('video');
 
-    // Form Part Start
-        if (progress >= formProgress) {
-            console.log('fetching inserted data');
-            $('#nextButton').prop('disabled', false);
-        //fetch already saved form data start
-        await fetchSavedData();  
-        renderSelectedAuditors();
-        //fetch already saved form data end
+            const canvas = document.getElementById('canvas');
+            const capturedPhoto = document.getElementById('capturedPhoto');
+            const visitorRegisterPhotoPreview = document.getElementById('visitorRegisterPhotoPreview');
 
-        } else {
-            console.log('fetching pre feeded data');
-            $('#nextButton').prop('disabled', true);
-            $('#saveButton').css('display', 'inline-block');
-        }
-        // progress fetch ending part
-} catch (error) {
-        console.error('Error:', error);
-    }
-    hideOverlay();
+            const visitorRegisterPhotoBase64 = document.getElementById('visitorRegisterPhotoBase64');
 
-}  // progress fetch ending part
-getProgress();
+            const photoCaptureModalLabel = document.getElementById('photoCaptureModalLabel');
+            let currentFacingMode = 'user';
+            const toggleCameraBtn = document.getElementById('toggleCameraBtn');
+            let stream;
+            let currentPhotoType;
 
-
-    let originalData = {};
-    async function fetchSavedData() {
-        try {
-            const response = await fetch('codes/fetchData/fetch_auditors_observations_saved_data.php');
-            const data = await response.json();
-            // console.log(data);
-            originalData = { ...data };
-            // console.log(originalData);
-            // updateSubmitButtonState();
-1
-            if (data.inputFieldsData.length > 0) {
-                document.getElementById('conclusion').value = data.inputFieldsData[0].conclusion;
-                document.getElementById('recommendations').value = data.inputFieldsData[0].recommendations;
-                document.getElementById('visitorRegisterPhotoPreview').src = 'codes/' + data.inputFieldsData[0].register_photo_url;
+            function startCamera() {
+                toggleCameraBtn.classList.remove('d-none');
+                const constraints = { video: { facingMode: currentFacingMode } };
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then(function (mediaStream) {
+                        stream = mediaStream;
+                        video.srcObject = stream;
+                        video.play().then(() => {
+                            console.log('Camera stream started successfully.');
+                        }).catch(function (err) {
+                            console.error('Error playing video: ', err);
+                        });
+                    }).catch(function (err) {
+                        console.error('Error accessing media devices.', err);
+                        handlePermissionDenied();
+                    });
             }
 
-            if (data.selectedAuditorsAndSignature.length > 0) {
-                selectedAuditorEmpIds = data.selectedAuditorsAndSignature.map(auditor => auditor.empId);
-                data.selectedAuditorsAndSignature.forEach(signature => {
-                    signatures[signature.empId] = {
-                        dataUrl: signature.signature_data_url,
-                        date: signature.date
-                    };
-                });
-
-            } else {
-                // Add the logged-in user if no auditors are returned
-                selectedAuditorEmpIds = [loggedInUserEmpId];
+            function handlePermissionDenied() {
+                photoCaptureModalLabel.textContent = "Can't Access Camera & Location";
+                captureBtn.disabled = true;
+                retakeBtn.disabled = true;
+                confirmBtn.disabled = true;
+                toggleCameraBtn.disabled = true;
+                const container = document.getElementById('permission-message');
+                const video = document.getElementById('video');
+                video.style.display = 'none';
+                container.innerHTML = '';
+                const gif = document.createElement('img');
+                gif.src = 'assets/images/cameraAccess.gif';
+                gif.alt = 'Permission Denied';
+                container.appendChild(gif);
             }
-        } catch (error) {
-            console.error('Error fetching saved data:', error);
-        }
-        hideOverlay();
-        // console.log("hide overlay after loading");
-    }
 
-    // Initial render data
-    // await fetchSavedData();  
-    renderSelectedAuditors();
+            function stopCamera() {
+                if (stream) {
+                    const tracks = stream.getTracks();
+                    tracks.forEach(function (track) {
+                        track.stop();
+                    });
+                    stream = null;
+                }
+            }
 
-function validateFormData(currentData) {
+            openCaptureModalBtnRegister.addEventListener('click', function () {
+                photoCaptureModalLabel.textContent = "Visitor Register Photo";
+                currentPhotoType = 'register';
+                currentFacingMode = 'environment';
+                $('#photoCaptureModal').modal('show');
+                retakeBtn.classList.add('d-none');
+                confirmBtn.classList.add('d-none');
+                captureBtn.classList.remove('d-none');
+                if (!stream) startCamera();
+                video.style.display = 'block';
+                capturedPhoto.classList.add('d-none');
+                canvas.style.display = 'none';
+            });
 
-    if (!currentData.conclusion.trim()) {
-        alert('Conclusion cannot be empty.');
-        return 'missingInputData';
-    }
-    if (!currentData.recommendations.trim()) {
-        alert('Recommendations cannot be empty.');
-        return 'missingInputData';
-    }
-    if (!currentData.signatures.length) {
-        alert('Please do sign before submit the form.');
-        return 'missingInputData';
-    }
-    return 'allGood';
-}
+            $('#photoCaptureModal').on('hidden.bs.modal', function () {
+                stopCamera();
+            });
 
-// compare the original data with the current data
-function hasChanges() {
-    // Construct the current data object
-    const currentData = {
-        selectedAuditors: selectedAuditorEmpIds,
-        signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
-            empId, dataUrl, date
-        })),
-        conclusion: document.getElementById('conclusion').value,
-        recommendations: document.getElementById('recommendations').value,
-        register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
-    };
+            toggleCameraBtn.addEventListener('click', function () {
+                currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+                if (stream) stream.getTracks().forEach(track => track.stop());
+                startCamera();
+            });
 
-    // Log currentData for inspection
-    console.log('currentData:', currentData);
-// // Validate required fields
-// const validationStatus = validateFormData(currentData);
-//     if (validationStatus === 'missingInputData') {
-//         return false;
-//     }
-    // Transform the original data to match the structure of currentData
-    const transformedOriginalData = {
-        selectedAuditors: originalData.selectedAuditorsAndSignature.map(item => item.empId),
-        signatures: originalData.selectedAuditorsAndSignature.map(item => ({
-            empId: item.empId,
-            dataUrl: item.signature_data_url,
-            date: item.date
-        })),
-        conclusion: originalData.inputFieldsData[0].conclusion,
-        recommendations: originalData.inputFieldsData[0].recommendations,
-        register_photo_url: ""
-        
-    };
+            captureBtn.addEventListener('click', function () {
+                toggleCameraBtn.classList.add('d-none');
+                captureBtn.classList.add('d-none');
+                retakeBtn.classList.remove('d-none');
+                confirmBtn.classList.remove('d-none');
+                confirmBtn.disabled = true;
 
-    // Log transformedOriginalData for inspection
-    console.log('transformedOriginalData:', transformedOriginalData);
+                const context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
-    // Compare the stringified versions of the data objects
-    const hasChanged = JSON.stringify(currentData) !== JSON.stringify(transformedOriginalData);
-    console.log('Has data changed?', hasChanged);
+                const now = new Date(); // Get the current local date and time
 
-    return hasChanged;
-}
+                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+                const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+
+                const formattedDate = now.toLocaleDateString('en-IN', dateOptions);
+                const formattedTime = now.toLocaleTimeString('en-IN', timeOptions);
+
+                drawOnCanvas(formattedDate, formattedTime);
+            });
+
+            function drawOnCanvas(dateString, timeString) {
+                const context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                navigator.geolocation.getCurrentPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    const rectHeight = 50;
+                    context.globalAlpha = 0.5;
+                    context.fillStyle = 'black';
+                    context.fillRect(0, canvas.height - rectHeight, canvas.width, rectHeight);
+                    context.globalAlpha = 1.0;
+                    context.fillStyle = 'white';
+                    context.font = '16px Arial';
+                    context.fillText(`Date: ${dateString} Time: ${timeString}`, 10, canvas.height - rectHeight + 20);
+                    context.fillText(`Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}`, 10, canvas.height - rectHeight + 40);
+                    displayCapturedPhoto();
+                });
+            }
+
+            function displayCapturedPhoto() {
+                const photoDataUrl = canvas.toDataURL('image/png');
+                video.style.display = 'none';
+                capturedPhoto.src = photoDataUrl;
+                capturedPhoto.classList.remove('d-none');
+                canvas.classList.add('d-none');
+                confirmBtn.disabled = false;
+
+            }
+
+            retakeBtn.addEventListener('click', function () {
+                if (!stream) startCamera();
+                video.style.display = 'block';
+                capturedPhoto.classList.add('d-none');
+                captureBtn.classList.remove('d-none');
+                retakeBtn.classList.add('d-none');
+                confirmBtn.classList.add('d-none');
+                toggleCameraBtn.classList.remove('d-none');
+            });
+
+            confirmBtn.addEventListener('click', function () {
+                const photoDataUrl = canvas.toDataURL('image/png');
+                const photoDataBase64 = photoDataUrl.replace(/^data:image\/(png|jpg);base64,/, "");
+                if (currentPhotoType === 'register') {
+                    visitorRegisterPhotoBase64.value = photoDataBase64;
+                    visitorRegisterPhotoPreview.src = photoDataUrl;
+                    visitorRegisterPhotoPreview.classList.remove('d-none');
+                }
+                $('#photoCaptureModal').modal('hide');
+            });
+
+            // Camera part end
+
+            // const loggedInUser = { name: 'John Doe Default', empId: 'A001' };
+            let selectedAuditorEmpIds = [loggedInUserEmpId];
+            let currentSignatureIndex = null;
+            const signatures = {};
+            let auditorsToDelete = [];
+
+            async function fetchAuditorData() {
+                try {
+                    const response = await fetch('codes/fetchData/get_auditors_list.php');
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error fetching auditor data:', error);
+                    return [];
+                }
+            }
 
 
-// Call this function after rendering selected auditors
-function updateSubmitButtonState() {
-    if (hasChanges()) {
-        submitBtn.style.display = 'block';
-        console.log("changes detected");
-        // Hide next button if present
-    } else {
-        submitBtn.style.display = 'none';
-        console.log("No changes");
+            let bcaId = "<?php echo ($bcaId); ?>";
+            let bcaName = "<?php echo ($bcaName); ?>";
+            let auditNumber = "<?php echo ($auditNumber); ?>";
+            let formProgress = 9;
+            const nextBtn = document.getElementById('nextButton');
 
-        // Show next button if present
-    }
-}
 
-// open auditor list popup
-    addAuditorBtn.addEventListener('click', () => {
-        auditorModal.modal('show');
-    });
+            const getProgress = async () => {
+                try {
+                    let progress = await fetchProgress(bcaId, auditNumber);
+                    // console.log('Progress:', progress);
+                    // Use the progress value here it is ended below
 
-    searchAuditor.addEventListener('input', async () => {
-        const query = searchAuditor.value.toLowerCase();
-        auditorList.innerHTML = '';
+                    // Form Part Start
+                    if (progress >= formProgress) {
+                        console.log('fetching inserted data');
+                        $('#nextButton').prop('disabled', false);
+                        //fetch already saved form data start
+                        await fetchSavedData();
+                        renderSelectedAuditors();
+                        //fetch already saved form data end
 
-        try {
-            const auditors = await fetchAuditorData();
-            const filteredAuditors = auditors.filter(auditor =>
-                auditor.name.toLowerCase().includes(query) ||
-                auditor.empId.toLowerCase().includes(query)
-            );
+                    } else {
+                        console.log('fetching pre feeded data');
+                        $('#nextButton').prop('disabled', true);
+                        $('#saveButton').css('display', 'inline-block');
+                    }
+                    // progress fetch ending part
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+                hideOverlay();
 
-            if (filteredAuditors.length > 0) {
-                noAuditorFound.style.display = 'none';
-                const allAuditors = filteredAuditors.length > 0 ? filteredAuditors : [{ name: searchAuditor.value, email: '', empId: '', mobile: '' }];
+            }  // progress fetch ending part
+            getProgress();
 
-                allAuditors.forEach(auditor => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = `
+
+            let originalData = {};
+            async function fetchSavedData() {
+                try {
+                    const response = await fetch('codes/fetchData/fetch_auditors_observations_saved_data.php');
+                    const data = await response.json();
+                    // console.log(data);
+                    originalData = { ...data };
+                    // console.log(originalData);
+                    // updateSubmitButtonState();
+                    1
+                    if (data.inputFieldsData.length > 0) {
+                        document.getElementById('conclusion').value = data.inputFieldsData[0].conclusion;
+                        document.getElementById('recommendations').value = data.inputFieldsData[0].recommendations;
+                        document.getElementById('visitorRegisterPhotoPreview').src = 'codes/' + data.inputFieldsData[0].register_photo_url;
+                    }
+
+                    if (data.selectedAuditorsAndSignature.length > 0) {
+                        selectedAuditorEmpIds = data.selectedAuditorsAndSignature.map(auditor => auditor.empId);
+                        data.selectedAuditorsAndSignature.forEach(signature => {
+                            signatures[signature.empId] = {
+                                dataUrl: signature.signature_data_url,
+                                date: signature.date
+                            };
+                        });
+
+                    } else {
+                        // Add the logged-in user if no auditors are returned
+                        selectedAuditorEmpIds = [loggedInUserEmpId];
+                    }
+                } catch (error) {
+                    console.error('Error fetching saved data:', error);
+                }
+                hideOverlay();
+                // console.log("hide overlay after loading");
+            }
+
+            // Initial render data
+            // await fetchSavedData();  
+            renderSelectedAuditors();
+
+            function validateFormData(currentData) {
+
+                if (!currentData.conclusion.trim()) {
+                    alert('Conclusion cannot be empty.');
+                    return 'missingInputData';
+                }
+                if (!currentData.recommendations.trim()) {
+                    alert('Recommendations cannot be empty.');
+                    return 'missingInputData';
+                }
+                if (!currentData.signatures.length) {
+                    alert('Please do sign before submit the form.');
+                    return 'missingInputData';
+                }
+                return 'allGood';
+            }
+
+            // compare the original data with the current data
+            function hasChanges() {
+                // Construct the current data object
+                const currentData = {
+                    selectedAuditors: selectedAuditorEmpIds,
+                    signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
+                        empId, dataUrl, date
+                    })),
+                    conclusion: document.getElementById('conclusion').value,
+                    recommendations: document.getElementById('recommendations').value,
+                    register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
+                };
+
+                // Log currentData for inspection
+                console.log('currentData:', currentData);
+                // // Validate required fields
+                // const validationStatus = validateFormData(currentData);
+                //     if (validationStatus === 'missingInputData') {
+                //         return false;
+                //     }
+                // Transform the original data to match the structure of currentData
+                const transformedOriginalData = {
+                    selectedAuditors: originalData.selectedAuditorsAndSignature.map(item => item.empId),
+                    signatures: originalData.selectedAuditorsAndSignature.map(item => ({
+                        empId: item.empId,
+                        dataUrl: item.signature_data_url,
+                        date: item.date
+                    })),
+                    conclusion: originalData.inputFieldsData[0].conclusion,
+                    recommendations: originalData.inputFieldsData[0].recommendations,
+                    register_photo_url: ""
+
+                };
+
+                // Log transformedOriginalData for inspection
+                console.log('transformedOriginalData:', transformedOriginalData);
+
+                // Compare the stringified versions of the data objects
+                const hasChanged = JSON.stringify(currentData) !== JSON.stringify(transformedOriginalData);
+                console.log('Has data changed?', hasChanged);
+
+                return hasChanged;
+            }
+
+
+            // Call this function after rendering selected auditors
+            function updateSubmitButtonState() {
+                if (hasChanges()) {
+                    submitBtn.style.display = 'block';
+                    console.log("changes detected");
+                    // Hide next button if present
+                } else {
+                    submitBtn.style.display = 'none';
+                    console.log("No changes");
+
+                    // Show next button if present
+                }
+            }
+
+            // open auditor list popup
+            addAuditorBtn.addEventListener('click', () => {
+                auditorModal.modal('show');
+            });
+
+            searchAuditor.addEventListener('input', async () => {
+                const query = searchAuditor.value.toLowerCase();
+                auditorList.innerHTML = '';
+
+                try {
+                    const auditors = await fetchAuditorData();
+                    const filteredAuditors = auditors.filter(auditor =>
+                        auditor.name.toLowerCase().includes(query) ||
+                        auditor.empId.toLowerCase().includes(query)
+                    );
+
+                    if (filteredAuditors.length > 0) {
+                        noAuditorFound.style.display = 'none';
+                        const allAuditors = filteredAuditors.length > 0 ? filteredAuditors : [{ name: searchAuditor.value, email: '', empId: '', mobile: '' }];
+
+                        allAuditors.forEach(auditor => {
+                            const listItem = document.createElement('li');
+                            listItem.innerHTML = `
                         <div class="form-check ml-3" style="max-height: 200px; overflow-y: auto;">
                             <input class="form-check-input" type="checkbox" value="${auditor.empId}" id="auditor${auditor.empId}">
                             <label class="form-check-label" for="auditor${auditor.empId}">
@@ -584,44 +609,44 @@ function updateSubmitButtonState() {
                             </label>
                         </div>
                     `;
-                    auditorList.appendChild(listItem);
+                            auditorList.appendChild(listItem);
 
-                    const checkbox = listItem.querySelector('input[type="checkbox"]');
-                    checkbox.checked = selectedAuditorEmpIds.includes(auditor.empId);
+                            const checkbox = listItem.querySelector('input[type="checkbox"]');
+                            checkbox.checked = selectedAuditorEmpIds.includes(auditor.empId);
 
-                    checkbox.addEventListener('change', () => {
-                        if (checkbox.checked) {
-                            selectedAuditorEmpIds.push(auditor.empId);
-                            auditorsToDelete = auditorsToDelete.filter(id => id !== auditor.empId); // Remove from delete list
-                        } else {
-                            selectedAuditorEmpIds = selectedAuditorEmpIds.filter(id => id !== auditor.empId);
-                            auditorsToDelete.push(auditor.empId);
-                        }
-                    });
-                });
-            } else {
-                noAuditorFound.style.display = 'block';
-            }
-        } catch (error) {
-            console.error('Error fetching auditor data:', error);
-        }
-    });
+                            checkbox.addEventListener('change', () => {
+                                if (checkbox.checked) {
+                                    selectedAuditorEmpIds.push(auditor.empId);
+                                    auditorsToDelete = auditorsToDelete.filter(id => id !== auditor.empId); // Remove from delete list
+                                } else {
+                                    selectedAuditorEmpIds = selectedAuditorEmpIds.filter(id => id !== auditor.empId);
+                                    auditorsToDelete.push(auditor.empId);
+                                }
+                            });
+                        });
+                    } else {
+                        noAuditorFound.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error fetching auditor data:', error);
+                }
+            });
 
-    okBtn.addEventListener('click', () => {
-        renderSelectedAuditors();
-        auditorModal.modal('hide');
-        // updateSubmitButtonState();
-    });
+            okBtn.addEventListener('click', () => {
+                renderSelectedAuditors();
+                auditorModal.modal('hide');
+                // updateSubmitButtonState();
+            });
 
-    async function renderSelectedAuditors() {
-        selectedAuditors.innerHTML = '';
-        const auditors = await fetchAuditorData();
+            async function renderSelectedAuditors() {
+                selectedAuditors.innerHTML = '';
+                const auditors = await fetchAuditorData();
 
-        selectedAuditorEmpIds.forEach((empId, index) => {
-            const auditor = auditors.find(auditor => auditor.empId === empId) || { name: '', empId: empId };
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item mt-2';
-            listItem.innerHTML = `
+                selectedAuditorEmpIds.forEach((empId, index) => {
+                    const auditor = auditors.find(auditor => auditor.empId === empId) || { name: '', empId: empId };
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item mt-2';
+                    listItem.innerHTML = `
                 <div class="row">
                     <div class="col-12">
                         ${toRoman(index + 1)}. ${auditor.name} - (${auditor.empId})
@@ -634,392 +659,392 @@ function updateSubmitButtonState() {
                     </div>
                 </div>
             `;
-            selectedAuditors.appendChild(listItem);
+                    selectedAuditors.appendChild(listItem);
 
-            listItem.querySelector('.removeBtn').addEventListener('click', () => {
-                selectedAuditorEmpIds = selectedAuditorEmpIds.filter(id => id !== auditor.empId);
-    if (!selectedAuditorEmpIds.includes(auditor.empId)) {
-        auditorsToDelete.push(auditor.empId);
-    }
-    renderSelectedAuditors();
-    updateAuditorList();
-});
+                    listItem.querySelector('.removeBtn').addEventListener('click', () => {
+                        selectedAuditorEmpIds = selectedAuditorEmpIds.filter(id => id !== auditor.empId);
+                        if (!selectedAuditorEmpIds.includes(auditor.empId)) {
+                            auditorsToDelete.push(auditor.empId);
+                        }
+                        renderSelectedAuditors();
+                        updateAuditorList();
+                    });
 
-            listItem.querySelector('.signBtn').addEventListener('click', () => {
-                currentSignatureIndex = index;
-                auditorNameDisplay.textContent = auditor.name;
-                loadSignature(auditor.empId);
-                signatureModal.modal('show');
+                    listItem.querySelector('.signBtn').addEventListener('click', () => {
+                        currentSignatureIndex = index;
+                        auditorNameDisplay.textContent = auditor.name;
+                        loadSignature(auditor.empId);
+                        signatureModal.modal('show');
+                    });
+
+                    if (signatures[auditor.empId]) {
+                        const signatureDiv = listItem.querySelector('.signature');
+                        const signatureDateDiv = listItem.querySelector('.signature-date');
+                        signatureDiv.innerHTML = `<img src="${signatures[auditor.empId].dataUrl}" alt="Signature" style="width: 200px; height: 100px;">`;
+                        signatureDateDiv.textContent = `Signed on: ${signatures[auditor.empId].date}`;
+                    }
+                });
+            }
+
+            function toRoman(num) {
+                const romanNumeralMap = [
+                    [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+                    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+                    [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+                ];
+                let result = '';
+                for (const [value, numeral] of romanNumeralMap) {
+                    while (num >= value) {
+                        result += numeral;
+                        num -= value;
+                    }
+                }
+                return result.toLowerCase();
+            }
+
+            const signatureCanvas = document.getElementById('signaturePad');
+            const signaturePad = new SignaturePad(signatureCanvas);
+
+            clearBtn.addEventListener('click', () => {
+                signaturePad.clear();
             });
 
-            if (signatures[auditor.empId]) {
-                const signatureDiv = listItem.querySelector('.signature');
-                const signatureDateDiv = listItem.querySelector('.signature-date');
-                signatureDiv.innerHTML = `<img src="${signatures[auditor.empId].dataUrl}" alt="Signature" style="width: 200px; height: 100px;">`;
-                signatureDateDiv.textContent = `Signed on: ${signatures[auditor.empId].date}`;
+            signatureConfirmBtn.addEventListener('click', () => {
+                if (!signaturePad.isEmpty()) {
+                    // updateSubmitButtonState();
+                    const signatureDataURL = signaturePad.toDataURL('image/png');
+
+                    const rotationCanvas = document.createElement('canvas');
+                    const ctx = rotationCanvas.getContext('2d');
+                    const img = new Image();
+                    img.src = signatureDataURL;
+
+                    img.onload = () => {
+                        rotationCanvas.width = img.height;
+                        rotationCanvas.height = img.width;
+
+                        ctx.save();
+                        ctx.translate(rotationCanvas.width / 2, rotationCanvas.height / 2);
+                        ctx.rotate(Math.PI / 2);
+                        ctx.drawImage(img, -img.width / 2, -img.height / 2);
+                        ctx.restore();
+
+                        const rotatedDataURL = rotationCanvas.toDataURL('image/png');
+                        const rotatedDataBase64 = rotatedDataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+                        const signatureDataUrl = rotatedDataURL;
+
+                        // const currentDate = new Date().toLocaleString();
+                        //get common date time format fom common js script start
+                        const getCurrentDate = async () => {
+                            let currentDate;
+                            try {
+                                currentDate = await getCommonDateTime();
+                                // console.log('Formatted time:', currentDate);
+                                signatures[selectedAuditorEmpIds[currentSignatureIndex]] = { dataUrl: signatureDataUrl, date: currentDate };
+                                renderSelectedAuditors();
+                                signatureModal.modal('hide');
+                            } catch (error) {
+                                console.error('Error:', error);
+                            }
+                            return currentDate;
+                        };
+                        getCurrentDate();
+                        //get common date time format fom common js script End
+                    };
+                } else {
+                    alert("Please make a signature first.");
+                }
+            });
+
+            // Load saved signatures from db
+            function loadSignature(empId) {
+                signaturePad.clear();
+                if (signatures[empId]) {
+                    const img = new Image();
+                    img.src = signatures[empId].dataUrl;
+                    img.onload = () => {
+                        const tempCanvas = document.createElement('canvas');
+                        const tempCtx = tempCanvas.getContext('2d');
+
+                        // Set temporary canvas dimensions
+                        tempCanvas.width = img.height;
+                        tempCanvas.height = img.width;
+
+                        // Draw the image with a 90-degree counterclockwise rotation
+                        tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
+                        tempCtx.rotate(-Math.PI / 2);
+                        tempCtx.drawImage(img, -img.width / 2, -img.height / 2);
+                        tempCtx.rotate(Math.PI / 2);  // Rotate back for further use
+
+                        // Draw the rotated image onto the signature pad canvas
+                        const rotatedDataUrl = tempCanvas.toDataURL('image/png');
+                        const ctx = signaturePad._ctx;
+                        ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+                        const rotatedImg = new Image();
+                        rotatedImg.src = rotatedDataUrl;
+                        rotatedImg.onload = () => {
+                            ctx.drawImage(rotatedImg, 0, 0, signatureCanvas.width, signatureCanvas.height);
+                        };
+                    };
+                }
             }
-        });
-    }
 
-    function toRoman(num) {
-        const romanNumeralMap = [
-            [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
-            [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
-            [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
-        ];
-        let result = '';
-        for (const [value, numeral] of romanNumeralMap) {
-            while (num >= value) {
-                result += numeral;
-                num -= value;
+
+            function updateAuditorList() {
+                const checkboxes = auditorList.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectedAuditorEmpIds.includes(checkbox.value);
+                });
+
             }
-        }
-        return result.toLowerCase();
-    }
 
-    const signatureCanvas = document.getElementById('signaturePad');
-    const signaturePad = new SignaturePad(signatureCanvas);
 
-    clearBtn.addEventListener('click', () => {
-        signaturePad.clear();
-    });
+            //     //  submit the form data
+            //     submitBtn.addEventListener('click', async () => {
+            //         const currentData = {
+            //         selectedAuditors: selectedAuditorEmpIds,
+            //         signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
+            //             empId, dataUrl, date
+            //         })),
+            //         conclusion: document.getElementById('conclusion').value,
+            //         recommendations: document.getElementById('recommendations').value
+            //     };
 
-    signatureConfirmBtn.addEventListener('click', () => {
-        if (!signaturePad.isEmpty()) {
-            // updateSubmitButtonState();
-            const signatureDataURL = signaturePad.toDataURL('image/png');
+            //         // Validate required fields
+            //         const validationStatus = validateFormData(currentData);
+            //             if (validationStatus === 'missingInputData') {
+            //         return;
+            //         }
 
-            const rotationCanvas = document.createElement('canvas');
-            const ctx = rotationCanvas.getContext('2d');
-            const img = new Image();
-            img.src = signatureDataURL;
+            //         // Check if there's at least one auditor selected
+            //         if (selectedAuditorEmpIds.length === 0) {
+            //             alert('Please select at least one auditor before submission.');
+            //             return;
+            //         }
 
-            img.onload = () => {
-                rotationCanvas.width = img.height;
-                rotationCanvas.height = img.width;
+            //             // Check if at least one auditor has a signature
+            //     const auditorsWithoutSignature = selectedAuditorEmpIds.filter(empId => !signatures[empId]);
 
-                ctx.save();
-                ctx.translate(rotationCanvas.width / 2, rotationCanvas.height / 2);
-                ctx.rotate(Math.PI / 2);
-                ctx.drawImage(img, -img.width / 2, -img.height / 2);
-                ctx.restore();
+            // if (auditorsWithoutSignature.length > 0) {
+            //     // Fetch auditor data to get their names
+            //     const auditors = await fetchAuditorData();
+            //     const auditorNamesAndIds = auditorsWithoutSignature.map(empId => {
+            //         const auditor = auditors.find(auditor => auditor.empId === empId);
+            //         return auditor ? `${auditor.name} (${auditor.empId})` : `Unknown Auditor (${empId})`;
+            //     });
 
-                const rotatedDataURL = rotationCanvas.toDataURL('image/png');
-                const rotatedDataBase64 = rotatedDataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+            //     alert(`The following auditors do not have a signature:\n${auditorNamesAndIds.join('\n')}`);
+            //     return;
+            // }
 
-                const signatureDataUrl = rotatedDataURL;
 
-                // const currentDate = new Date().toLocaleString();
-            //get common date time format fom common js script start
-                const getCurrentDate = async () => {
-                let currentDate;
+            //     //     if (!hasChanges()) {
+            //     //     alert('No changes detected. Proceeding to the next.');
+            //     //         window.location.href ="/bcaudit/download-audit-report.php";
+            //     //     // Handle next step logic here
+            //     //     return;
+            //     // }
+
+
+
+            //         try {
+            //         showOverlay("--Submiting Data--");
+            //             const requestBody = {
+            //                 ...currentData,
+            //                 auditorsToDelete: auditorsToDelete
+            //                 };
+            //             const response = await fetch('codes/insert_auditors_observations_data.php', {
+            //                 method: 'POST',
+            //                 headers: {
+            //                     'Content-Type': 'application/json'
+            //                 },
+            //                 // body: JSON.stringify({
+            //                 //     selectedAuditors: selectedAuditorEmpIds,
+            //                 //     auditorsToDelete: auditorsToDelete,
+            //                 //     signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
+            //                 //         empId, dataUrl, date
+            //                 //     })),
+            //                 //     conclusion: document.getElementById('conclusion').value,
+            //                 //     recommendations: document.getElementById('recommendations').value
+            //                 // })
+            //                 body: JSON.stringify(requestBody)
+            //             });
+
+            //             if (response.status = 'ok') {
+            //                 alert('Auditing Data Submited successfully.');
+            //                  window.location.href ="/bcaudit/download-audit-report.php";
+            //                 auditorsToDelete = [];
+            //                 hideOverlay();
+
+            //             } else {
+            //                 alert('Error updating data.');
+            //             }
+
+
+            //         } catch (error) {
+            //             console.error('Error saving data:', error);
+            //             alert('Error saving data.');
+            //         }
+            //     });
+
+
+
+            // Submit the form data
+            submitBtn.addEventListener('click', async () => {
+                const currentData = {
+                    selectedAuditors: selectedAuditorEmpIds,
+                    auditorsToDelete: auditorsToDelete,
+                    signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
+                        empId, dataUrl, date
+                    })),
+                    conclusion: document.getElementById('conclusion').value,
+                    recommendations: document.getElementById('recommendations').value,
+                    register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
+                };
+
+                // Validate required fields
+                const validationStatus = validateFormData(currentData);
+                if (validationStatus === 'missingInputData') {
+                    return;
+                }
+
+                // Check if there's at least one auditor selected
+                if (selectedAuditorEmpIds.length === 0) {
+                    alert('Please select at least one auditor before submission.');
+                    return;
+                }
+
+                // Check if at least one auditor has a signature
+                const auditorsWithoutSignature = selectedAuditorEmpIds.filter(empId => !signatures[empId]);
+
+                if (auditorsWithoutSignature.length > 0) {
+                    // Fetch auditor data to get their names
+                    const auditors = await fetchAuditorData();
+                    const auditorNamesAndIds = auditorsWithoutSignature.map(empId => {
+                        const auditor = auditors.find(auditor => auditor.empId === empId);
+                        return auditor ? `${auditor.name} (${auditor.empId})` : `Unknown Auditor (${empId})`;
+                    });
+
+                    alert(`The following auditors do not have a signature:\n${auditorNamesAndIds.join('\n')}`);
+                    return;
+                }
+
                 try {
-                    currentDate = await getCommonDateTime();
-                    // console.log('Formatted time:', currentDate);
-                    signatures[selectedAuditorEmpIds[currentSignatureIndex]] = { dataUrl: signatureDataUrl, date: currentDate };
-                renderSelectedAuditors();
-                signatureModal.modal('hide');
-            } catch (error) {
-                console.error('Error:', error);
+                    showOverlay("--Please Wait--");
+
+                    // Fetch progress
+                    let progress = await fetchProgress(bcaId, auditNumber);
+
+                    if (progress >= formProgress) {
+                        console.log('Updating data');
+                        updateData(currentData);
+                    } else {
+                        console.log('Inserting data');
+                        insertData(currentData);
+                    }
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error processing data.');
+                }
+            });
+
+
+            // go to next page function
+            function goToNextPage() {
+                window.location.href = '/bcaudit/download-audit-report.php';
+            };
+            nextBtn.addEventListener('click', goToNextPage);
+
+            // Function to insert data
+            async function insertData(formData) {
+                try {
+                    showOverlay("--Inserting Data--");
+
+                    const response = await fetch('codes/insert_auditors_observations_data.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    const result = await response.json();
+                    if (result.status == 'success') {
+                        alert('Auditing Data Submitted successfully.');
+                        goToNextPage();
+
+                        auditorsToDelete = [];
+                    } else {
+                        alert(result.error);
+                    }
+
+                    // $.ajax({
+                    //         url: 'codes/insert_auditors_observations_data.php',
+                    //         type: 'POST',
+                    //         data: JSON.stringify(formData),
+                    //         contentType: false,
+                    //         processData: false,
+                    //         dataType: 'json',
+                    //         success: function(response) {
+                    //             $('#saveButton').prop('disabled', false);
+                    //                 if (response.status=='success') {
+                    //                     alert(response.message);
+                    //                     goToNextPage();
+                    //                     auditorsToDelete = [];
+
+                    //                 } else {
+                    //                     alert(response.error);
+                    //                     console.log('Error: ' + response.error);
+                    //                 }
+                    //         },
+                    //         error: function(xhr, status, error) {
+                    //             alert('Error: ' + error);
+                    //             console.log('Error: ' + error);
+                    //         }
+                    //     });
+                } catch (error) {
+                    console.error('Error inserting data:', error);
+                    alert('Error inserting data.');
+                } finally {
+                    hideOverlay();
+                }
             }
-            return currentDate;
-            };
-            getCurrentDate();
-            //get common date time format fom common js script End
-            };
-        } else {
-            alert("Please make a signature first.");
-        }
-    });
 
-// Load saved signatures from db
-    function loadSignature(empId) {
-    signaturePad.clear();
-    if (signatures[empId]) {
-        const img = new Image();
-        img.src = signatures[empId].dataUrl;
-        img.onload = () => {
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
+            // Function to update data
+            async function updateData(formData) {
+                try {
+                    showOverlay("--Updating Data--");
 
-            // Set temporary canvas dimensions
-            tempCanvas.width = img.height;
-            tempCanvas.height = img.width;
+                    if (!hasChanges()) {
+                        alert('No changes detected.');
+                        // Handle next step logic here
+                        return;
+                    }
+                    // console.log(formData);
+                    const response = await fetch('codes/update_auditors_observations_data.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
 
-            // Draw the image with a 90-degree counterclockwise rotation
-            tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
-            tempCtx.rotate(-Math.PI / 2);
-            tempCtx.drawImage(img, -img.width / 2, -img.height / 2);
-            tempCtx.rotate(Math.PI / 2);  // Rotate back for further use
+                    if (response.ok) {
+                        alert('Auditing Data Updated successfully.');
+                        goToNextPage();
+                        auditorsToDelete = [];
+                    } else {
+                        alert('Error updating data.');
+                    }
+                } catch (error) {
+                    console.error('Error updating data:', error);
+                    alert('Error updating data.');
+                } finally {
+                    hideOverlay();
+                }
+            }
 
-            // Draw the rotated image onto the signature pad canvas
-            const rotatedDataUrl = tempCanvas.toDataURL('image/png');
-            const ctx = signaturePad._ctx;
-            ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
-            const rotatedImg = new Image();
-            rotatedImg.src = rotatedDataUrl;
-            rotatedImg.onload = () => {
-                ctx.drawImage(rotatedImg, 0, 0, signatureCanvas.width, signatureCanvas.height);
-            };
-        };
-    }
-}
-
-
-    function updateAuditorList() {
-        const checkboxes = auditorList.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = selectedAuditorEmpIds.includes(checkbox.value);
         });
 
-    }
-
-
-//     //  submit the form data
-//     submitBtn.addEventListener('click', async () => {
-//         const currentData = {
-//         selectedAuditors: selectedAuditorEmpIds,
-//         signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
-//             empId, dataUrl, date
-//         })),
-//         conclusion: document.getElementById('conclusion').value,
-//         recommendations: document.getElementById('recommendations').value
-//     };
-
-//         // Validate required fields
-//         const validationStatus = validateFormData(currentData);
-//             if (validationStatus === 'missingInputData') {
-//         return;
-//         }
-
-//         // Check if there's at least one auditor selected
-//         if (selectedAuditorEmpIds.length === 0) {
-//             alert('Please select at least one auditor before submission.');
-//             return;
-//         }
-
-//             // Check if at least one auditor has a signature
-//     const auditorsWithoutSignature = selectedAuditorEmpIds.filter(empId => !signatures[empId]);
-
-// if (auditorsWithoutSignature.length > 0) {
-//     // Fetch auditor data to get their names
-//     const auditors = await fetchAuditorData();
-//     const auditorNamesAndIds = auditorsWithoutSignature.map(empId => {
-//         const auditor = auditors.find(auditor => auditor.empId === empId);
-//         return auditor ? `${auditor.name} (${auditor.empId})` : `Unknown Auditor (${empId})`;
-//     });
-
-//     alert(`The following auditors do not have a signature:\n${auditorNamesAndIds.join('\n')}`);
-//     return;
-// }
-
-
-//     //     if (!hasChanges()) {
-//     //     alert('No changes detected. Proceeding to the next.');
-//     //         window.location.href ="/bcaudit/download-audit-report.php";
-//     //     // Handle next step logic here
-//     //     return;
-//     // }
-
-
-
-//         try {
-//         showOverlay("--Submiting Data--");
-//             const requestBody = {
-//                 ...currentData,
-//                 auditorsToDelete: auditorsToDelete
-//                 };
-//             const response = await fetch('codes/insert_auditors_observations_data.php', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 // body: JSON.stringify({
-//                 //     selectedAuditors: selectedAuditorEmpIds,
-//                 //     auditorsToDelete: auditorsToDelete,
-//                 //     signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
-//                 //         empId, dataUrl, date
-//                 //     })),
-//                 //     conclusion: document.getElementById('conclusion').value,
-//                 //     recommendations: document.getElementById('recommendations').value
-//                 // })
-//                 body: JSON.stringify(requestBody)
-//             });
-
-//             if (response.status = 'ok') {
-//                 alert('Auditing Data Submited successfully.');
-//                  window.location.href ="/bcaudit/download-audit-report.php";
-//                 auditorsToDelete = [];
-//                 hideOverlay();
-
-//             } else {
-//                 alert('Error updating data.');
-//             }
-
-            
-//         } catch (error) {
-//             console.error('Error saving data:', error);
-//             alert('Error saving data.');
-//         }
-//     });
-
-        
-
-// Submit the form data
-submitBtn.addEventListener('click', async () => {
-    const currentData = {
-        selectedAuditors: selectedAuditorEmpIds,
-        auditorsToDelete: auditorsToDelete,
-        signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
-            empId, dataUrl, date
-        })),
-        conclusion: document.getElementById('conclusion').value,
-        recommendations: document.getElementById('recommendations').value,
-        register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
-    };
-
-    // Validate required fields
-    const validationStatus = validateFormData(currentData);
-    if (validationStatus === 'missingInputData') {
-        return;
-    }
-
-    // Check if there's at least one auditor selected
-    if (selectedAuditorEmpIds.length === 0) {
-        alert('Please select at least one auditor before submission.');
-        return;
-    }
-
-    // Check if at least one auditor has a signature
-    const auditorsWithoutSignature = selectedAuditorEmpIds.filter(empId => !signatures[empId]);
-
-    if (auditorsWithoutSignature.length > 0) {
-        // Fetch auditor data to get their names
-        const auditors = await fetchAuditorData();
-        const auditorNamesAndIds = auditorsWithoutSignature.map(empId => {
-            const auditor = auditors.find(auditor => auditor.empId === empId);
-            return auditor ? `${auditor.name} (${auditor.empId})` : `Unknown Auditor (${empId})`;
-        });
-
-        alert(`The following auditors do not have a signature:\n${auditorNamesAndIds.join('\n')}`);
-        return;
-    }
-
-    try {
-        showOverlay("--Please Wait--");
-
-        // Fetch progress
-        let progress = await fetchProgress(bcaId, auditNumber);
-
-        if (progress >= formProgress) {
-            console.log('Updating data');
-            updateData(currentData);
-        } else {
-            console.log('Inserting data');
-            insertData(currentData);
-        }
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error processing data.');
-    }
-});
-
-
-// go to next page function
-function goToNextPage(){
-            window.location.href = '/bcaudit/download-audit-report.php';
-        };
-    nextBtn.addEventListener('click', goToNextPage);
-
-// Function to insert data
-async function insertData(formData) {
-    try {
-        showOverlay("--Inserting Data--");
-
-        const response = await fetch('codes/insert_auditors_observations_data.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-        const result = await response.json();
-        if (result.status == 'success') {
-            alert('Auditing Data Submitted successfully.');
-            goToNextPage();
-
-            auditorsToDelete = [];
-        } else {
-            alert(result.error);
-        }
-
-        // $.ajax({
-        //         url: 'codes/insert_auditors_observations_data.php',
-        //         type: 'POST',
-        //         data: JSON.stringify(formData),
-        //         contentType: false,
-        //         processData: false,
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             $('#saveButton').prop('disabled', false);
-        //                 if (response.status=='success') {
-        //                     alert(response.message);
-        //                     goToNextPage();
-        //                     auditorsToDelete = [];
-
-        //                 } else {
-        //                     alert(response.error);
-        //                     console.log('Error: ' + response.error);
-        //                 }
-        //         },
-        //         error: function(xhr, status, error) {
-        //             alert('Error: ' + error);
-        //             console.log('Error: ' + error);
-        //         }
-        //     });
-    } catch (error) {
-        console.error('Error inserting data:', error);
-        alert('Error inserting data.');
-    } finally {
-        hideOverlay();
-    }
-}
-
-// Function to update data
-async function updateData(formData) {
-    try {
-        showOverlay("--Updating Data--");
-
-        if (!hasChanges()) {
-        alert('No changes detected.');
-        // Handle next step logic here
-        return;
-    }
-// console.log(formData);
-        const response = await fetch('codes/update_auditors_observations_data.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        if (response.ok) {
-            alert('Auditing Data Updated successfully.');
-            goToNextPage();
-            auditorsToDelete = [];
-        } else {
-            alert('Error updating data.');
-        }
-    } catch (error) {
-        console.error('Error updating data:', error);
-        alert('Error updating data.');
-    } finally {
-        hideOverlay();
-    }
-}
-
-});
-
-</script>
+    </script>

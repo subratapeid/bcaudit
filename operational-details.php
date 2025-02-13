@@ -27,7 +27,7 @@ include "codes/verify_audit_session.php";
                 <input type="text" class="form-control" id="zmName" name="zmName" placeholder="Enter ZM Name" required>
             </div>
 
-            <div class="form-group dark">
+            <!-- <div class="form-group dark">
                 <label for="bcaServices">6. Services Provide by BCA Point.</label>
                 <div class="dropdown-checkbox">
                     <button type="button" id="serviceButton" onclick="toggleDropdown()">Select Services</button>
@@ -51,9 +51,9 @@ include "codes/verify_audit_session.php";
                     </div>
                 </div>
                 <span id="error-message" class="error-message">Please select at least one service.</span>
-            </div>
+            </div> -->
 
-            <script>
+            <!-- <script>
                 function toggleDropdown() {
                     var dropdown = document.getElementById("serviceOptions");
                     dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
@@ -79,17 +79,17 @@ include "codes/verify_audit_session.php";
                     }
                 });
 
-                // Validate before submitting the form
-                // document.querySelector("form").addEventListener("submit", function (event) {
-                //     var checkboxes = document.querySelectorAll('input[name="bcaServices[]"]:checked');
-                //     var errorMessage = document.getElementById("error-message");
+                Validate before submitting the form
+                document.querySelector("form").addEventListener("submit", function (event) {
+                    var checkboxes = document.querySelectorAll('input[name="bcaServices[]"]:checked');
+                    var errorMessage = document.getElementById("error-message");
 
-                //     if (checkboxes.length === 0) {
-                //         errorMessage.style.display = "block";
-                //         event.preventDefault(); // Prevent form submission
-                //     }
-                // });
-            </script>
+                    if (checkboxes.length === 0) {
+                        errorMessage.style.display = "block";
+                        event.preventDefault(); // Prevent form submission
+                    }
+                });
+            </script> -->
 
 
             <div class="form-group dark">
@@ -118,6 +118,27 @@ include "codes/verify_audit_session.php";
                         rows="3" placeholder="Enter your remarks"></textarea>
                 </div>
             </div>
+            <!-- <div class="form-group dark">
+                <label for="servicesBanner">6. BC point services banner is present?</label>
+                <div>
+                    <div class="form-check form-check-inline ml-4">
+                        <input class="custom-radio form-check-input" type="radio" name="servicesBanner"
+                            id="servicesBannerYes" value="Yes" required>
+                        <label class="custom-label form-check-label" for="servicesBannerYes">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline ml-5">
+                        <input class="custom-radio form-check-input" type="radio" name="servicesBanner"
+                            id="servicesBannerNo" value="No" required>
+                        <label class="custom-label form-check-label" for="servicesBannerNo">No</label>
+                    </div>
+                </div>
+                <div class="form-group dark">
+                    <label for="servicesBannerRemarks"><span class="mdi mdi-hand-pointing-right"></span> Remarks (if
+                        any):</label>
+                    <textarea class="form-control" name="servicesBannerRemarks" id="servicesBannerRemarks" rows="3"
+                        placeholder="Enter your remarks"></textarea>
+                </div>
+            </div> -->
             <div class="form-group dark">
                 <label for="trainingGiven">7. Is any Training given by the ABE on Opportunity chart, commission, SSS
                     camps, and other training to BCA during the time of visit?</label>
@@ -146,14 +167,14 @@ include "codes/verify_audit_session.php";
                     location):</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="businessExplore" id="businessExploreYes"
-                            value="Yes" required>
-                        <label class="form-check-label" for="businessExploreYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="businessExplore"
+                            id="businessExploreYes" value="Yes" required>
+                        <label class="custom-label form-check-label" for="businessExploreYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="businessExplore" id="businessExploreNo"
-                            value="No" required>
-                        <label class="form-check-label" for="businessExploreNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="businessExplore"
+                            id="businessExploreNo" value="No" required>
+                        <label class="custom-label form-check-label" for="businessExploreNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -170,14 +191,14 @@ include "codes/verify_audit_session.php";
                     communicated.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="targetSet" id="targetSetYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="targetSetYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="targetSet" id="targetSetYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="targetSetYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="targetSet" id="targetSetNo" value="No"
-                            required>
-                        <label class="form-check-label" for="targetSetNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="targetSet" id="targetSetNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="targetSetNo">No</label>
                     </div>
                 </div>
 
@@ -185,14 +206,14 @@ include "codes/verify_audit_session.php";
                     BCA.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="targetClear" id="targetClearYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="targetClearYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="targetClear" id="targetClearYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="targetClearYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="targetClear" id="targetClearNo" value="No"
-                            required>
-                        <label class="form-check-label" for="targetClearNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="targetClear" id="targetClearNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="targetClearNo">No</label>
                     </div>
                 </div>
 
@@ -200,14 +221,14 @@ include "codes/verify_audit_session.php";
                     ABE documented and recorded?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="targetDocumented" id="targetDocumentedYes"
-                            value="Yes" required>
-                        <label class="form-check-label" for="targetDocumentedYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="targetDocumented"
+                            id="targetDocumentedYes" value="Yes" required>
+                        <label class="custom-label form-check-label" for="targetDocumentedYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="targetDocumented" id="targetDocumentedNo"
-                            value="No" required>
-                        <label class="form-check-label" for="targetDocumentedNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="targetDocumented"
+                            id="targetDocumentedNo" value="No" required>
+                        <label class="custom-label form-check-label" for="targetDocumentedNo">No</label>
                     </div>
                 </div>
 
@@ -215,14 +236,14 @@ include "codes/verify_audit_session.php";
                     operational activities.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="abeSupport" id="abeSupportYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="abeSupportYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="abeSupport" id="abeSupportYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="abeSupportYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="abeSupport" id="abeSupportNo" value="No"
-                            required>
-                        <label class="form-check-label" for="abeSupportNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="abeSupport" id="abeSupportNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="abeSupportNo">No</label>
                     </div>
                 </div>
 
@@ -230,14 +251,14 @@ include "codes/verify_audit_session.php";
                     bank or ABE for handling transactions.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="bankSupport" id="bankSupportYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="bankSupportYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="bankSupport" id="bankSupportYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="bankSupportYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="bankSupport" id="bankSupportNo" value="No"
-                            required>
-                        <label class="form-check-label" for="bankSupportNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="bankSupport" id="bankSupportNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="bankSupportNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -247,20 +268,20 @@ include "codes/verify_audit_session.php";
                         placeholder="Enter your remarks"></textarea>
                 </div>
             </div>
-            <div class="form-group dark">
+            <!-- <div class="form-group dark">
                 <h6 class="fieldHeading">10. On-boarding Payment-operation</h6>
                 <label for="onboardingFeePaid"><span class="mdi mdi-hand-pointing-right"></span> A fee was paid during
                     on-boarding.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="onboardingFeePaid" id="onboardingFeePaidYes"
+                        <input class="custom-radio form-check-input" type="radio" name="onboardingFeePaid" id="onboardingFeePaidYes"
                             value="Yes" required>
-                        <label class="form-check-label" for="onboardingFeePaidYes">Yes</label>
+                        <label class="custom-label form-check-label" for="onboardingFeePaidYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="onboardingFeePaid" id="onboardingFeePaidNo"
+                        <input class="custom-radio form-check-input" type="radio" name="onboardingFeePaid" id="onboardingFeePaidNo"
                             value="No" required>
-                        <label class="form-check-label" for="onboardingFeePaidNo">No</label>
+                        <label class="custom-label form-check-label" for="onboardingFeePaidNo">No</label>
                     </div>
                 </div>
 
@@ -268,14 +289,14 @@ include "codes/verify_audit_session.php";
                     undocumented, and no receipt was issued.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="feeUnclear" id="feeUnclearYes" value="Yes"
+                        <input class="custom-radio form-check-input" type="radio" name="feeUnclear" id="feeUnclearYes" value="Yes"
                             required>
-                        <label class="form-check-label" for="feeUnclearYes">Yes</label>
+                        <label class="custom-label form-check-label" for="feeUnclearYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="feeUnclear" id="feeUnclearNo" value="No"
+                        <input class="custom-radio form-check-input" type="radio" name="feeUnclear" id="feeUnclearNo" value="No"
                             required>
-                        <label class="form-check-label" for="feeUnclearNo">No</label>
+                        <label class="custom-label form-check-label" for="feeUnclearNo">No</label>
                     </div>
                 </div>
 
@@ -283,14 +304,14 @@ include "codes/verify_audit_session.php";
                     are documented and justified by the company.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="feesDocumented" id="feesDocumentedYes"
+                        <input class="custom-radio form-check-input" type="radio" name="feesDocumented" id="feesDocumentedYes"
                             value="Yes" required>
-                        <label class="form-check-label" for="feesDocumentedYes">Yes</label>
+                        <label class="custom-label form-check-label" for="feesDocumentedYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="feesDocumented" id="feesDocumentedNo"
+                        <input class="custom-radio form-check-input" type="radio" name="feesDocumented" id="feesDocumentedNo"
                             value="No" required>
-                        <label class="form-check-label" for="feesDocumentedNo">No</label>
+                        <label class="custom-label form-check-label" for="feesDocumentedNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -312,19 +333,20 @@ include "codes/verify_audit_session.php";
                     <textarea class="form-control" name="onboardingRemarks" id="onboardingRemarks" rows="3"
                         placeholder="Enter your remarks"></textarea>
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group dark">
-                <label for="rmVisit">11. RM visited twice in the last month?</label>
+                <label for="rmVisit">11. RM/ZM/ABM/ABE Bank officials visited twice in the last month?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="rmVisit" id="rmVisitYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="rmVisitYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="rmVisit" id="rmVisitYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="rmVisitYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="rmVisit" id="rmVisitNo" value="No" required>
-                        <label class="form-check-label" for="rmVisitNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="rmVisit" id="rmVisitNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="rmVisitNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -335,18 +357,18 @@ include "codes/verify_audit_session.php";
                 </div>
             </div>
 
-            <div class="form-group dark">
+            <!-- <div class="form-group dark">
                 <label for="abmVisit">12. ABM visited once in the last month?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="abmVisit" id="abmVisitYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="abmVisitYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="abmVisit" id="abmVisitYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="abmVisitYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="abmVisit" id="abmVisitNo" value="No"
-                            required>
-                        <label class="form-check-label" for="abmVisitNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="abmVisit" id="abmVisitNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="abmVisitNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -361,14 +383,14 @@ include "codes/verify_audit_session.php";
                 <label for="abeVisit">13. ABE visited three times in the last month?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="abeVisit" id="abeVisitYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="abeVisitYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="abeVisit" id="abeVisitYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="abeVisitYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="abeVisit" id="abeVisitNo" value="No"
-                            required>
-                        <label class="form-check-label" for="abeVisitNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="abeVisit" id="abeVisitNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="abeVisitNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -383,14 +405,14 @@ include "codes/verify_audit_session.php";
                 <label for="bankOfficialVisit">14. Bank officials visited the BCA point?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="bankOfficialVisit" id="bankOfficialVisitYes"
-                            value="Yes" required>
-                        <label class="form-check-label" for="bankOfficialVisitYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="bankOfficialVisit"
+                            id="bankOfficialVisitYes" value="Yes" required>
+                        <label class="custom-label form-check-label" for="bankOfficialVisitYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="bankOfficialVisit" id="bankOfficialVisitNo"
-                            value="No" required>
-                        <label class="form-check-label" for="bankOfficialVisitNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="bankOfficialVisit"
+                            id="bankOfficialVisitNo" value="No" required>
+                        <label class="custom-label form-check-label" for="bankOfficialVisitNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -399,19 +421,20 @@ include "codes/verify_audit_session.php";
                     <textarea class="form-control" name="bankOfficialVisitRemarks" id="bankOfficialVisitRemarks"
                         rows="3" placeholder="Enter your remarks"></textarea>
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group dark">
                 <label for="bcVisit">15. BC makes frequent visits to the bank?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="form-check-input" type="radio" name="bcVisit" id="bcVisitYes" value="Yes"
-                            required>
-                        <label class="form-check-label" for="bcVisitYes">Yes</label>
+                        <input class="custom-radio form-check-input" type="radio" name="bcVisit" id="bcVisitYes"
+                            value="Yes" required>
+                        <label class="custom-label form-check-label" for="bcVisitYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="form-check-input" type="radio" name="bcVisit" id="bcVisitNo" value="No" required>
-                        <label class="form-check-label" for="bcVisitNo">No</label>
+                        <input class="custom-radio form-check-input" type="radio" name="bcVisit" id="bcVisitNo"
+                            value="No" required>
+                        <label class="custom-label form-check-label" for="bcVisitNo">No</label>
                     </div>
                 </div>
                 <div class="form-group dark">
@@ -575,63 +598,63 @@ include "codes/verify_audit_session.php";
                 // });
 
                 function formDataToObject(formData) {
-    var object = {};
+                    var object = {};
 
-    formData.forEach((value, key) => {
-        if (value instanceof File && value.name) {
-            // For file inputs, store file name and size for comparison
-            object[key] = { name: value.name, size: value.size };
-        } else {
-            // Handle multiple values (checkboxes, multi-select inputs)
-            if (object[key]) {
-                if (!Array.isArray(object[key])) {
-                    object[key] = [object[key]]; // Convert to array if not already
+                    formData.forEach((value, key) => {
+                        if (value instanceof File && value.name) {
+                            // For file inputs, store file name and size for comparison
+                            object[key] = { name: value.name, size: value.size };
+                        } else {
+                            // Handle multiple values (checkboxes, multi-select inputs)
+                            if (object[key]) {
+                                if (!Array.isArray(object[key])) {
+                                    object[key] = [object[key]]; // Convert to array if not already
+                                }
+                                object[key].push(value);
+                            } else {
+                                object[key] = value;
+                            }
+                        }
+                    });
+
+                    return object;
                 }
-                object[key].push(value);
-            } else {
-                object[key] = value;
-            }
-        }
-    });
-
-    return object;
-}
 
 
                 $('#operationalForm').on('submit', function (event) {
-    event.preventDefault();
-    
-    var form = $(this);
-    var formElement = document.getElementById('operationalForm');
-    var formData = new FormData(formElement);
+                    event.preventDefault();
 
-    // Collect selected services
-    let selectedServices = [];
-    document.querySelectorAll('input[name="bcaServices[]"]:checked').forEach((checkbox) => {
-        selectedServices.push(checkbox.value);
-    });
+                    var form = $(this);
+                    var formElement = document.getElementById('operationalForm');
+                    var formData = new FormData(formElement);
 
-    // Convert array to JSON string and append to formData
-    formData.append("bcaServices", JSON.stringify(selectedServices));
+                    // Collect selected services
+                    let selectedServices = [];
+                    document.querySelectorAll('input[name="bcaServices[]"]:checked').forEach((checkbox) => {
+                        selectedServices.push(checkbox.value);
+                    });
 
-    // Debugging logs
-    console.log("Selected Services:", selectedServices);
+                    // Convert array to JSON string and append to formData
+                    formData.append("bcaServices", JSON.stringify(selectedServices));
 
-    if (progress >= formProgress) {
-        var oldDataObject = formDataToObject(formOldData);
-        var newDataObject = formDataToObject(formData);
-    }
+                    // Debugging logs
+                    console.log("Selected Services:", selectedServices);
 
-    if (progress < formProgress) {
-        insertData(formData); // Insert new form data
-    } else if (JSON.stringify(oldDataObject) !== JSON.stringify(newDataObject)) {
-        updateForm(formData); // Update existing form data
-        $('#saveButton').text("Update & Next");
-    } else {
-        alert("No changes detected. Go to next");
-        goToNextPage();
-    }
-});
+                    if (progress >= formProgress) {
+                        var oldDataObject = formDataToObject(formOldData);
+                        var newDataObject = formDataToObject(formData);
+                    }
+
+                    if (progress < formProgress) {
+                        insertData(formData); // Insert new form data
+                    } else if (JSON.stringify(oldDataObject) !== JSON.stringify(newDataObject)) {
+                        updateForm(formData); // Update existing form data
+                        $('#saveButton').text("Update & Next");
+                    } else {
+                        alert("No changes detected. Go to next");
+                        goToNextPage();
+                    }
+                });
 
 
                 // progress fetch ending part
