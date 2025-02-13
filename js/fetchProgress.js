@@ -4,13 +4,13 @@ async function fetchProgress(bcaId, auditNumber) {
         // Create a new Promise to handle the asynchronous operation
         const progress = await new Promise((resolve, reject) => {
             $.ajax({
-                url: '/bcaudit/codes/fetchData/fetch_progress.php',
+                url: 'codes/fetchData/fetch_progress.php',
                 type: 'GET',
-                data: { 
-                    bcaId: bcaId, 
-                    auditNumber: auditNumber 
+                data: {
+                    bcaId: bcaId,
+                    auditNumber: auditNumber
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         var progress = parseInt(response.data.progress, 10);
                         // console.log(progress);
@@ -29,7 +29,7 @@ async function fetchProgress(bcaId, auditNumber) {
                         reject("BCA ID not found"); // Reject if ID not found
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     alert('Error fetching data: ' + error);
                     reject(error); // Reject the Promise on error
                 }

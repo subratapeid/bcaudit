@@ -12,19 +12,19 @@ const sidebarExpand = document.querySelector(".expand_sidebar");
 const footerArea = document.querySelector(".footer");
 
 // overlay loading start
-const loadingDiv= document.getElementById('loading-overlay');
-const loadingText= document.getElementById('loadingText');
-        function showOverlay(setLoadingText) {
-            if (!setLoadingText){
-              var setLoadingText = "--Please Wait--";
-            }
-            loadingDiv.style.display = 'block';
-            loadingText.textContent = setLoadingText;
-        }
-        // Function to hide the loading overlay
-        function hideOverlay() {
-          loadingDiv.style.display = 'none';
-        }
+const loadingDiv = document.getElementById('loading-overlay');
+const loadingText = document.getElementById('loadingText');
+function showOverlay(setLoadingText) {
+  if (!setLoadingText) {
+    var setLoadingText = "--Please Wait--";
+  }
+  loadingDiv.style.display = 'block';
+  loadingText.textContent = setLoadingText;
+}
+// Function to hide the loading overlay
+function hideOverlay() {
+  loadingDiv.style.display = 'none';
+}
 // Hide loading overlay once the page is fully loaded
 // window.addEventListener('load', hideOverlay);
 
@@ -44,12 +44,12 @@ const initializePreferences = () => {
   }
   // Check for sidebar state preference
   const sidebarState = localStorage.getItem("sidebarState");
-    if (sidebarState === "expanded") {
-      sidebar.classList.remove("closed", "hoverable");
-      sidebarOpen.classList.add("closed");
-      mainContainer.classList.add("expand");
-      footerArea.classList.remove("closed");
-    }
+  if (sidebarState === "expanded") {
+    sidebar.classList.remove("closed", "hoverable");
+    sidebarOpen.classList.add("closed");
+    mainContainer.classList.add("expand");
+    footerArea.classList.remove("closed");
+  }
 };
 
 sidebarOpen.addEventListener("click", () => {
@@ -70,36 +70,36 @@ sidebarClose.addEventListener("click", () => {
 
 sidebarExpand.addEventListener("click", () => {
   if (window.innerWidth > 768) {
-  sidebar.classList.remove("closed", "hoverable");
-  mainContainer.classList.add("expand");
-  sidebarOpen.classList.add("closed");
-  footerArea.classList.remove("closed");
-  // Save sidebar state
-  localStorage.setItem("sidebarState", "expanded");
+    sidebar.classList.remove("closed", "hoverable");
+    mainContainer.classList.add("expand");
+    sidebarOpen.classList.add("closed");
+    footerArea.classList.remove("closed");
+    // Save sidebar state
+    localStorage.setItem("sidebarState", "expanded");
   }
 });
 
 sidebar.addEventListener("mouseenter", () => {
-  if (window.innerWidth > 768){
-  if (sidebar.classList.contains("hoverable")) {
-    sidebar.classList.remove("closed");
+  if (window.innerWidth > 768) {
+    if (sidebar.classList.contains("hoverable")) {
+      sidebar.classList.remove("closed");
+    }
   }
-}
 });
 
 sidebar.addEventListener("mouseleave", () => {
-  if (window.innerWidth > 768){
-  if (sidebar.classList.contains("hoverable")) {
-    sidebar.classList.add("closed");
+  if (window.innerWidth > 768) {
+    if (sidebar.classList.contains("hoverable")) {
+      sidebar.classList.add("closed");
+    }
   }
-}
 });
 
 // sidebar close by touch screen and cross button
 function hideSidebarOnTouch(event) {
   if (!sidebar.contains(event.target) && !sidebarOpen.contains(event.target)) {
     sidebarOpen.classList.remove('closed');
-      sidebar.classList.add('closed');
+    sidebar.classList.add('closed');
   }
 }
 // Add event listener for touchstart events on the document
@@ -149,8 +149,8 @@ const markActiveMenuItem = () => {
         }
       }
       // Scroll to the active menu item if it's not in the sidebar's viewport or window's viewport
-          link.scrollIntoView({ behavior: "smooth", block: "center" });
-        
+      link.scrollIntoView({ behavior: "smooth", block: "center" });
+
     } else {
       link.classList.remove("active");
 
@@ -165,21 +165,21 @@ const markActiveMenuItem = () => {
 
 // User menu popup
 const userIcon = document.getElementById('userImage');
-            const userMenu = document.getElementById('userMenu');
+const userMenu = document.getElementById('userMenu');
 
-            userIcon.addEventListener('click', function() {
-                userMenu.classList.toggle('active');
-            });
+userIcon.addEventListener('click', function () {
+  userMenu.classList.toggle('active');
+});
 
-            document.addEventListener('click', function(event) {
-                if (!userMenu.contains(event.target) && !userIcon.contains(event.target)) {
-                    userMenu.classList.remove('active');
-                }
-            });
+document.addEventListener('click', function (event) {
+  if (!userMenu.contains(event.target) && !userIcon.contains(event.target)) {
+    userMenu.classList.remove('active');
+  }
+});
 
-  // Call the function on page load
+// Call the function on page load
 markActiveMenuItem();
-initializePreferences();     
+initializePreferences();
 
 // go back functionality
 var urlMapping = {
@@ -196,18 +196,18 @@ var urlMapping = {
   '/bcaudit/download-audit-report.php': '/bcaudit/auditor-observation.php'
 };
 var backBtn = document.getElementById('backButton');
-  if (backBtn){
-    backBtn.addEventListener('click', backToPrevious);
-  }
+if (backBtn) {
+  backBtn.addEventListener('click', backToPrevious);
+}
 
-    // Define the goBack function
+// Define the goBack function
 function backToPrevious() {
-    var currentUrl= window.location.pathname;
-    var redirectUrl = urlMapping[currentUrl] || '/dashboard.php';
-    // Replace the current state with the appropriate URL
-      window.history.replaceState(null, '', redirectUrl);
-   // Navigate to the appropriate URL
-      window.location.href = redirectUrl;
+  var currentUrl = window.location.pathname;
+  var redirectUrl = urlMapping[currentUrl] || '/dashboard.php';
+  // Replace the current state with the appropriate URL
+  window.history.replaceState(null, '', redirectUrl);
+  // Navigate to the appropriate URL
+  window.location.href = redirectUrl;
 }
 
 // get and set current year in footer
@@ -224,10 +224,10 @@ function goToPage(button) {
   var page = button.getAttribute('page');
   // Define URL mappings
   var urlMapping = {
-      'createUser': '/bcaudit/create-user.php',
-      'createBCA': '/bcaudit/create-bca.php',
-      'dashboard': '/bcaudit/dashboard.php'
-      // Add more mappings as needed
+    'createUser': '/bcaudit/create-user.php',
+    'createBCA': '/bcaudit/create-bca.php',
+    'dashboard': '/bcaudit/dashboard.php'
+    // Add more mappings as needed
   };
   // Get the URL for the target page
   var url = urlMapping[page] || '/dashboard.php'; // Default to dashboard if not found
@@ -238,48 +238,48 @@ function goToPage(button) {
 }
 
 // change input into uppercase
-document.querySelectorAll('.uppercase-input').forEach(function(input) {
+document.querySelectorAll('.uppercase-input').forEach(function (input) {
   let timer;
   let cursorPosition = 0; // Initialize cursor position
 
   input.addEventListener('input', function (e) {
     //   clearTimeout(timer); // Clear previous timeout
-      cursorPosition = this.selectionStart; // Save cursor position
+    cursorPosition = this.selectionStart; // Save cursor position
     //   timer = setTimeout(() => {
-          const value = this.value.toUpperCase();
-          this.value = value;
-          this.setSelectionRange(cursorPosition, cursorPosition); // Restore cursor position
+    const value = this.value.toUpperCase();
+    this.value = value;
+    this.setSelectionRange(cursorPosition, cursorPosition); // Restore cursor position
     //   }, 5); 
   });
 });
 
 // change input into lowercase
-document.querySelectorAll('.lowercase-input').forEach(function(input) {
+document.querySelectorAll('.lowercase-input').forEach(function (input) {
   let timer;
   let cursorPosition = 0; // Initialize cursor position
 
   input.addEventListener('input', function (e) {
-      // clearTimeout(timer); // Clear previous timeout
-      cursorPosition = this.selectionStart; // Save cursor position
-      // timer = setTimeout(() => {
-          const value = this.value.toLowerCase();
-          this.value = value;
-          this.setSelectionRange(cursorPosition, cursorPosition); // Restore cursor position
-      // }, 50); 
+    // clearTimeout(timer); // Clear previous timeout
+    cursorPosition = this.selectionStart; // Save cursor position
+    // timer = setTimeout(() => {
+    const value = this.value.toLowerCase();
+    this.value = value;
+    this.setSelectionRange(cursorPosition, cursorPosition); // Restore cursor position
+    // }, 50); 
   });
 });
 
 // remove spaces from input
 const inputFields = document.querySelectorAll('.no-space');
 // Add event listener to each input field
-inputFields.forEach(function(inputField) {
-    inputField.addEventListener('input', function() {
-        // Get the current value of the input field
-        let value = this.value;
-        // Remove spaces from the value
-        value = value.replace(/\s/g, '');
-        // Update the input field with the modified value
-        this.value = value;
-    });
+inputFields.forEach(function (inputField) {
+  inputField.addEventListener('input', function () {
+    // Get the current value of the input field
+    let value = this.value;
+    // Remove spaces from the value
+    value = value.replace(/\s/g, '');
+    // Update the input field with the modified value
+    this.value = value;
+  });
 });
 
