@@ -2171,9 +2171,9 @@ include "codes/verify_audit_session.php";
                     </div>
                     <div class="signatureInfo">
                         <p class="bulletPoints"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
-                                class="questionIcon">Date: <span></span></p>
+                                class="questionIcon">Date: <span class="ml-1" data-id="created_date"></span></p>
                         <p class="bulletPoints"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
-                                class="questionIcon">Place: <span></span></p>
+                                class="questionIcon">Place: <span class="ml-1" data-id="location"></span></p>
                     </div>
                 </div>
 
@@ -2497,14 +2497,40 @@ include "codes/verify_audit_session.php";
                     });
                 });
 
-                // Update the conclusion section (Assuming there's an element with id="conclusion")
+                // Update the conclusion section with balanced paragraph lengths
                 const conclusionElement = document.getElementById("conclusion");
                 if (conclusionElement) {
-                    conclusionElement.textContent = conclusion;
-                }
-                hideOverlay();
+                    // Split the conclusion into sentences
+                    const sentences = conclusion.split('.').map(sentence => sentence.trim()).filter(Boolean);
 
+                    // Define the max number of characters or sentences for each paragraph
+                    const maxParagraphLength = 300; // You can adjust this value as per your needs
+                    let currentParagraph = '';
+                    let formattedConclusion = '';
+
+                    sentences.forEach((sentence, index) => {
+                        // If adding the sentence would exceed max length, start a new paragraph
+                        if ((currentParagraph.length + sentence.length) <= maxParagraphLength) {
+                            currentParagraph += sentence + '. ';
+                        } else {
+                            // Push current paragraph to the result and start a new one
+                            formattedConclusion += `<p>${currentParagraph.trim()}</p>`;
+                            currentParagraph = sentence + '. '; // Start new paragraph with the current sentence
+                        }
+
+                        // Add the last paragraph if it exists
+                        if (index === sentences.length - 1) {
+                            formattedConclusion += `<p>${currentParagraph.trim()}</p>`;
+                        }
+                    });
+
+                    // Insert the formatted conclusion into the HTML element
+                    conclusionElement.innerHTML = formattedConclusion;
+                }
+
+                hideOverlay();
             }
+
 
 
             document.getElementById('downloadPdfButton').addEventListener('click', downloadReport);
