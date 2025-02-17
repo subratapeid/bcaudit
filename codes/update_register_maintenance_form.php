@@ -1,5 +1,5 @@
 <?php
-include "../../include/auth.php";
+include "../include/auth.php";
 
 include 'verify_audit_session.php';
 include 'config.php';

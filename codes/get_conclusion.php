@@ -89,7 +89,7 @@ if ($result->num_rows > 0) {
         $userAnswers[1] = $row['proc_trans']; // Replace with actual column for transactions
         $userAnswers[2] = $row['proc_dep_with'];  // Replace with actual column for transaction recording
         $userAnswers[3] = $row['delay_trans']; // Replace with actual column for cash handling
-        $userAnswers[4] = $row['no_of_groups'];  // Replace with actual column for abe_name
+        $userAnswers[4] = $row['groups_maintain'];  // Replace with actual column for abe_name
         $userAnswers[5] = $row['operating_hours'];  // Replace with actual column for abm_name
         // You can add more mappings here if necessary
     }

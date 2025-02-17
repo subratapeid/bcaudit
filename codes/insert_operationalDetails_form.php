@@ -24,50 +24,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_SESSION['user_id'];
     $progress = 2; // Assuming a new progress value for this form
 
-// Retrieve form data
-$abeName = $_POST['abeName'] ?? '';
-$abmName = $_POST['abmName'] ?? '';
-$rmName = $_POST['rmName'] ?? '';
-$zmName = $_POST['zmName'] ?? '';
-$operatingHours = $_POST['operatingHours'] ?? '';
-$operatingLocation = $_POST['operatingLocation'] ?? '';
-$operatingLocationRemarks = $_POST['operatingLocationRemarks'] ?? '';
-$trainingGiven = $_POST['trainingGiven'] ?? '';
-$trainingRemarks = $_POST['trainingRemarks'] ?? '';
-$businessExplore = $_POST['businessExplore'] ?? '';
-$businessExploreRemarks = $_POST['businessExploreRemarks'] ?? '';
-$targetSet = $_POST['targetSet'] ?? '';
-$targetClear = $_POST['targetClear'] ?? '';
-$targetDocumented = $_POST['targetDocumented'] ?? '';
-$abeSupport = $_POST['abeSupport'] ?? '';
-$bankSupport = $_POST['bankSupport'] ?? '';
-$targetRemarks = $_POST['targetRemarks'] ?? '';
-$onboardingFeePaid = $_POST['onboardingFeePaid'] ?? '';
-$feeUnclear = $_POST['feeUnclear'] ?? '';
-$feesDocumented = $_POST['feesDocumented'] ?? '';
-$transactionModule = $_POST['transactionModule'] ?? '';
-$onboardingRemarks = $_POST['onboardingRemarks'] ?? '';
-$rmVisit = $_POST['rmVisit'] ?? '';
-$rmVisitRemarks = $_POST['rmVisitRemarks'] ?? '';
-$abmVisit = $_POST['abmVisit'] ?? '';
-$abmVisitRemarks = $_POST['abmVisitRemarks'] ?? '';
-$abeVisit = $_POST['abeVisit'] ?? '';
-$abeVisitRemarks = $_POST['abeVisitRemarks'] ?? '';
-$bankOfficialVisit = $_POST['bankOfficialVisit'] ?? '';
-$bankOfficialVisitRemarks = $_POST['bankOfficialVisitRemarks'] ?? '';
-$bcVisit = $_POST['bcVisit'] ?? '';
-$bcVisitRemarks = $_POST['bcVisitRemarks'] ?? '';
-// Services (assuming services are passed as a JSON string from frontend)
-$bcaServices = isset($_POST['bcaServices']) ? $_POST['bcaServices'] : [];
+    // Retrieve form data
+    $abeName = $_POST['abeName'] ?? '';
+    $abmName = $_POST['abmName'] ?? '';
+    $rmName = $_POST['rmName'] ?? '';
+    $zmName = $_POST['zmName'] ?? '';
+    $operatingHours = $_POST['operatingHours'] ?? '';
+    $operatingLocation = $_POST['operatingLocation'] ?? '';
+    $operatingLocationRemarks = $_POST['operatingLocationRemarks'] ?? '';
+    $trainingGiven = $_POST['trainingGiven'] ?? '';
+    $trainingRemarks = $_POST['trainingRemarks'] ?? '';
+    $businessExplore = $_POST['businessExplore'] ?? '';
+    $businessExploreRemarks = $_POST['businessExploreRemarks'] ?? '';
+    $targetSet = $_POST['targetSet'] ?? '';
+    $targetClear = $_POST['targetClear'] ?? '';
+    $targetDocumented = $_POST['targetDocumented'] ?? '';
+    $abeSupport = $_POST['abeSupport'] ?? '';
+    $bankSupport = $_POST['bankSupport'] ?? '';
+    $targetRemarks = $_POST['targetRemarks'] ?? '';
+    $onboardingFeePaid = $_POST['onboardingFeePaid'] ?? '';
+    $feeUnclear = $_POST['feeUnclear'] ?? '';
+    $feesDocumented = $_POST['feesDocumented'] ?? '';
+    $transactionModule = $_POST['transactionModule'] ?? '';
+    $onboardingRemarks = $_POST['onboardingRemarks'] ?? '';
+    $rmVisit = $_POST['rmVisit'] ?? '';
+    $rmVisitRemarks = $_POST['rmVisitRemarks'] ?? '';
+    $abmVisit = $_POST['abmVisit'] ?? '';
+    $abmVisitRemarks = $_POST['abmVisitRemarks'] ?? '';
+    $abeVisit = $_POST['abeVisit'] ?? '';
+    $abeVisitRemarks = $_POST['abeVisitRemarks'] ?? '';
+    $bankOfficialVisit = $_POST['bankOfficialVisit'] ?? '';
+    $bankOfficialVisitRemarks = $_POST['bankOfficialVisitRemarks'] ?? '';
+    $bcVisit = $_POST['bcVisit'] ?? '';
+    $bcVisitRemarks = $_POST['bcVisitRemarks'] ?? '';
+    // Services (assuming services are passed as a JSON string from frontend)
+    // $bcaServices = isset($_POST['bcaServices']) ? $_POST['bcaServices'] : [];
 
-// Convert bcaServices to CSV (comma-separated string)
-$servicesString = implode(',', $bcaServices);
+    // Convert bcaServices to CSV (comma-separated string)
+    // $servicesString = implode(',', $bcaServices);
 
 
-    try{
+    try {
         // Start a transaction
-    $pdo->beginTransaction();
-    
+        $pdo->beginTransaction();
+
         // update progress query
         $updateQuery = "UPDATE audit_list SET progress = :progress, last_updated_date = :updatedDate WHERE audit_number = :auditNumber";
         $stmtUpdate = $pdo->prepare($updateQuery);
@@ -83,7 +83,6 @@ $servicesString = implode(',', $bcaServices);
             abm_name,
             rm_name,
             zm_name,
-            bca_services,
             operating_hours,
             designated_location,
             designated_location_remarks,
@@ -121,7 +120,6 @@ $servicesString = implode(',', $bcaServices);
             :abmName,
             :rmName,
             :zmName,
-            :servicesString,
             :operatingHours,
             :operatingLocation,
             :operatingLocationRemarks,
@@ -164,7 +162,6 @@ $servicesString = implode(',', $bcaServices);
         $stmt->bindParam(':abmName', $abmName, PDO::PARAM_STR);
         $stmt->bindParam(':rmName', $rmName, PDO::PARAM_STR);
         $stmt->bindParam(':zmName', $zmName, PDO::PARAM_STR);
-        $stmt->bindParam(':servicesString', $servicesString, PDO::PARAM_STR);
         $stmt->bindParam(':operatingHours', $operatingHours, PDO::PARAM_STR);
         $stmt->bindParam(':operatingLocation', $operatingLocation, PDO::PARAM_STR);
         $stmt->bindParam(':operatingLocationRemarks', $operatingLocationRemarks, PDO::PARAM_STR);
@@ -197,41 +194,41 @@ $servicesString = implode(',', $bcaServices);
         $stmt->bindParam(':createdDate', $dbDatetime, PDO::PARAM_STR);
         $stmt->bindParam(':updatedDate', $dbDatetime, PDO::PARAM_STR);
 
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                // First query was successful
-                $response['status'] = 'success';
-                $response['message'] = 'Data Inserted successfully! Go to the next page';
-                // Execute the second update query
-                $stmtUpdate->execute();
-        
-                if ($stmtUpdate->rowCount() > 0) {
-                    $pdo->commit();
-                    $response['update_status'] = 'success';
-                    $response['update_message'] = 'Data updated successfully!';
-                } else {
-                    $pdo->rollBack();
-                    $response['update_status'] = 'failure';
-                    $response['update_message'] = 'No rows updated.';
-                }
-                // second querry end
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            // First query was successful
+            $response['status'] = 'success';
+            $response['message'] = 'Data Inserted successfully! Go to the next page';
+            // Execute the second update query
+            $stmtUpdate->execute();
+
+            if ($stmtUpdate->rowCount() > 0) {
+                $pdo->commit();
+                $response['update_status'] = 'success';
+                $response['update_message'] = 'Data updated successfully!';
             } else {
                 $pdo->rollBack();
-                $response['status'] = 'error';
-                $response['error'] = 'No data was inserted. Something went wrong.';
+                $response['update_status'] = 'failure';
+                $response['update_message'] = 'No rows updated.';
             }
-            // first querry end
-        } catch (PDOException $e) {
+            // second querry end
+        } else {
             $pdo->rollBack();
             $response['status'] = 'error';
-            $response['error'] = 'Error: ' . $e->getMessage();
+            $response['error'] = 'No data was inserted. Something went wrong.';
         }
+        // first querry end
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        $response['status'] = 'error';
+        $response['error'] = 'Error: ' . $e->getMessage();
+    }
     // } input data validation check end
 
-    } else {
-        $response['status'] = 'error';
-        $response['error'] = 'Invalid request type.';
-    }
+} else {
+    $response['status'] = 'error';
+    $response['error'] = 'Invalid request type.';
+}
 
-    echo json_encode($response);
+echo json_encode($response);
 ?>

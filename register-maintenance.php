@@ -76,7 +76,7 @@ include "codes/verify_audit_session.php";
 </div> -->
 
             <div class="form-group dark">
-                <label for="visitorRegister">4. Visitor Register: Records information about visitors to the BCA
+                <label for="visitorRegister">3. Visitor Register: Records information about visitors to the BCA
                     point.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
@@ -216,7 +216,7 @@ include "codes/verify_audit_session.php";
 
 
             <div class="form-group dark">
-                <label for="customerFeedbackRegister">10. Customer Feedback Register: Captures customer feedback and
+                <label for="customerFeedbackRegister">4. Customer Feedback Register: Captures customer feedback and
                     suggestions.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
@@ -314,7 +314,7 @@ include "codes/verify_audit_session.php";
             </div> -->
 
             <div class="form-group dark">
-                <label for="shgRegister">14. SHG (Self Help Group) Register: Maintains details of SHG customers and
+                <label for="shgRegister">5. SHG (Self Help Group) Register: Maintains details of SHG customers and
                     their transactions.</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
@@ -386,7 +386,7 @@ include "codes/verify_audit_session.php";
             </div> -->
 
             <div class="form-group dark">
-                <label for="entriesAccuracy">17. Are the transaction entries accurate, consistent, and matching in
+                <label for="entriesAccuracy">6. Are the transaction entries accurate, consistent, and matching in
                     registers and settlement accounts?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
@@ -459,7 +459,7 @@ include "codes/verify_audit_session.php";
 
             <!-- Additional Remarks Regarding Registers -->
             <div class="form-group dark">
-                <label for="additionalRemarksRegisters">20. Additional Remarks Regarding Registers:</label>
+                <label for="additionalRemarksRegisters">7. Additional Remarks Regarding Registers:</label>
                 <textarea class="form-control" name="additionalRemarksRegisters" id="additionalRemarksRegisters"
                     rows="4" placeholder="Enter your remarks"></textarea>
             </div>

@@ -42,87 +42,88 @@ $conclusion = $data['conclusion'] ?? '';
 $recommendations = $data['recommendations'] ?? '';
 $register_photo_url = $data['register_photo_url'] ?? '';
 
-    // Mandatory check for register photo
-    if (empty($register_photo_url)) {
-        $response['status'] = 'error';
-        $response['error'] = 'Register book photo is missing';
-        echo json_encode($response);
-    exit;
-    }
-// Validate required fields
-if (empty($signatures) || empty($conclusion) || empty($recommendations)) {
+// Mandatory check for register photo
+if (empty($register_photo_url)) {
     $response['status'] = 'error';
-    $response['error'] = 'Required fields missing';
+    $response['error'] = 'Register book photo is missing';
     echo json_encode($response);
     exit;
 }
+// Validate required fields
+// if (empty($signatures) || empty($conclusion) || empty($recommendations)) {
+//     $response['status'] = 'error';
+//     $response['error'] = 'Required fields missing';
+//     echo json_encode($response);
+//     exit;
+// }
 
 try {
 
-// Handle Register captured photo process
-if ($register_photo_url) {
-    $register_photo_url = $data['register_photo_url'];
-    $register_photo_data = base64_decode($register_photo_url);
-    $registerPhotoNewName = 'RegisterPhoto_' . $auditId . '_' . uniqid() . '.png';
-    $registerPhotoPath = 'uploads/' . $registerPhotoNewName;
+    // Handle Register captured photo process
+    if ($register_photo_url) {
+        $register_photo_url = $data['register_photo_url'];
+        $register_photo_data = base64_decode($register_photo_url);
+        $registerPhotoNewName = 'RegisterPhoto_' . $auditId . '_' . uniqid() . '.png';
+        $registerPhotoPath = 'uploads/' . $registerPhotoNewName;
 
-    if (!file_put_contents($registerPhotoPath, $register_photo_data)) {
-        $response['status'] = 'error';
-        $response['error'] = 'Failed to upload Register book photograph.';
-        echo json_encode($response);
-        exit();
+        if (!file_put_contents($registerPhotoPath, $register_photo_data)) {
+            $response['status'] = 'error';
+            $response['error'] = 'Failed to upload Register book photograph.';
+            echo json_encode($response);
+            exit();
+        }
+
     }
-
-}
     // Start transaction
     $pdo->beginTransaction();
 
-// Function to save the image data and return the URL
-function saveImageAndGetUrl($dataUrl, $empId, $auditId) {
-    // Decode the base64 encoded image data
-    list($type, $data) = explode(';', $dataUrl);
-    list(, $data) = explode(',', $data);
-    $data = base64_decode($data);
+    // Function to save the image data and return the URL
+    function saveImageAndGetUrl($dataUrl, $empId, $auditId)
+    {
+        // Decode the base64 encoded image data
+        list($type, $data) = explode(';', $dataUrl);
+        list(, $data) = explode(',', $data);
+        $data = base64_decode($data);
 
-    // Set the file path and name
-    $filePath = 'uploads/signatures/';
-    if (!file_exists($filePath)) {
-        mkdir($filePath, 0755, true);
+        // Set the file path and name
+        $filePath = 'uploads/signatures/';
+        if (!file_exists($filePath)) {
+            mkdir($filePath, 0755, true);
+        }
+        $fileName = $empId . '_' . $auditId . '_' . uniqid() . '.png';
+        $fullPath = $filePath . $fileName;
+
+        // Save the file
+        file_put_contents($fullPath, $data);
+
+        // Generate the URL
+        $baseUrl = '/bcaudit/codes/';
+        $url = $baseUrl . $fullPath;
+
+        return $url;
     }
-    $fileName = $empId . '_' . $auditId . '_' . uniqid() . '.png';
-    $fullPath = $filePath . $fileName;
 
-    // Save the file
-    file_put_contents($fullPath, $data);
+    // Process signatures
+    foreach ($signatures as $signature) {
+        $empId = $signature['empId'];
+        $dataUrl = $signature['dataUrl'];
+        $frontendDate = $signature['date'];
+        $date = convertToDatabaseFormat($frontendDate);
 
-    // Generate the URL
-    $baseUrl = '/bcaudit/codes/';
-    $url = $baseUrl . $fullPath;
+        // Save the image data and get the URL
+        $imageUrl = saveImageAndGetUrl($dataUrl, $empId, $auditId);
 
-    return $url;
-}
+        $stmt = $pdo->prepare("INSERT INTO auditor_and_signature (emp_id, signature_data_url, date, audit_number) VALUES (:empId, :imageUrl, :date, :auditId)");
+        $stmt->bindParam(':empId', $empId);
+        $stmt->bindParam(':imageUrl', $imageUrl);
+        $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':auditId', $auditId);
+        $stmt->execute();
 
-// Process signatures
-foreach ($signatures as $signature) {
-    $empId = $signature['empId'];
-    $dataUrl = $signature['dataUrl'];
-    $frontendDate = $signature['date'];
-    $date = convertToDatabaseFormat($frontendDate);
-
-    // Save the image data and get the URL
-    $imageUrl = saveImageAndGetUrl($dataUrl, $empId, $auditId);
-
-    $stmt = $pdo->prepare("INSERT INTO auditor_and_signature (emp_id, signature_data_url, date, audit_number) VALUES (:empId, :imageUrl, :date, :auditId)");
-    $stmt->bindParam(':empId', $empId);
-    $stmt->bindParam(':imageUrl', $imageUrl);
-    $stmt->bindParam(':date', $date);
-    $stmt->bindParam(':auditId', $auditId);
-    $stmt->execute();
-
-    if ($stmt->rowCount() == 0) {
-        throw new PDOException("Error inserting signature for emp_id $empId");
+        if ($stmt->rowCount() == 0) {
+            throw new PDOException("Error inserting signature for emp_id $empId");
+        }
     }
-}
 
     // Insert auditor observations
     $stmt = $pdo->prepare("INSERT INTO auditor_observation (audit_number, conclusion, recommendations, register_photo_url, created_by_id, created_date, last_updated_date) 
@@ -170,7 +171,8 @@ foreach ($signatures as $signature) {
 unset($pdo);
 
 // Function to convert frontend date to database format
-function convertToDatabaseFormat($frontendDate) {
+function convertToDatabaseFormat($frontendDate)
+{
     $dateTime = DateTime::createFromFormat('d-M-Y, h:i A', $frontendDate);
     return $dateTime->format('Y-m-d H:i:s');
 }

@@ -64,20 +64,20 @@ include "codes/verify_audit_session.php";
             <h4 class="card-title text-center"><i class="fa-solid fa-users"></i> Auditor's Observation</h4>
         </div>
         <div class="card-body">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="conclusion">1. Audit Conclusion</label>
                 <textarea class="form-control" id="conclusion" name="conclusion" rows="6" placeholder="Enter conclusion"
                     required></textarea>
-            </div>
+            </div> -->
             <div class="form-group">
-                <label for="conclusion">2. Recommendations</label>
+                <label for="conclusion">1. Recommendations</label>
                 <textarea class="form-control" id="recommendations" name="recommendations" rows="6"
                     placeholder="Enter recommendations" required></textarea>
             </div>
             <!-- visitor Register Photo -->
             <div class="form-group mt-4">
                 <div>
-                    <label for="visitorRegisterPhotoPreview">3. visitor Register Photo</label>
+                    <label for="visitorRegisterPhotoPreview">2. visitor Register Photo</label>
                 </div>
                 <div>
                     <img id="visitorRegisterPhotoPreview" class="mt-2 mb-3 img-thumbnail" src="default-image.png"
@@ -92,7 +92,7 @@ include "codes/verify_audit_session.php";
 
 
             <div class="form-group mt-4">
-                <label for="customer-list">4. Auditor Signature</label>
+                <label for="customer-list">3. Auditor Signature</label>
                 <div id="customer-list">
                     <!-- Dynamic Auditors list will be appended here -->
                 </div>
@@ -474,7 +474,7 @@ include "codes/verify_audit_session.php";
                     // updateSubmitButtonState();
                     1
                     if (data.inputFieldsData.length > 0) {
-                        document.getElementById('conclusion').value = data.inputFieldsData[0].conclusion;
+                        // document.getElementById('conclusion').value = data.inputFieldsData[0].conclusion;
                         document.getElementById('recommendations').value = data.inputFieldsData[0].recommendations;
                         document.getElementById('visitorRegisterPhotoPreview').src = 'codes/' + data.inputFieldsData[0].register_photo_url;
                     }
@@ -505,10 +505,10 @@ include "codes/verify_audit_session.php";
 
             function validateFormData(currentData) {
 
-                if (!currentData.conclusion.trim()) {
-                    alert('Conclusion cannot be empty.');
-                    return 'missingInputData';
-                }
+                // if (!currentData.conclusion.trim()) {
+                //     alert('Conclusion cannot be empty.');
+                //     return 'missingInputData';
+                // }
                 if (!currentData.recommendations.trim()) {
                     alert('Recommendations cannot be empty.');
                     return 'missingInputData';
@@ -528,7 +528,7 @@ include "codes/verify_audit_session.php";
                     signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
                         empId, dataUrl, date
                     })),
-                    conclusion: document.getElementById('conclusion').value,
+                    // conclusion: document.getElementById('conclusion').value,
                     recommendations: document.getElementById('recommendations').value,
                     register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
                 };
@@ -548,7 +548,7 @@ include "codes/verify_audit_session.php";
                         dataUrl: item.signature_data_url,
                         date: item.date
                     })),
-                    conclusion: originalData.inputFieldsData[0].conclusion,
+                    // conclusion: originalData.inputFieldsData[0].conclusion,
                     recommendations: originalData.inputFieldsData[0].recommendations,
                     register_photo_url: ""
 
@@ -898,7 +898,7 @@ include "codes/verify_audit_session.php";
                     signatures: Object.entries(signatures).map(([empId, { dataUrl, date }]) => ({
                         empId, dataUrl, date
                     })),
-                    conclusion: document.getElementById('conclusion').value,
+                    // conclusion: document.getElementById('conclusion').value,
                     recommendations: document.getElementById('recommendations').value,
                     register_photo_url: document.getElementById('visitorRegisterPhotoBase64').value
                 };

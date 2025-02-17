@@ -1,5 +1,5 @@
 <?php
-include "../../include/auth.php";
+include "../include/auth.php";
 include 'verify_audit_session.php';
 include 'config.php';
 include 'common/getDateTime.php';
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->rowCount() > 0) {
             // Commit the transaction
             $pdo->commit();
-            $response['status'] = 'success'; 
+            $response['status'] = 'success';
             $response['message'] = 'Data Updated Successfully';
         } else {
             throw new Exception("Failed to update data in the form_responses table");

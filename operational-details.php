@@ -336,7 +336,7 @@ include "codes/verify_audit_session.php";
             </div> -->
 
             <div class="form-group dark">
-                <label for="rmVisit">11. RM/ZM/ABM/ABE Bank officials visited twice in the last month?</label>
+                <label for="rmVisit">10 RM/ZM/ABM/ABE Bank officials visited twice in the last month?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
                         <input class="custom-radio form-check-input" type="radio" name="rmVisit" id="rmVisitYes"
@@ -424,7 +424,7 @@ include "codes/verify_audit_session.php";
             </div> -->
 
             <div class="form-group dark">
-                <label for="bcVisit">15. BC makes frequent visits to the bank?</label>
+                <label for="bcVisit">11 BC makes frequent visits to the bank?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
                         <input class="custom-radio form-check-input" type="radio" name="bcVisit" id="bcVisitYes"
@@ -635,10 +635,10 @@ include "codes/verify_audit_session.php";
                     });
 
                     // Convert array to JSON string and append to formData
-                    formData.append("bcaServices", JSON.stringify(selectedServices));
+                    // formData.append("bcaServices", JSON.stringify(selectedServices));
 
                     // Debugging logs
-                    console.log("Selected Services:", selectedServices);
+                    // console.log("Selected Services:", selectedServices);
 
                     if (progress >= formProgress) {
                         var oldDataObject = formDataToObject(formOldData);
