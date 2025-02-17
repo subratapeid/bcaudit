@@ -39,8 +39,8 @@ ALTER TABLE operational_details MODIFY bank_official_visit VARCHAR(10) NULL DEFA
 ALTER TABLE operational_details MODIFY bank_official_visit_remarks VARCHAR(250) NULL DEFAULT NULL;
 ALTER TABLE operational_details MODIFY bc_visit VARCHAR(10) NULL DEFAULT NULL;
 ALTER TABLE operational_details MODIFY bc_visit_remarks VARCHAR(250) NULL DEFAULT NULL;
-ALTER TABLE operational_details MODIFY last_updated_by_id VARCHAR(20) NULL DEFAULT NULL;
-ALTER TABLE operational_details MODIFY last_updated_date DATETIME NULL DEFAULT NULL;
+ALTER TABLE operational_details MODIFY  VARCHAR(20) NULL DEFAULT NULL;
+ALTER TABLE operational_details MODIFY  DATETIME NULL DEFAULT NULL;
 
 
 
@@ -178,3 +178,196 @@ ADD shg_activity_remarks VARCHAR(255) NULL DEFAULT NULL AFTER book_keeping;
 
 ALTER TABLE auditor_observation
 MODIFY COLUMN conclusion TEXT DEFAULT NULL,
+
+
+
+
+
+-- all columns names
+SELECT COLUMN_NAME 
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME IN (
+    'compliance_verification', 
+    'hardware_infrastructure', 
+    'operational_details', 
+    'register_maintain', 
+    'transaction_verification'
+);
+
+
+bc_point_place
+bc_point_place_remarks
+bc_point_clean
+bc_point_clean_remarks
+posters_displayed
+outdated_posters
+posters_remarks
+customer_alert_dos_donts
+customer_alert_dos_donts_remarks
+verification_certificate
+verification_certificate_remarks
+unauthorized_individuals
+unauthorized_individuals_remarks
+id_card_usage
+id_card_usage_remarks
+clone_fingerprint
+clone_fingerprint_remarks
+manual_receipts
+system_generated_receipts
+customer_passbooks
+transaction_slips
+manual_receipts_remarks
+non_relevant_applications
+non_relevant_applications_remarks
+blocked_accounts
+blocked_accounts_remarks
+
+
+laptop_desktop
+laptop_desktop_remarks
+printer
+printer_remarks
+scanner
+scanner_remarks
+biometric
+biometric_remarks
+pos_terminal
+pos_terminal_remarks
+internet_router
+internet_router_remarks
+ups
+ups_remarks
+cctv_camera
+cctv_camera_remarks
+mobile_tablet
+mobile_tablet_remarks
+counting_machine
+counting_machine_remarks
+card_reader
+card_reader_remarks
+external_hdd
+external_hdd_remarks
+photocopier
+photocopier_remarks
+other_devices
+hardware_photo_path
+hardware_remarks
+
+
+operating_hours
+designated_location
+designated_location_remarks
+training_given
+training_remarks
+business_explore
+business_explore_remarks
+target_set
+target_clear
+target_documented
+abe_support
+bank_support
+target_remarks
+onboarding_fee_paid
+fee_unclear
+fees_documented
+fee_payment_mode
+onboarding_remarks
+rm_visit
+rm_visit_remarks
+abm_visit
+abm_visit_remarks
+abe_visit
+abe_visit_remarks
+bank_official_visit
+bank_official_visit_remarks
+bc_visit
+bc_visit_remarks
+
+
+transaction_register
+transaction_register_remarks
+account_opening_register
+account_opening_register_remarks
+complaint_register
+complaint_register_remarks
+visitor_register
+visitor_register_remarks
+cash_register
+cash_register_remarks
+audit_register
+audit_register_remarks
+service_register
+service_register_remarks
+inventory_register
+inventory_register_remarks
+loan_register
+loan_register_remarks
+customer_feedback_register
+customer_feedback_register_remarks
+compliance_register
+compliance_register_remarks
+staff_attendance_register
+staff_attendance_register_remarks
+training_register
+training_register_remarks
+shg_register
+shg_register_remarks
+settlement_register
+settlement_register_remarks
+target_achievement_register
+target_achievement_register_remarks
+entries_accuracy
+entries_accuracy_remarks
+transaction_entries_reliability
+transaction_entries_reliability_remarks
+txn_count_matching
+txn_count_matching_remarks
+additional_remarks_registers
+
+
+proc_trans
+remarks_proc_trans
+proc_dep_with
+remarks_proc_dep_with
+delay_trans
+remarks_delay_trans
+acc_trans
+remarks_acc_trans
+time_match
+remarks_time_match
+cust_ver
+remarks_cust_ver
+bc_verify
+remarks_bc_verify
+sys_receipts
+remarks_sys_receipts
+cust_copy
+remarks_cust_copy
+presc_limits
+remarks_presc_limits
+auth_trans
+remarks_auth_trans
+cash_handling
+remarks_cash_handling
+cash_discrep
+remarks_cash_discrep
+complaints
+remarks_complaints
+comp_policies
+remarks_comp_policies
+reg_req
+remarks_reg_req
+audit_trail
+remarks_audit_trail
+comm_trans
+remarks_comm_trans
+tech_issues
+remarks_tech_issues
+maintain_shg
+mentor_groups
+groups_maintain
+book_keeping
+shg_activity_remarks
+
+
+
