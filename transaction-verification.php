@@ -462,62 +462,62 @@ include "codes/verify_audit_session.php";
 
             <div class="form-group dark">
                 <h6 id="fieldHeading">9. SHG Activities:</h6>
-                <label for="targetSet"><span class="mdi mdi-hand-pointing-right"></span> If BCA maintain any SHG/JLG
+                <label for="maintain_shg"><span class="mdi mdi-hand-pointing-right"></span> If BCA maintain any SHG/JLG
                     Groups?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="custom-radio form-check-input" type="radio" name="targetSet" id="targetSetYes"
+                        <input class="custom-radio form-check-input" type="radio" name="maintain_shg" id="maintainShgYes"
                             value="Yes" required>
-                        <label class="custom-label form-check-label" for="targetSetYes">Yes</label>
+                        <label class="custom-label form-check-label" for="maintainShgYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="custom-radio form-check-input" type="radio" name="targetSet" id="targetSetNo"
+                        <input class="custom-radio form-check-input" type="radio" name="maintain_shg" id="maintainShgNo"
                             value="No" required>
-                        <label class="custom-label form-check-label" for="targetSetNo">No</label>
+                        <label class="custom-label form-check-label" for="maintainShgNo">No</label>
                     </div>
                 </div>
 
-                <label for="targetClear"><span class="mdi mdi-hand-pointing-right"></span> BCA mentor any
+                <label for="mentor_groups"><span class="mdi mdi-hand-pointing-right"></span> BCA mentor any
                     groups?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="custom-radio form-check-input" type="radio" name="targetClear" id="targetClearYes"
+                        <input class="custom-radio form-check-input" type="radio" name="mentor_groups" id="mentorGroupsYes"
                             value="Yes" required>
-                        <label class="custom-label form-check-label" for="targetClearYes">Yes</label>
+                        <label class="custom-label form-check-label" for="mentorGroupsYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="custom-radio form-check-input" type="radio" name="targetClear" id="targetClearNo"
+                        <input class="custom-radio form-check-input" type="radio" name="mentor_groups" id="mentorGroupsNo"
                             value="No" required>
-                        <label class="custom-label form-check-label" for="targetClearNo">No</label>
+                        <label class="custom-label form-check-label" for="mentorGroupsNo">No</label>
                     </div>
                 </div>
 
-                <label for="targetDocumented"><span class="mdi mdi-hand-pointing-right"></span> Number of groups
+                <label for="groups_maintain"><span class="mdi mdi-hand-pointing-right"></span> Number of groups
                     maintain by BCA.</label>
                 <div>
-                    <input type="text" class="form-control mb-2" id="abeName" name="abeName"
+                    <input type="text" class="form-control mb-2" id="groups_maintain" name="groups_maintain"
                         placeholder="Enter no of groups" required>
                 </div>
 
-                <label for="abeSupport"><span class="mdi mdi-hand-pointing-right"></span> SHG Book Keeping are maintain
+                <label for="book_keeping"><span class="mdi mdi-hand-pointing-right"></span> SHG Book Keeping are maintain
                     by BCA?</label>
                 <div>
                     <div class="form-check form-check-inline ml-4">
-                        <input class="custom-radio form-check-input" type="radio" name="abeSupport" id="abeSupportYes"
+                        <input class="custom-radio form-check-input" type="radio" name="book_keeping" id="book_keepingYes"
                             value="Yes" required>
-                        <label class="custom-label form-check-label" for="abeSupportYes">Yes</label>
+                        <label class="custom-label form-check-label" for="book_keepingYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline ml-5">
-                        <input class="custom-radio form-check-input" type="radio" name="abeSupport" id="abeSupportNo"
+                        <input class="custom-radio form-check-input" type="radio" name="book_keeping" id="book_keepingNo"
                             value="No" required>
-                        <label class="custom-label form-check-label" for="abeSupportNo">No</label>
+                        <label class="custom-label form-check-label" for="book_keepingNo">No</label>
                     </div>
                 </div>
 
                 <div class="form-group dark">
-                    <label for="targetRemarks"><span class="mdi mdi-hand-pointing-right"></span> Remarks (if
+                    <label for="shg_activity_remarks"><span class="mdi mdi-hand-pointing-right"></span> Remarks (if
                         any):</label>
-                    <textarea class="form-control" name="targetRemarks" id="targetRemarks" rows="3"
+                    <textarea class="form-control" name="shg_activity_remarks" id="shg_activity_remarks" rows="3"
                         placeholder="Enter your remarks"></textarea>
                 </div>
             </div>
@@ -763,6 +763,12 @@ include "codes/verify_audit_session.php";
 
             $('input[name="techIssues"][value="' + data.tech_issues + '"]').prop('checked', true);
             $('#remarksTechIssues').val(data.remarks_tech_issues);
+
+            $('input[name="maintain_shg"][value="' + data.maintain_shg + '"]').prop('checked', true);
+            $('input[name="mentor_groups"][value="' + data.mentor_groups + '"]').prop('checked', true);
+            $('#groups_maintain').val(data.groups_maintain);
+            $('input[name="book_keeping"][value="' + data.book_keeping + '"]').prop('checked', true);
+            $('#shg_activity_remarks').val(data.shg_activity_remarks);
         }
 
         getProgress();
