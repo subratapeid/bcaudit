@@ -54,6 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $techIssues = $_POST['techIssues'] ?? '';
     $remarksTechIssues = $_POST['remarksTechIssues'] ?? '';
 
+    $maintainShg = $_POST['maintain_shg'] ?? '';
+    $mentorGroups = $_POST['mentor_groups'] ?? '';
+    $groupsMaintain = $_POST['groups_maintain'] ?? '';
+    $bookKeeping = $_POST['book_keeping'] ?? '';
+    $shgActivityRemarks = $_POST['shg_activity_remarks'] ?? '';
+
     try {
         // Start a transaction
         $pdo->beginTransaction();
@@ -98,6 +104,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         remarks_comm_trans = :remarksCommTrans,
         tech_issues = :techIssues,
         remarks_tech_issues = :remarksTechIssues,
+
+        maintain_shg = :maintainShg,
+        mentor_groups = :mentorGroups,
+        groups_maintain = :groupsMaintain,
+        book_keeping = :bookKeeping,
+        shg_activity_remarks = :shgActivityRemarks,
+
         last_updated_by_id = :updatedBy,
         last_updated_date = :updatedDate
     WHERE audit_number = :auditNumber";
@@ -145,6 +158,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':remarksCommTrans', $remarksCommTrans, PDO::PARAM_STR);
         $stmt->bindParam(':techIssues', $techIssues, PDO::PARAM_STR);
         $stmt->bindParam(':remarksTechIssues', $remarksTechIssues, PDO::PARAM_STR);
+
+        $stmt->bindParam(':maintainShg', $maintainShg, PDO::PARAM_STR);
+        $stmt->bindParam(':mentorGroups', $mentorGroups, PDO::PARAM_STR);
+        $stmt->bindParam(':groupsMaintain', $groupsMaintain, PDO::PARAM_STR);
+        $stmt->bindParam(':bookKeeping', $bookKeeping, PDO::PARAM_STR);
+        $stmt->bindParam(':shgActivityRemarks', $shgActivityRemarks, PDO::PARAM_STR);
+
 
         $stmt->bindParam(':updatedBy', $userId, PDO::PARAM_STR);
         $stmt->bindParam(':updatedDate', $dbDatetime, PDO::PARAM_STR);

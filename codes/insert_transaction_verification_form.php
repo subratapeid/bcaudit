@@ -55,6 +55,12 @@ $remarksCommTrans = $_POST['remarksCommTrans'] ?? '';
 $techIssues = $_POST['techIssues'] ?? '';
 $remarksTechIssues = $_POST['remarksTechIssues'] ?? '';
 
+$maintainShg = $_POST['maintain_shg'] ?? '';
+$mentorGroups = $_POST['mentor_groups'] ?? '';
+$groupsMaintain = $_POST['groups_maintain'] ?? '';
+$bookKeeping = $_POST['book_keeping'] ?? '';
+$shgActivityRemarks = $_POST['shg_activity_remarks'] ?? '';
+
 try {
     // Start a transaction
     $pdo->beginTransaction();
@@ -100,6 +106,13 @@ try {
         remarks_comm_trans,
         tech_issues,
         remarks_tech_issues,
+
+        maintain_shg,
+        mentor_groups,
+        groups_maintain,
+        book_keeping,
+        shg_activity_remarks,
+
         created_by_id,
         created_date,
         last_updated_date
@@ -143,6 +156,13 @@ try {
         :remarksCommTrans,
         :techIssues,
         :remarksTechIssues,
+
+        :maintainShg,
+        :mentorGroups,
+        :groupsMaintain,
+        :bookKeeping,
+        :shgActivityRemarks,
+
         :createdById,
         :createdDate,
         :updatedDate
@@ -191,6 +211,12 @@ try {
     $stmt->bindParam(':remarksCommTrans', $remarksCommTrans, PDO::PARAM_STR);
     $stmt->bindParam(':techIssues', $techIssues, PDO::PARAM_STR);
     $stmt->bindParam(':remarksTechIssues', $remarksTechIssues, PDO::PARAM_STR);
+
+    $stmt->bindParam(':maintainShg', $maintainShg, PDO::PARAM_STR);
+    $stmt->bindParam(':mentorGroups', $mentorGroups, PDO::PARAM_STR);
+    $stmt->bindParam(':groupsMaintain', $groupsMaintain, PDO::PARAM_STR);
+    $stmt->bindParam(':bookKeeping', $bookKeeping, PDO::PARAM_STR);
+    $stmt->bindParam(':shgActivityRemarks', $shgActivityRemarks, PDO::PARAM_STR);
 
     $stmt->bindParam(':createdById', $userId, PDO::PARAM_STR);
     $stmt->bindParam(':createdDate', $dbDatetime, PDO::PARAM_STR);
