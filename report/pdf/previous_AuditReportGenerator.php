@@ -545,7 +545,7 @@ include '../../codes/verify_audit_session.php';
                 </div>
 
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>On-boarding Payment-operation</strong></p>
                     <div class="subQuestion">
@@ -590,11 +590,11 @@ include '../../codes/verify_audit_session.php';
                                 class="remarksIcon">Remarks:<span class="remarksAns" id="remarks5"
                                 data-id="onboarding_fee_remarks"></span></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
-                            class="questionIcon"><strong>RM/ZM/ABM/ABE Bank officials visited twice in the last month?</strong></p>
+                            class="questionIcon"><strong>RM visited twice in the last month?</strong></p>
                     <div class="yesNosection">
                         <div class="yesBox" data-id="rm_visit"><span class="checkbox" data-value="Yes"></span><span
                                 class="yesLabel">Yes</span></div>
@@ -607,7 +607,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="rm_visit_remarks"></span></p>
                     </div>
                 </div>
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>ABE visited three times in the last month?</strong></p>
                     <div class="yesNosection">
@@ -638,19 +638,19 @@ include '../../codes/verify_audit_session.php';
                                 class="remarksIcon">Remarks:<span class="remarksAns" data-id="abe_visit_remarks"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>BC makes frequent visits to the bank?</strong></p>
                     <div class="yesNosection">
-                        <div class="yesBox" data-id="bc_visit"><span class="checkbox" data-value="Yes"></span><span
+                        <div class="yesBox" data-id="abe_visit"><span class="checkbox" data-value="Yes"></span><span
                                 class="yesLabel">Yes</span></div>
-                        <div class="noBox" data-id="bc_visit"><span class="checkbox" data-value="No"></span><span
+                        <div class="noBox" data-id="abe_visit"><span class="checkbox" data-value="No"></span><span
                                 class="noLabel">No</span></div>
                     </div>
                     <div class="remarks">
                         <p class="remarksLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt=""
-                                class="remarksIcon">Remarks:<span class="remarksAns" data-id="bc_visit_remarks"></span>
+                                class="remarksIcon">Remarks:<span class="remarksAns" data-id="abe_visit_remarks"></span>
                         </p>
                     </div>
                 </div>
@@ -930,7 +930,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>Complaint Register: Captures customer complaints and their
                             resolution status.</strong></p>
@@ -945,7 +945,7 @@ include '../../codes/verify_audit_session.php';
                                 class="remarksIcon">Remarks:<span class="remarksAns" id="remarks_complaint_register"
                                 data-id="complaint_register_remarks"></span></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
@@ -964,7 +964,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>Cash Register: Keeps track of cash inflows and
                             outflows.</strong></p>
@@ -1046,8 +1046,8 @@ include '../../codes/verify_audit_session.php';
                         <p class="remarksLabel"><img src="/bcaudit/assets/icons/handIcon.png" alt=""
                                 class="remarksIcon">Remarks:<span class="remarksAns" id="remarks_loan_register"
                                 data-id="loan_register_remarks"></span></p>
-                    </div> 
-                </div> -->
+                    </div>
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
@@ -1067,7 +1067,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>Compliance Register: Tracks compliance-related activities and
                             checks.</strong></p>
@@ -1117,7 +1117,7 @@ include '../../codes/verify_audit_session.php';
                                 class="remarksIcon">Remarks:<span class="remarksAns" id="remarks_training_register"
                                 data-id="training_register_remarks"></span></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
@@ -1136,7 +1136,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>Settlement Register: Documents settlement of daily transactions
                             and balances.</strong></p>
@@ -1169,7 +1169,7 @@ include '../../codes/verify_audit_session.php';
                                 id="remarks_target_achievement_register"
                                 data-id="target_achievement_register_remarks"></span></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
@@ -1187,7 +1187,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
                             class="questionIcon"><strong>Transaction registers contain varying and unreliable
                             entries.</strong></p>
@@ -1219,7 +1219,7 @@ include '../../codes/verify_audit_session.php';
                                 class="remarksIcon">Remarks:<span class="remarksAns" id="remarks_matching_txns_count"
                                 data-id="txn_count_matching_remarks"></span></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel"><img src="/bcaudit/assets/icons/pointIcon.png" alt=""
@@ -1238,7 +1238,7 @@ include '../../codes/verify_audit_session.php';
                     class="headingIcon">Compliance & Verification</h2>
             <div class="innerSection">
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Is the BC Point located in a prominent place?</strong>
@@ -1254,7 +1254,7 @@ include '../../codes/verify_audit_session.php';
                                 class="remarksIcon">Remarks:<span class="remarksAns" id="bc_point_place_remarks"
                                 data-id="bc_point_prominent_remarks"></span></p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1327,7 +1327,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Dos and Don’ts for Customer Alert before Transactions Displayed?</strong>
@@ -1350,7 +1350,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="customer_alert_dos_donts_remarks"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1472,7 +1472,7 @@ include '../../codes/verify_audit_session.php';
                         </div>
                     </div>
 
-                    <!-- <div class="subQuestion">
+                    <div class="subQuestion">
                         <p class="subQuestionLabel">
                             <img src="/bcaudit/assets/icons/handIcon.png" alt="" class="subQuestionIcon">
                             Only system-generated transaction receipts are issued by the BCA.
@@ -1487,7 +1487,7 @@ include '../../codes/verify_audit_session.php';
                                 <span class="noLabel">No</span>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="subQuestion">
                         <p class="subQuestionLabel">
@@ -1507,7 +1507,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Customer transaction slips are handed over to the customer.</strong>
@@ -1530,7 +1530,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="manual_receipts_remarks"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1618,7 +1618,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Are deposits and withdrawals processed promptly?</strong>
@@ -1666,7 +1666,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="remarks_delay_trans"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1693,7 +1693,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Do the timestamps on transaction slips match the actual transaction times?</strong>
@@ -1716,7 +1716,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="remarks_time_match"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1796,7 +1796,7 @@ include '../../codes/verify_audit_session.php';
 
 
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Are customers provided with a customer copy of the transaction slip?</strong>
@@ -1869,7 +1869,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="remarks_auth_trans"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1896,7 +1896,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Are there any discrepancies in the cash register?</strong>
@@ -1944,7 +1944,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="remarks_complaints"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
@@ -1972,7 +1972,7 @@ include '../../codes/verify_audit_session.php';
                     </div>
                 </div>
 
-                <!-- <div class="subSection">
+                <div class="subSection">
                     <p class="questionLabel">
                         <img src="/bcaudit/assets/icons/pointIcon.png" alt="" class="questionIcon">
                         <strong>Are regulatory requirements adhered to during transactions?</strong>
@@ -2020,7 +2020,7 @@ include '../../codes/verify_audit_session.php';
                                 data-id="remarks_audit_trail"></span>
                         </p>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="subSection">
                     <p class="questionLabel">
