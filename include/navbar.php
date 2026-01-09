@@ -174,6 +174,7 @@ include "include/auth.php";
 
             <ul class="menu_items submenu">
               <a href="bca-list.php" class="nav_link sublink">All BCA List</a>
+              <a href="add-bca.php" class="nav_link sublink">Add New BC</a>
               <!-- <a href="create-bca.php" class="nav_link sublink">Create New BCA</a>
               <a href="approve-bca.php" class="nav_link sublink">Approve BCA</a> -->
               <a href="bca-bulk-upload.php" class="nav_link sublink">Bulk Upload</a>
