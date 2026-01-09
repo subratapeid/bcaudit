@@ -1,58 +1,65 @@
-<?php 
-    $pageTitle="All BCA List";
-    include "include/navbar.php"; 
+<?php
+$pageTitle = "All BCA List";
+include "include/navbar.php";
 ?>
 <style>
     .daterange-input {
-      position: relative;
-      display: inline-block;
+        position: relative;
+        display: inline-block;
     }
+
     .daterange-input input {
-      width: 250px;
-      padding-right: 40px;
-      padding-left: 15px;
-      border-radius: 25px;
-      border: 1px solid #ced4da;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
-      font-size: 16px;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        width: 250px;
+        padding-right: 40px;
+        padding-left: 15px;
+        border-radius: 25px;
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+        font-size: 16px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
+
     .daterange-input input:focus {
-      border-color: #80bdff;
-      box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
     }
+
     .daterange-input .calendar-icon,
     .daterange-input .reset-icon {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
     }
+
     .daterange-input .calendar-icon {
-      right: 40px;
-      color: #007bff;
-      font-size: 18px;
+        right: 40px;
+        color: #007bff;
+        font-size: 18px;
     }
+
     .daterange-input .reset-icon {
-      right: 10px;
-      color: #dc3545;
-      font-size: 18px;
-      display: none;
+        right: 10px;
+        color: #dc3545;
+        font-size: 18px;
+        display: none;
     }
+
     .daterangepicker .drp-calendar.right {
-      display: none;
+        display: none;
     }
+
     .daterangepicker .drp-calendar.left {
-      width: 100% !important;
+        width: 100% !important;
     }
-    
-  </style>
+</style>
 
 <style>
-#searchInput{
-    width: 350px;
-    margin: 0 10px 0 10px;
-}
+    #searchInput {
+        width: 350px;
+        margin: 0 10px 0 10px;
+    }
+
     .table-container {
         min-height: 600px;
         width: 100%;
@@ -63,33 +70,39 @@
         border-radius: 8px;
         border: 2px solid #ddd;
     }
-    .header-container {
-            display: flex;
-            justify-content: space-between; /* Spaces out title and button container */
-            align-items: center;
-            padding: 10px 10px 40px;
-        }
-        .header-title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .button-container {
-            display: flex;
-            gap: 10px;
 
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        /* Spaces out title and button container */
+        align-items: center;
+        padding: 10px 10px 40px;
+    }
+
+    .header-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 10px;
+
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 600px) {
+        .header-title {
+            display: none;
         }
-        
-        /* Media query for mobile devices */
-        @media (max-width: 600px) {
-            .header-title {
-                display: none;
-            }
-            .header-container {
-                justify-content: center;
-                flex-wrap: wrap; 
-            }
+
+        .header-container {
+            justify-content: center;
+            flex-wrap: wrap;
         }
-    .data-container{
+    }
+
+    .data-container {
         min-height: 600px;
         background-color: var(--white-color);
         /* border: 1px solid #ddd; */
@@ -102,8 +115,10 @@
         border-collapse: collapse;
         min-width: 800px;
     }
-    #dataTable tr td, #dataTable tr th {
-    white-space: nowrap;
+
+    #dataTable tr td,
+    #dataTable tr th {
+        white-space: nowrap;
     }
 
     #dataTable th {
@@ -116,6 +131,7 @@
         color: var(--white-color);
         text-align: center;
     }
+
     #dataTable td {
         border: 2px solid #ddd;
         padding: 8px;
@@ -133,11 +149,13 @@
     }
 
     .sort-up::before {
-        content: '\25b2'; /* Unicode for up arrow */
+        content: '\25b2';
+        /* Unicode for up arrow */
     }
 
     .sort-down::before {
-        content: '\25bc'; /* Unicode for down arrow */
+        content: '\25bc';
+        /* Unicode for down arrow */
     }
 
     .status {
@@ -175,14 +193,16 @@
         cursor: pointer;
         text-decoration: none;
         color: white;
-        background:#0037ff;
+        background: #0037ff;
     }
+
     .action-button:hover {
         text-decoration: none;
         color: white;
-        background:#344276;
+        background: #344276;
     }
-/* 
+
+    /* 
     .action-button.start-audit {
         background-color: #007bff;
     }
@@ -233,481 +253,617 @@
         display: flex;
         align-items: center;
     }
+
     .filter-data {
         display: flex;
         align-items: center;
     }
+
     .controllLabel {
         margin: 0 5px;
     }
 
-    .controls input, .controls select {
+    .controls input,
+    .controls select {
         padding: 5px;
         margin-right: 10px;
         border-radius: 4px;
         border: 1.3px solid #959595;
     }
+
     th.sort-asc::after {
         content: ' 🔼';
     }
-    
+
     th.sort-desc::after {
         content: ' 🔽';
     }
+
     /* Custom CSS for .form-control placeholder */
-/* .form-control, ::placeholder{
+    /* .form-control, ::placeholder{
   color: #b7b7b7;
   opacity: 1;
 } */
-.form-select .defaultSelect {
-  color: #b7b7b7;
-}
-#dateRange[readonly] {
-  background-color: #fcfcfc;
-  color: #6c757d; 
-  border: 1px solid #ced4da;
-  opacity: 1;
-}
-.form-control:focus::placeholder {
-  color: #666;
-  font-style: normal;
-}
-#filterButton {
-    position: relative;
-  }
-  
-  #filterCount {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    padding: 1px 4px;
-    border-radius: 50%;
-    font-size: 12px;
-  }
-  /* datepicker calender area */
-  .daterangepicker.show-calendar .drp-buttons{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
+    .form-select .defaultSelect {
+        color: #b7b7b7;
     }
-  .daterangepicker .drp-selected {
-      display: inline-block;
-      font-size: 12px;
-      padding-right: 2px;
-  }
-  .daterangepicker {
-    position: absolute;
-    color: inherit;
-    background-color: #f2f7f7;
-    border-radius: 4px;
-    border: 1px solid #8d8d8d;
-    width: 370px;
-    max-width: none;
-    padding: 0;
-    margin-top: 7px;
-    top: 100px;
-    left: 20px;
-    z-index: 3001;
-    display: none;
-    font-family: arial;
-    font-size: 15px;
-    line-height: 1em;
-}
-.daterangepicker .calendar-table {
-    border: 1px solid #c3c3c3;
-    border-radius: 4px;
-    background-color: #fdfdfd;
-    width: 350px;
-    height: auto;
-    padding: 5px;
-}
-.daterangepicker .calendar-table th, .daterangepicker .calendar-table td {
-    white-space: nowrap;
-    text-align: center;
-    vertical-align: middle;
-    min-width: 32px;
-    width: 32px;
-    height: 24px;
-    line-height: 24px;
-    font-size: 17px;
-    border-radius: 4px;
-    border: 1px solid #efefef;
-    white-space: nowrap;
-    cursor: pointer;
-}
-  /* datepicker calender area end*/
+
+    #dateRange[readonly] {
+        background-color: #fcfcfc;
+        color: #6c757d;
+        border: 1px solid #ced4da;
+        opacity: 1;
+    }
+
+    .form-control:focus::placeholder {
+        color: #666;
+        font-style: normal;
+    }
+
+    #filterButton {
+        position: relative;
+    }
+
+    #filterCount {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        padding: 1px 4px;
+        border-radius: 50%;
+        font-size: 12px;
+    }
+
+    /* datepicker calender area */
+    .daterangepicker.show-calendar .drp-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .daterangepicker .drp-selected {
+        display: inline-block;
+        font-size: 12px;
+        padding-right: 2px;
+    }
+
+    .daterangepicker {
+        position: absolute;
+        color: inherit;
+        background-color: #f2f7f7;
+        border-radius: 4px;
+        border: 1px solid #8d8d8d;
+        width: 370px;
+        max-width: none;
+        padding: 0;
+        margin-top: 7px;
+        top: 100px;
+        left: 20px;
+        z-index: 3001;
+        display: none;
+        font-family: arial;
+        font-size: 15px;
+        line-height: 1em;
+    }
+
+    .daterangepicker .calendar-table {
+        border: 1px solid #c3c3c3;
+        border-radius: 4px;
+        background-color: #fdfdfd;
+        width: 350px;
+        height: auto;
+        padding: 5px;
+    }
+
+    .daterangepicker .calendar-table th,
+    .daterangepicker .calendar-table td {
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        min-width: 32px;
+        width: 32px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 17px;
+        border-radius: 4px;
+        border: 1px solid #efefef;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    /* datepicker calender area end*/
 
     @media (max-width: 780px) {
-        .show-pages{
+        .show-pages {
             display: none;
         }
-        #searchInput{
+
+        #searchInput {
             max-width: 200px;
             margin-left: 10px
         }
-        .controllLabel{
+
+        .controllLabel {
             display: none;
         }
     }
-
 </style>
 
-    <div class="table-container">
-      <div class="header-container">
+
+<div class="table-container">
+    <div class="header-container">
         <div class="header-title">List of All BCA</div>
-          <div class="button-container">
-            <button type="button" class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#auditModal">
+        <div class="button-container">
+            <button type="button" class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#addBcModal">
                 <i class="fas fa-plus"></i> Add New BCA
             </button>
             <button type="button" class="btn btn-primary ml-2" id="exportData">
                 <i class="fas fa-file-export"></i> Export Data
             </button>
-          </div>
-          <!-- <div id="message"></div> -->
         </div>
-      <div class="controls">
+        <!-- <div id="message"></div> -->
+    </div>
+    <div class="controls">
         <div class="show-pages ml-4">
-          <p class="controllLabel ml-3">show</p>
+            <p class="controllLabel ml-3">show</p>
             <select id="entriesPerPage" onchange="changeEntriesPerPage()">
                 <option value="15">15</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
-          <p class="controllLabel">entries</p>
+            <p class="controllLabel">entries</p>
         </div>
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search..." oninput="searchTable()">
-      </div>
-      <div class="filter-data mr-4">
-      <button type="button" class="btn btn-secondary btn-sm mr-2" id="filterButton" data-bs-toggle="modal" data-bs-target="#filterModal">
-  <i class="fa-solid fa-filter"></i>
-  <span id="filterCount" class="badge badge-light">0</span> Filter
-</button>
-          <!-- <button type="button" class="btn btn-secondary mr-2" data-target="#">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search..." oninput="searchTable()">
+        </div>
+        <div class="filter-data mr-4">
+            <button type="button" class="btn btn-secondary btn-sm mr-2" id="filterButton" data-bs-toggle="modal"
+                data-bs-target="#filterModal">
+                <i class="fa-solid fa-filter"></i>
+                <span id="filterCount" class="badge badge-light">0</span> Filter
+            </button>
+            <!-- <button type="button" class="btn btn-secondary mr-2" data-target="#">
             <i class="fa-solid fa-filter-circle-xmark"></i>
           </button> -->
             <!-- <p class="controllLabel">Filter</p> -->
-        <select id="filterStatus" hidden>
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inprogress">Inactive</option>
-            <option value="approved">Pending</option>
-            <option value="rejected">Blocked</option>
-        </select>
-      </div>
+            <select id="filterStatus" hidden>
+                <option value="all">All</option>
+                <option value="active">Active</option>
+                <option value="inprogress">Inactive</option>
+                <option value="approved">Pending</option>
+                <option value="rejected">Blocked</option>
+            </select>
+        </div>
     </div>
 
     <div class="data-container">
-      <table id="dataTable">
-        <thead>
-        <tr>
-            <th data-column="sl" class="sortable" id="header-index">SL No <span class="sort-icon"></span></th>
-            <th data-column="bcaId" class="sortable" id="header-bca_id">BCA ID <span class="sort-icon"></span></th>
-            <th data-column="bcaFullName" class="sortable" id="header-bca_full_name">BCA Full Name <span class="sort-icon"></span></th>
-            <th data-column="bcaContactNo" class="sortable" id="header-mobile_no">BCA Contact No <span class="sort-icon"></span></th>
-            <th data-column="bcaEmailId" class="sortable" id="header-bca_bank">BCA Bank <span class="sort-icon"></span></th>
-            <th data-column="bcaState" class="sortable" id="header-state">BCA State <span class="sort-icon"></span></th>
-            <th data-column="bcaLocation" class="sortable" id="header-location">BCA Location <span class="sort-icon"></span></th>
-            <th data-column="status" class="sortable" id="header-status">Status <span class="sort-icon"></span></th>
-            <th data-column="date" class="sortable" id="header-formatted_date">Created Date <span class="sort-icon"></span></th>
-            <th data-column="userName" class="sortable" id="header-created_by">Created By User <span class="sort-icon"></span></th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody id="dataTableBody">
-            <!-- Rows will be dynamically generated by JavaScript -->
-        </tbody>
-      </table>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th data-column="sl" class="sortable" id="header-index">SL No <span class="sort-icon"></span></th>
+                    <th data-column="bcaId" class="sortable" id="header-bca_id">BCA ID <span class="sort-icon"></span>
+                    </th>
+                    <th data-column="bcaFullName" class="sortable" id="header-bca_full_name">BCA Full Name <span
+                            class="sort-icon"></span></th>
+                    <th data-column="bcaContactNo" class="sortable" id="header-mobile_no">BCA Contact No <span
+                            class="sort-icon"></span></th>
+                    <th data-column="bcaEmailId" class="sortable" id="header-bca_bank">BCA Bank <span
+                            class="sort-icon"></span></th>
+                    <th data-column="bcaState" class="sortable" id="header-state">BCA State <span
+                            class="sort-icon"></span></th>
+                    <th data-column="bcaLocation" class="sortable" id="header-location">BCA Location <span
+                            class="sort-icon"></span></th>
+                    <th data-column="status" class="sortable" id="header-status">Status <span class="sort-icon"></span>
+                    </th>
+                    <th data-column="date" class="sortable" id="header-formatted_date">Created Date <span
+                            class="sort-icon"></span></th>
+                    <th data-column="userName" class="sortable" id="header-created_by">Created By User <span
+                            class="sort-icon"></span></th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="dataTableBody">
+                <!-- Rows will be dynamically generated by JavaScript -->
+            </tbody>
+        </table>
     </div>
     <div class="pagination">
-      <div id="recordInfo">0 to 0 of 0 data</div>
-      <div id="paginationControls"></div>
+        <div id="recordInfo">0 to 0 of 0 data</div>
+        <div id="paginationControls"></div>
     </div>
 
-<!-- Main From Header Close Bellow -->
+    <!-- Main From Header Close Bellow -->
 </div>
 </div>
 
 
 <div class="all-modal-area">
-  <!-- Filter data modal -->
-  <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="dataFilterModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h5 class="modal-title">Filter BCA List</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <form id="filterForm">
-            <div class="row g-3">
-              <!-- State -->
-              <div class="col-md-6">
-                <label for="state" class="form-label">BCA State:</label>
-                <select class="form-select" id="state" name="state">
-                  <option value="">Select State</option>
-                  <!-- Populate state options here -->
-                </select>
-              </div>
+    <!-- Filter data modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="dataFilterModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Filter BCA List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form id="filterForm">
+                        <div class="row g-3">
+                            <!-- State -->
+                            <div class="col-md-6">
+                                <label for="state" class="form-label">BCA State:</label>
+                                <select class="form-select" id="state" name="state">
+                                    <option value="">Select State</option>
+                                    <!-- Populate state options here -->
+                                </select>
+                            </div>
 
-              <!-- Bank -->
-              <div class="col-md-6">
-                <label for="bank" class="form-label">BCA Bank:</label>
-                <select class="form-select" id="bank" name="bank">
-                  <option value="">Select Bank</option>
-                  <!-- Populate bank options here -->
-                </select>
-              </div>
-              <!-- Created By -->
-              <div class="col-md-6">
-                <label for="createdBy" class="form-label">BCA Created By:</label>
-                <select class="form-select" id="createdBy" name="createdBy">
-                  <option value="">Select Created By</option>
-                  <!-- Populate created by options here -->
-                </select>
-              </div>
-              <!-- Status -->
-              <div class="col-md-6">
-                <label for="status" class="form-label">Account Status:</label>
-                <select class="form-select" id="status" name="status">
-                  <option value="">Select Status</option>
-                  <!-- Populate status options here -->
-                </select>
-              </div>
+                            <!-- Bank -->
+                            <div class="col-md-6">
+                                <label for="bank" class="form-label">BCA Bank:</label>
+                                <select class="form-select" id="bank" name="bank">
+                                    <option value="">Select Bank</option>
+                                    <!-- Populate bank options here -->
+                                </select>
+                            </div>
+                            <!-- Created By -->
+                            <div class="col-md-6">
+                                <label for="createdBy" class="form-label">BCA Created By:</label>
+                                <select class="form-select" id="createdBy" name="createdBy">
+                                    <option value="">Select Created By</option>
+                                    <!-- Populate created by options here -->
+                                </select>
+                            </div>
+                            <!-- Status -->
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">Account Status:</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="">Select Status</option>
+                                    <!-- Populate status options here -->
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer justify-content-between pt-2 pb-2">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <div>
+                        <button type="button" class="btn btn-warning btn-sm mr-4" id="resetFilterForm">Reset</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="applyFilters()"
+                            data-bs-dismiss="modal">Apply</button>
+                    </div>
+                    <!-- Modal Footer  end bellow-->
+                </div>
+                <!-- Modal Content end bellow-->
             </div>
-          </form>
+            <!-- modal-dialog  end bellow-->
         </div>
-        <!-- Modal Footer -->
-        <div class="modal-footer justify-content-between pt-2 pb-2">
-                  <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                  <div>
-                    <button type="button" class="btn btn-warning btn-sm mr-4" id="resetFilterForm">Reset</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="applyFilters()" data-bs-dismiss="modal">Apply</button>
-                  </div>
-            <!-- Modal Footer  end bellow-->
-            </div> 
-          <!-- Modal Content end bellow-->
-          </div> 
-        <!-- modal-dialog  end bellow-->
-        </div>
-            
-      <!-- Modal Area end in footer-->
-    <!-- </div> -->
 
-<?php include "include/footer.php"; ?>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <!-- Modal Area end in footer-->
+        </div>
+
+        <!-- Add BCA Modal -->
+<div class="modal fade" id="addBcModal" tabindex="-1" aria-labelledby="addBcModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBcModalLabel">Add New BCA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Form -->
+            <form id="bcaForm" autocomplete="off">
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label class="form-label">BCA ID</label>
+                        <input 
+                            type="text" 
+                            name="bca_id" 
+                            class="form-control"
+                            placeholder="Enter BCA ID"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input 
+                            type="text" 
+                            name="bca_full_name" 
+                            class="form-control"
+                            placeholder="Enter Full Name"
+                            required
+                        >
+                    </div>
+
+                    <!-- Optional hidden field -->
+                    <input type="hidden" name="created_at" value="<?= date('Y-m-d H:i:s') ?>">
+
+                    <!-- Message -->
+                    <div id="formMsg" class="small text-danger"></div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-save me-1"></i> Save
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+            
 <script>
+document.addEventListener('DOMContentLoaded', function () {
 
-showOverlay('--Loading--');
+    const form = document.getElementById('bcaForm');
+    const formMsg = document.getElementById('formMsg');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-  const filterBtn = document.getElementById('filterButton');
-  const filterModal = document.getElementById('filterModal');
-  let allData = [];
-  let filteredData = [];
-  let displayedData = [];
-  let currentPage = 1;
-  let entriesPerPage = 15;
-  let filtersApplied = false;
-  let selectedDateRange = {
-            start: '',
-            end: ''
-        };
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-// Fetch All BCA List From Backend
-  document.addEventListener("DOMContentLoaded", function() {
-  showOverlay('--Fetching Data--');
+        formMsg.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Saving...';
 
-    fetch('codes/fetchData/fetch_bca_list_data.php',{
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-      })
-      .then(response => response.json())
-        .then(data => {
-          allData = data.sort((a, b) => moment(b.date, 'DD-MM-YYYY') - moment(a.date, 'DD-MM-YYYY'));
-          filteredData = allData;
-          displayedData = allData;
-          renderTable('short');
-          populateDropdowns(allData);
-          // console.log(allData);
+        const formData = new FormData(form);
+
+        fetch('/bcaudit/codes/insert_new_bc.php', {
+            method: 'POST',
+            body: formData
         })
+        .then(response => response.json())
+        .then(result => {
 
-    .catch(error => console.error('Error fetching data:', error));
+            if (result.status === true) {
+                // Like submitting office form and getting approval
+                window.location.reload();
+            } else {
+                formMsg.textContent = result.message;
+            }
 
-    // Date picker funtionality start
-    $('#dateRange').daterangepicker({
-        singleDatePicker: false,
-        showDropdowns: true,
-        autoUpdateInput: false,
-        locale: {
-            format: 'DD-MM-YYYY',
-            cancelLabel: 'Clear',
-            applyLabel: 'Ok'
-        },
-        opens: 'left',
-        linkedCalendars: false,
-        startDate: moment(),
-        endDate: moment()
-    }, function(start, end) {
-        $('#dateRange').val(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
-        selectedDateRange = {
-            start: start.format('YYYY-MM-DD'),
-            end: end.format('YYYY-MM-DD')
-        };
+        })
+        .catch(() => {
+            formMsg.textContent = 'Something went wrong. Please try again.';
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Save';
+        });
+
     });
 
-    function resetDatePicker(picker) {
-        $('#dateRange').val('');
-        selectedDateRange = {
-            start: '',
-            end: ''
-        };
-        picker.setStartDate(moment());
-        picker.setEndDate(moment());
-        picker.updateView();
+});
+</script>
 
-        const currentMonth = moment().month();
-        const currentYear = moment().year();
 
-        const monthSelect = picker.container.find('.monthselect');
-        const yearSelect = picker.container.find('.yearselect');
 
-        monthSelect.val(currentMonth).change();
-        yearSelect.val(currentYear).change();
+        <?php include "include/footer.php"; ?>
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script>
 
-        picker.hide();
-    }
+            showOverlay('--Loading--');
 
-    $('#dateRange').on('cancel.daterangepicker', function(ev, picker) {
-        resetDatePicker(picker);
-    });
-
-    $('#dateRange').on('apply.daterangepicker', function(ev, picker) {
-        if ($(this).val() === '') {
-            $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-            selectedDateRange = {
-                start: picker.startDate.format('YYYY-MM-DD'),
-                end: picker.endDate.format('YYYY-MM-DD')
+            const filterBtn = document.getElementById('filterButton');
+            const filterModal = document.getElementById('filterModal');
+            let allData = [];
+            let filteredData = [];
+            let displayedData = [];
+            let currentPage = 1;
+            let entriesPerPage = 15;
+            let filtersApplied = false;
+            let selectedDateRange = {
+                start: '',
+                end: ''
             };
-        }
-    });
-    // Date picker funtionality End
-    // Reset filter form data start
-    $('#resetFilterForm').on('click', function() {
-        // var picker = $('#dateRange').data('daterangepicker');
-        // resetDatePicker(picker);
-        document.getElementById('filterForm').reset();
-    });
-    // Reset filter form data End
 
-  });
-  // Audit List Data fetch End
+            // Fetch All BCA List From Backend
+            document.addEventListener("DOMContentLoaded", function () {
+                showOverlay('--Fetching Data--');
 
-  // Table shorting funtionality start
-    let currentSortColumn = 'formatted_date';
-    let currentSortOrder = 'desc'; // Default to descending for date
+                fetch('codes/fetchData/fetch_bca_list_data.php', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        allData = data.sort((a, b) => moment(b.date, 'DD-MM-YYYY') - moment(a.date, 'DD-MM-YYYY'));
+                        filteredData = allData;
+                        displayedData = allData;
+                        renderTable('short');
+                        populateDropdowns(allData);
+                        // console.log(allData);
+                    })
 
-    // Event listeners for sorting columns
-    document.getElementById('header-bca_id').addEventListener('click', () => sortTable('bca_id'));
-    document.getElementById('header-bca_full_name').addEventListener('click', () => sortTable('bca_full_name'));
-    document.getElementById('header-bca_bank').addEventListener('click', () => sortTable('bca_bank'));
-    document.getElementById('header-mobile_no').addEventListener('click', () => sortTable('mobile_no'));
-    document.getElementById('header-state').addEventListener('click', () => sortTable('state'));
-    document.getElementById('header-location').addEventListener('click', () => sortTable('location'));
-    document.getElementById('header-status').addEventListener('click', () => sortTable('status'));
-    document.getElementById('header-formatted_date').addEventListener('click', () => sortTable('formatted_date'));
-    document.getElementById('header-created_by').addEventListener('click', () => sortTable('created_by'));
+                    .catch(error => console.error('Error fetching data:', error));
 
-    // Default sorting function
-    function defaultSort() {
-        displayedData.sort((a, b) => {
-            const dateA = new Date(a.formatted_date);
-            const dateB = new Date(b.formatted_date);
-            
-            // Compare by date in descending order (most recent first)
-            if (dateA > dateB) return -1;
-            if (dateA < dateB) return 1;
+                // Date picker funtionality start
+                $('#dateRange').daterangepicker({
+                    singleDatePicker: false,
+                    showDropdowns: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: 'DD-MM-YYYY',
+                        cancelLabel: 'Clear',
+                        applyLabel: 'Ok'
+                    },
+                    opens: 'left',
+                    linkedCalendars: false,
+                    startDate: moment(),
+                    endDate: moment()
+                }, function (start, end) {
+                    $('#dateRange').val(start.format('DD-MM-YYYY') + ' - ' + end.format('DD-MM-YYYY'));
+                    selectedDateRange = {
+                        start: start.format('YYYY-MM-DD'),
+                        end: end.format('YYYY-MM-DD')
+                    };
+                });
 
-            // If dates are the same, compare by audit number (largest to smallest)
-            const auditNumberA = parseInt(a.bca_id.replace('AUD', ''), 10);
-            const auditNumberB = parseInt(b.bca_id.replace('AUD', ''), 10);
-            
-            return auditNumberB - auditNumberA;
-        });
-    }
+                function resetDatePicker(picker) {
+                    $('#dateRange').val('');
+                    selectedDateRange = {
+                        start: '',
+                        end: ''
+                    };
+                    picker.setStartDate(moment());
+                    picker.setEndDate(moment());
+                    picker.updateView();
 
-    // Sort the table based on the clicked column
-    function sortTable(column) {
-        // Toggle sort order if the same column is clicked
-        if (currentSortColumn === column) {
-            currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
-        } else {
-            currentSortOrder = 'asc';
-        }
-        currentSortColumn = column;
+                    const currentMonth = moment().month();
+                    const currentYear = moment().year();
 
-        // Sort the data based on the current column and order
-        displayedData.sort((a, b) => {
-            let valA, valB;
-            if (column === 'audit_number') {
-                valA = parseInt(a[column].replace('AUD', ''), 10);
-                valB = parseInt(b[column].replace('AUD', ''), 10);
-            } else if (column === 'formatted_date') {
-                valA = new Date(a[column]);
-                valB = new Date(b[column]);
-            } else {
-                valA = a[column];
-                valB = b[column];
+                    const monthSelect = picker.container.find('.monthselect');
+                    const yearSelect = picker.container.find('.yearselect');
+
+                    monthSelect.val(currentMonth).change();
+                    yearSelect.val(currentYear).change();
+
+                    picker.hide();
+                }
+
+                $('#dateRange').on('cancel.daterangepicker', function (ev, picker) {
+                    resetDatePicker(picker);
+                });
+
+                $('#dateRange').on('apply.daterangepicker', function (ev, picker) {
+                    if ($(this).val() === '') {
+                        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                        selectedDateRange = {
+                            start: picker.startDate.format('YYYY-MM-DD'),
+                            end: picker.endDate.format('YYYY-MM-DD')
+                        };
+                    }
+                });
+                // Date picker funtionality End
+                // Reset filter form data start
+                $('#resetFilterForm').on('click', function () {
+                    // var picker = $('#dateRange').data('daterangepicker');
+                    // resetDatePicker(picker);
+                    document.getElementById('filterForm').reset();
+                });
+                // Reset filter form data End
+
+            });
+            // Audit List Data fetch End
+
+            // Table shorting funtionality start
+            let currentSortColumn = 'formatted_date';
+            let currentSortOrder = 'desc'; // Default to descending for date
+
+            // Event listeners for sorting columns
+            document.getElementById('header-bca_id').addEventListener('click', () => sortTable('bca_id'));
+            document.getElementById('header-bca_full_name').addEventListener('click', () => sortTable('bca_full_name'));
+            document.getElementById('header-bca_bank').addEventListener('click', () => sortTable('bca_bank'));
+            document.getElementById('header-mobile_no').addEventListener('click', () => sortTable('mobile_no'));
+            document.getElementById('header-state').addEventListener('click', () => sortTable('state'));
+            document.getElementById('header-location').addEventListener('click', () => sortTable('location'));
+            document.getElementById('header-status').addEventListener('click', () => sortTable('status'));
+            document.getElementById('header-formatted_date').addEventListener('click', () => sortTable('formatted_date'));
+            document.getElementById('header-created_by').addEventListener('click', () => sortTable('created_by'));
+
+            // Default sorting function
+            function defaultSort() {
+                displayedData.sort((a, b) => {
+                    const dateA = new Date(a.formatted_date);
+                    const dateB = new Date(b.formatted_date);
+
+                    // Compare by date in descending order (most recent first)
+                    if (dateA > dateB) return -1;
+                    if (dateA < dateB) return 1;
+
+                    // If dates are the same, compare by audit number (largest to smallest)
+                    const auditNumberA = parseInt(a.bca_id.replace('AUD', ''), 10);
+                    const auditNumberB = parseInt(b.bca_id.replace('AUD', ''), 10);
+
+                    return auditNumberB - auditNumberA;
+                });
             }
-            if (currentSortOrder === 'asc') {
-                return valA > valB ? 1 : -1;
-            } else {
-                return valA < valB ? 1 : -1;
+
+            // Sort the table based on the clicked column
+            function sortTable(column) {
+                // Toggle sort order if the same column is clicked
+                if (currentSortColumn === column) {
+                    currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortOrder = 'asc';
+                }
+                currentSortColumn = column;
+
+                // Sort the data based on the current column and order
+                displayedData.sort((a, b) => {
+                    let valA, valB;
+                    if (column === 'audit_number') {
+                        valA = parseInt(a[column].replace('AUD', ''), 10);
+                        valB = parseInt(b[column].replace('AUD', ''), 10);
+                    } else if (column === 'formatted_date') {
+                        valA = new Date(a[column]);
+                        valB = new Date(b[column]);
+                    } else {
+                        valA = a[column];
+                        valB = b[column];
+                    }
+                    if (currentSortOrder === 'asc') {
+                        return valA > valB ? 1 : -1;
+                    } else {
+                        return valA < valB ? 1 : -1;
+                    }
+                });
+
+                // Render the table with sorted data
+                renderTable();
+                updateTableHeaders();
             }
-        });
+            // Table shorting funtionality start
 
-        // Render the table with sorted data
-        renderTable();
-        updateTableHeaders();
-    }
-  // Table shorting funtionality start
+            // Render the table
+            function renderTable(isDefault) {
+                const tbody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+                tbody.innerHTML = '';
 
-    // Render the table
-    function renderTable(isDefault) {
-        const tbody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
+                if (isDefault == 'short') {
+                    defaultSort();
+                    defaultShortCount = 1;
+                }
 
-        if (isDefault =='short'){
-            defaultSort();
-            defaultShortCount = 1;
-        }
+                const start = (currentPage - 1) * entriesPerPage;
+                const end = start + entriesPerPage;
+                const paginatedData = displayedData.slice(start, end);
 
-        const start = (currentPage - 1) * entriesPerPage;
-        const end = start + entriesPerPage;
-        const paginatedData = displayedData.slice(start, end);
-
-        if (paginatedData.length === 0) {
-          $('#exportData').prop('disabled', true);
-            const row = document.createElement('tr');
-            const cell = document.createElement('td');
-            cell.colSpan = 16;
-            // Assuming cell is a table cell element
-            cell.innerHTML = `<p class="text-lg-center fw-bold pt-3" style="color: red;">No Data Found</p>`;
-            row.appendChild(cell);
-            tbody.appendChild(row);
-        } else {
-          $('#exportData').prop('disabled', false);
-            paginatedData.forEach((item, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+                if (paginatedData.length === 0) {
+                    $('#exportData').prop('disabled', true);
+                    const row = document.createElement('tr');
+                    const cell = document.createElement('td');
+                    cell.colSpan = 16;
+                    // Assuming cell is a table cell element
+                    cell.innerHTML = `<p class="text-lg-center fw-bold pt-3" style="color: red;">No Data Found</p>`;
+                    row.appendChild(cell);
+                    tbody.appendChild(row);
+                } else {
+                    $('#exportData').prop('disabled', false);
+                    paginatedData.forEach((item, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
                     <td>${start + index + 1}</td>
                     <td>${item.bca_id}</td>
                     <td>${item.bca_name}</td>
@@ -725,326 +881,325 @@ showOverlay('--Loading--');
                     <button type="button" class="btn btn-danger" data-bca-id="${item.bca_id}" title="Delete BCA"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
                 `;
-                tbody.appendChild(row);
-            });
-        }
-        updatePaginationControls(displayedData);
-        updateRecordInfo(displayedData.length, start, end);
-        hideOverlay();
-    }
+                        tbody.appendChild(row);
+                    });
+                }
+                updatePaginationControls(displayedData);
+                updateRecordInfo(displayedData.length, start, end);
+                hideOverlay();
+            }
 
-    // Update the table headers to show sorting icons
-    function updateTableHeaders() {
-        const headers = document.querySelectorAll('.sortable');
-        // console.log(headers);
+            // Update the table headers to show sorting icons
+            function updateTableHeaders() {
+                const headers = document.querySelectorAll('.sortable');
+                // console.log(headers);
 
-        headers.forEach(header => {
-            header.classList.remove('sort-asc', 'sort-desc');
-        });
+                headers.forEach(header => {
+                    header.classList.remove('sort-asc', 'sort-desc');
+                });
 
-        const currentHeader = document.getElementById(`header-${currentSortColumn}`);
-        // console.log(currentHeader);
-        if (currentHeader) {
-            currentHeader.classList.add(currentSortOrder === 'asc' ? 'sort-asc' : 'sort-desc');
-        }
-    }
+                const currentHeader = document.getElementById(`header-${currentSortColumn}`);
+                // console.log(currentHeader);
+                if (currentHeader) {
+                    currentHeader.classList.add(currentSortOrder === 'asc' ? 'sort-asc' : 'sort-desc');
+                }
+            }
 
-    // Function to add event listeners after the table has been rendered
-    function addEventListeners() {
-            hideOverlay();
-            // on click action button capture row data for storeSessionData
-            dataTableBody.addEventListener('click', function(event) {
-                if (event.target && event.target.matches('button.action-button')) {
-                    const button = event.target;
-                    const auditNumber = button.getAttribute('data-audit-number');
-                    const bcaId = button.getAttribute('data-bca-id');
-                    const bcaName = button.getAttribute('data-bca-name');
-                    const state = button.getAttribute('data-bca-state');
-                    const location = button.getAttribute('data-bca-location');
+            // Function to add event listeners after the table has been rendered
+            function addEventListeners() {
+                hideOverlay();
+                // on click action button capture row data for storeSessionData
+                dataTableBody.addEventListener('click', function (event) {
+                    if (event.target && event.target.matches('button.action-button')) {
+                        const button = event.target;
+                        const auditNumber = button.getAttribute('data-audit-number');
+                        const bcaId = button.getAttribute('data-bca-id');
+                        const bcaName = button.getAttribute('data-bca-name');
+                        const state = button.getAttribute('data-bca-state');
+                        const location = button.getAttribute('data-bca-location');
 
-                    // Call storeSessionData with the appropriate data
-                    storeSessionData(bcaId, bcaName, state, location, auditNumber);
+                        // Call storeSessionData with the appropriate data
+                        storeSessionData(bcaId, bcaName, state, location, auditNumber);
+                    }
+                });
+            }
+
+            // Call the function to add event listeners after setting innerHTML
+            addEventListeners();
+            // Function to fetch BCA name on BCA ID input change
+            $('#bcaId').on('input', function () {
+                var bcaId = $(this).val().trim();
+                if (bcaId.length >= 3) { // Only proceed if BCA ID is 6 characters long
+                    fetchBcaName(bcaId);
+                } else {
+                    $('#bcaName').val('').prop('disabled', true);
+                    $('#proceedBtn').prop('disabled', true);
+                    displayErrorMessage('Please enter a valid 3-digit BCA ID.');
                 }
             });
-        }
 
-    // Call the function to add event listeners after setting innerHTML
-    addEventListeners();
-    // Function to fetch BCA name on BCA ID input change
-    $('#bcaId').on('input', function() {
-      var bcaId = $(this).val().trim();
-      if (bcaId.length >= 3) { // Only proceed if BCA ID is 6 characters long
-        fetchBcaName(bcaId);
-      } else {
-        $('#bcaName').val('').prop('disabled', true);
-        $('#proceedBtn').prop('disabled', true);
-        displayErrorMessage('Please enter a valid 3-digit BCA ID.');
-      }
-    });
-
-    // Function to store session data
-    function storeSessionData(bcaId, bcaName, state, location, auditNumber) {
-      showOverlay();
-        if (auditNumber){
-            var action = 'newAudit';
-        }else{
-            var action = 'existingAudit';
-        }
-      $.ajax({
-        url: '/bcaudit/codes/store_session.php',
-        type: 'POST',
-        data: { bcaId: bcaId, bcaName: bcaName, auditNumber: auditNumber, action: action, state: state, location: location },
-        success: function(response) {
-          hideOverlay();
-          var result = JSON.parse(response);
-          if (result.success) {
-            // console.log('Session data stored successfully');
-            window.location.href = '/bcaudit/progress.php';
-          } else {
-            console.log('Error: ' + result.message);
-            alert('Error: ' + result.message);
-          }
-        },
-        error: function() {
-        hideOverlay();
-        alert('Error: Unable to send request');
-          console.log('AJAX request failed');
-        }
-      });
-    }
-    // Function to store session data End
-
-    //  Populate dropdown into filter modal field from fetched data
-    function populateDropdowns(data) {
-        const stateDropdown = document.getElementById('state');
-        // const districtDropdown = document.getElementById('district');
-        const bankDropdown = document.getElementById('bank');
-        const createdByDropdown = document.getElementById('createdBy');
-        const statusDropdown = document.getElementById('status');
-
-        const states = [...new Set(data.map(item => item.state))];
-        // const districts = [...new Set(data.map(item => item.district))];
-        const banks = [...new Set(data.map(item => item.bca_bank))];
-        const users = [...new Set(data.map(item => item.user_full_name))];
-        const statuses = [...new Set(data.map(item => item.status))];
-
-        populateDropdown(stateDropdown, states);
-        // populateDropdown(districtDropdown, districts);
-        populateDropdown(bankDropdown, banks);
-        populateDropdown(createdByDropdown, users);
-        populateDropdown(statusDropdown, statuses);
-    }
-
-    function populateDropdown(dropdown, options) {
-        const selectedValue = dropdown.value;
-        dropdown.innerHTML = '<option class="defaultSelect" value="">Select</option>';
-        options.forEach(option => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            dropdown.appendChild(opt);
-        });
-        dropdown.value = selectedValue;
-    }
-    //  Populate dropdown into filter modal field from fetched data End
-
-    // Apply Filter Function
-    function applyFilters() {
-      const state = document.getElementById('state').value.toLowerCase();
-      const bank = document.getElementById('bank').value.toLowerCase();
-      const createdBy = document.getElementById('createdBy').value.toLowerCase();
-      const status = document.getElementById('status').value.toLowerCase();
-      
-      const dateRange = selectedDateRange || {
-          start: moment().format('YYYY-MM-DD'),
-          end: moment().format('YYYY-MM-DD')
-      };
-
-      // filter count part
-      let filterCount = 0;
-      if (state !== '') filterCount++;
-      if (bank !== '') filterCount++;
-      if (createdBy !== '') filterCount++;
-      if (status !== '') filterCount++;
-      if (dateRange.start !== '') filterCount++;
-      // console.log(dateRange.start);
-      // date filter part
-      filteredData = allData.filter(item => {
-          const itemDate = moment(item.created_date, 'DD-MM-YYYY');
-          const dateInRange = selectedDateRange ?
-              itemDate.isBetween(dateRange.start, dateRange.end, null, '[]') :
-              true;
-
-          // filter data asper valid input
-          return dateInRange &&
-              (state === '' || item.state.toLowerCase().includes(state)) &&
-              (bank === '' || item.bca_bank.toLowerCase().includes(bank)) &&
-              (createdBy === '' || item.user_full_name.toLowerCase().includes(createdBy)) &&
-              (status === '' || item.status.toLowerCase().includes(status));
-      });
-
-      // Remove input from search field
-      $('#searchInput').val('');
-
-      filtersApplied = true;
-      searchTable();
-
-      // Display the filter count
-      document.getElementById('filterCount').textContent = filterCount;
-  }
-
-    // clearFilters currently Not in use
-    function clearFilters() {
-        document.getElementById('filter-form').reset();
-        selectedDateRange = {
-            start: moment().subtract(7, 'days').format('DD-MM-YYYY'),
-            end: moment().format('DD-MM-YYYY')
-        };
-        $('#dateRange').val(`${selectedDateRange.start} - ${selectedDateRange.end}`);
-
-        filteredData = allData;
-        filtersApplied = false;
-        searchTable();
-    }
-
-    $('#exportData').on('click', function() {
-      $('#exportData').prop('disabled', true);
-
-  if (filtersApplied) {
-    var startDate = selectedDateRange.start || '';
-    var endDate = selectedDateRange.end || '';
-    var state = $('#state').val();
-    var createdBy = $('#createdBy').val();
-    var bank = $('#bank').val();
-    var status = $('#status').val();
-    // console.log(selectedDateRange.start);
-    var queryParams = [];
-
-    if (startDate) queryParams.push('start_date=' + encodeURIComponent(startDate));
-    if (endDate) queryParams.push('end_date=' + encodeURIComponent(endDate));
-    if (state) queryParams.push('state=' + encodeURIComponent(state));
-    if (createdBy) queryParams.push('created_by=' + encodeURIComponent(createdBy));
-    if (bank) queryParams.push('bank=' + encodeURIComponent(bank));
-    if (status) queryParams.push('status=' + encodeURIComponent(status));
-
-    var queryString = queryParams.length ? '?' + queryParams.join('&') : '';
-  } else {
-    console.log('Exporting data without filters');
-    var queryString = '';
-  }
-  const url = `codes/download_bca_list_csv.php${queryString}`;
-    console.log("export button clicked");
-
-    // Open the URL in a new tab
-    const newTab = window.open(url, '_blank');
-
-// Check if the new tab was blocked
-if (!newTab) {
-    alert('Please allow pop-ups for this website');
-    return;
-}
-
-// Monitor the new tab to detect when it has been closed
-const checkTabClosed = setInterval(() => {
-    if (newTab.closed) {
-        clearInterval(checkTabClosed);
-        console.log('CSV Download started successfully!');
-        $('#exportData').prop('disabled', false);
-    }
-}, 500);
-});
-
-    // Search funtionality on rendered table data
-    function searchTable() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const dataToSearch = filtersApplied ? filteredData : allData;
-
-        displayedData = dataToSearch.filter(item => {
-            return item.bca_id.toLowerCase().includes(query) ||
-                item.bca_name.toLowerCase().includes(query) ||
-                item.bca_contact_no.toLowerCase().includes(query) ||
-                item.bca_bank.toLowerCase().includes(query) ||
-                item.state.toLowerCase().includes(query) ||
-                item.location.toLowerCase().includes(query);
-        });
-
-        currentPage = 1;
-        renderTable();
-    }
-    // data showing in table selection funtionality
-    function changeEntriesPerPage() {
-        entriesPerPage = parseInt(document.getElementById("entriesPerPage").value);
-        currentPage = 1;
-        renderTable();
-    }
-    // update pagination depened on redered table data
-    function updatePaginationControls(renderedData) {
-        const totalEntries = renderedData.length;
-        const totalPages = Math.ceil(totalEntries / entriesPerPage);
-
-        if (totalPages < 1) {
-            paginationControls.innerHTML = '';
-            return;
-        }
-
-        let paginationHtml = '';
-
-        if (currentPage > 1) {
-            paginationHtml += `<a href="#" class="prev" data-page="${currentPage - 1}">Previous</a>`;
-        }
-
-        for (let i = 1; i <= 2; i++) {
-            if (i <= totalPages) {
-                paginationHtml += `<a href="#" class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`;
+            // Function to store session data
+            function storeSessionData(bcaId, bcaName, state, location, auditNumber) {
+                showOverlay();
+                if (auditNumber) {
+                    var action = 'newAudit';
+                } else {
+                    var action = 'existingAudit';
+                }
+                $.ajax({
+                    url: '/bcaudit/codes/store_session.php',
+                    type: 'POST',
+                    data: { bcaId: bcaId, bcaName: bcaName, auditNumber: auditNumber, action: action, state: state, location: location },
+                    success: function (response) {
+                        hideOverlay();
+                        var result = JSON.parse(response);
+                        if (result.success) {
+                            // console.log('Session data stored successfully');
+                            window.location.href = '/bcaudit/progress.php';
+                        } else {
+                            console.log('Error: ' + result.message);
+                            alert('Error: ' + result.message);
+                        }
+                    },
+                    error: function () {
+                        hideOverlay();
+                        alert('Error: Unable to send request');
+                        console.log('AJAX request failed');
+                    }
+                });
             }
-        }
+            // Function to store session data End
 
-        if (currentPage > 4) {
-            paginationHtml += `<span>...</span>`;
-        }
+            //  Populate dropdown into filter modal field from fetched data
+            function populateDropdowns(data) {
+                const stateDropdown = document.getElementById('state');
+                // const districtDropdown = document.getElementById('district');
+                const bankDropdown = document.getElementById('bank');
+                const createdByDropdown = document.getElementById('createdBy');
+                const statusDropdown = document.getElementById('status');
 
-        let startPage = Math.max(3, currentPage - 1);
-        let endPage = Math.min(totalPages - 1, currentPage + 1);
-        for (let i = startPage; i <= endPage; i++) {
-            if (i > 2 && i < totalPages) {
-                paginationHtml += `<a href="#" class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`;
+                const states = [...new Set(data.map(item => item.state))];
+                // const districts = [...new Set(data.map(item => item.district))];
+                const banks = [...new Set(data.map(item => item.bca_bank))];
+                const users = [...new Set(data.map(item => item.user_full_name))];
+                const statuses = [...new Set(data.map(item => item.status))];
+
+                populateDropdown(stateDropdown, states);
+                // populateDropdown(districtDropdown, districts);
+                populateDropdown(bankDropdown, banks);
+                populateDropdown(createdByDropdown, users);
+                populateDropdown(statusDropdown, statuses);
             }
-        }
 
-        if (currentPage < totalPages - 2) {
-            paginationHtml += `<span>...</span>`;
-        }
+            function populateDropdown(dropdown, options) {
+                const selectedValue = dropdown.value;
+                dropdown.innerHTML = '<option class="defaultSelect" value="">Select</option>';
+                options.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    dropdown.appendChild(opt);
+                });
+                dropdown.value = selectedValue;
+            }
+            //  Populate dropdown into filter modal field from fetched data End
 
-        if (totalPages > 2) {
-            paginationHtml += `<a href="#" class="${totalPages === currentPage ? 'active' : ''}" data-page="${totalPages}">${totalPages}</a>`;
-        }
+            // Apply Filter Function
+            function applyFilters() {
+                const state = document.getElementById('state').value.toLowerCase();
+                const bank = document.getElementById('bank').value.toLowerCase();
+                const createdBy = document.getElementById('createdBy').value.toLowerCase();
+                const status = document.getElementById('status').value.toLowerCase();
 
-        if (currentPage < totalPages) {
-            paginationHtml += `<a href="#" class="next" data-page="${currentPage + 1}">Next</a>`;
-        }
+                const dateRange = selectedDateRange || {
+                    start: moment().format('YYYY-MM-DD'),
+                    end: moment().format('YYYY-MM-DD')
+                };
 
-        paginationControls.innerHTML = paginationHtml;
+                // filter count part
+                let filterCount = 0;
+                if (state !== '') filterCount++;
+                if (bank !== '') filterCount++;
+                if (createdBy !== '') filterCount++;
+                if (status !== '') filterCount++;
+                if (dateRange.start !== '') filterCount++;
+                // console.log(dateRange.start);
+                // date filter part
+                filteredData = allData.filter(item => {
+                    const itemDate = moment(item.created_date, 'DD-MM-YYYY');
+                    const dateInRange = selectedDateRange ?
+                        itemDate.isBetween(dateRange.start, dateRange.end, null, '[]') :
+                        true;
 
-        document.querySelectorAll("#paginationControls a").forEach(a => {
-            a.addEventListener("click", function(event) {
-                event.preventDefault();
-                currentPage = parseInt(this.getAttribute("data-page"));
-                renderTable();
+                    // filter data asper valid input
+                    return dateInRange &&
+                        (state === '' || item.state.toLowerCase().includes(state)) &&
+                        (bank === '' || item.bca_bank.toLowerCase().includes(bank)) &&
+                        (createdBy === '' || item.user_full_name.toLowerCase().includes(createdBy)) &&
+                        (status === '' || item.status.toLowerCase().includes(status));
+                });
+
+                // Remove input from search field
+                $('#searchInput').val('');
+
+                filtersApplied = true;
+                searchTable();
+
+                // Display the filter count
+                document.getElementById('filterCount').textContent = filterCount;
+            }
+
+            // clearFilters currently Not in use
+            function clearFilters() {
+                document.getElementById('filter-form').reset();
+                selectedDateRange = {
+                    start: moment().subtract(7, 'days').format('DD-MM-YYYY'),
+                    end: moment().format('DD-MM-YYYY')
+                };
+                $('#dateRange').val(`${selectedDateRange.start} - ${selectedDateRange.end}`);
+
+                filteredData = allData;
+                filtersApplied = false;
+                searchTable();
+            }
+
+            $('#exportData').on('click', function () {
+                $('#exportData').prop('disabled', true);
+
+                if (filtersApplied) {
+                    var startDate = selectedDateRange.start || '';
+                    var endDate = selectedDateRange.end || '';
+                    var state = $('#state').val();
+                    var createdBy = $('#createdBy').val();
+                    var bank = $('#bank').val();
+                    var status = $('#status').val();
+                    // console.log(selectedDateRange.start);
+                    var queryParams = [];
+
+                    if (startDate) queryParams.push('start_date=' + encodeURIComponent(startDate));
+                    if (endDate) queryParams.push('end_date=' + encodeURIComponent(endDate));
+                    if (state) queryParams.push('state=' + encodeURIComponent(state));
+                    if (createdBy) queryParams.push('created_by=' + encodeURIComponent(createdBy));
+                    if (bank) queryParams.push('bank=' + encodeURIComponent(bank));
+                    if (status) queryParams.push('status=' + encodeURIComponent(status));
+
+                    var queryString = queryParams.length ? '?' + queryParams.join('&') : '';
+                } else {
+                    console.log('Exporting data without filters');
+                    var queryString = '';
+                }
+                const url = `codes/download_bca_list_csv.php${queryString}`;
+                console.log("export button clicked");
+
+                // Open the URL in a new tab
+                const newTab = window.open(url, '_blank');
+
+                // Check if the new tab was blocked
+                if (!newTab) {
+                    alert('Please allow pop-ups for this website');
+                    return;
+                }
+
+                // Monitor the new tab to detect when it has been closed
+                const checkTabClosed = setInterval(() => {
+                    if (newTab.closed) {
+                        clearInterval(checkTabClosed);
+                        console.log('CSV Download started successfully!');
+                        $('#exportData').prop('disabled', false);
+                    }
+                }, 500);
             });
-        });
-    }
-    // update pagination depened on redered table data End
 
-    // update data showing information of the rendered table
-    function updateRecordInfo(totalEntries, start, end) {
-        document.getElementById('recordInfo').innerHTML = `Showing ${Math.min(start + 1, totalEntries)} to ${Math.min(end, totalEntries)} of ${totalEntries} entries`;
-    }
+            // Search funtionality on rendered table data
+            function searchTable() {
+                const query = document.getElementById('searchInput').value.toLowerCase();
+                const dataToSearch = filtersApplied ? filteredData : allData;
 
-  // Open filter modal popup and populate dropdown data
-  // filterModal.addEventListener('shown.bs.modal', function(event) {
-  //     // console.log('Modal is fully visible');
-  //     populateDropdowns(allData);
-  // });
+                displayedData = dataToSearch.filter(item => {
+                    return item.bca_id.toLowerCase().includes(query) ||
+                        item.bca_name.toLowerCase().includes(query) ||
+                        String(item.bca_contact_no ?? '').includes(query) ||
+                        item.bca_bank.toLowerCase().includes(query) ||
+                        item.state.toLowerCase().includes(query) ||
+                        item.location.toLowerCase().includes(query);
+                });
 
-    </script>
+                currentPage = 1;
+                renderTable();
+            }
+            // data showing in table selection funtionality
+            function changeEntriesPerPage() {
+                entriesPerPage = parseInt(document.getElementById("entriesPerPage").value);
+                currentPage = 1;
+                renderTable();
+            }
+            // update pagination depened on redered table data
+            function updatePaginationControls(renderedData) {
+                const totalEntries = renderedData.length;
+                const totalPages = Math.ceil(totalEntries / entriesPerPage);
 
+                if (totalPages < 1) {
+                    paginationControls.innerHTML = '';
+                    return;
+                }
+
+                let paginationHtml = '';
+
+                if (currentPage > 1) {
+                    paginationHtml += `<a href="#" class="prev" data-page="${currentPage - 1}">Previous</a>`;
+                }
+
+                for (let i = 1; i <= 2; i++) {
+                    if (i <= totalPages) {
+                        paginationHtml += `<a href="#" class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`;
+                    }
+                }
+
+                if (currentPage > 4) {
+                    paginationHtml += `<span>...</span>`;
+                }
+
+                let startPage = Math.max(3, currentPage - 1);
+                let endPage = Math.min(totalPages - 1, currentPage + 1);
+                for (let i = startPage; i <= endPage; i++) {
+                    if (i > 2 && i < totalPages) {
+                        paginationHtml += `<a href="#" class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`;
+                    }
+                }
+
+                if (currentPage < totalPages - 2) {
+                    paginationHtml += `<span>...</span>`;
+                }
+
+                if (totalPages > 2) {
+                    paginationHtml += `<a href="#" class="${totalPages === currentPage ? 'active' : ''}" data-page="${totalPages}">${totalPages}</a>`;
+                }
+
+                if (currentPage < totalPages) {
+                    paginationHtml += `<a href="#" class="next" data-page="${currentPage + 1}">Next</a>`;
+                }
+
+                paginationControls.innerHTML = paginationHtml;
+
+                document.querySelectorAll("#paginationControls a").forEach(a => {
+                    a.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        currentPage = parseInt(this.getAttribute("data-page"));
+                        renderTable();
+                    });
+                });
+            }
+            // update pagination depened on redered table data End
+
+            // update data showing information of the rendered table
+            function updateRecordInfo(totalEntries, start, end) {
+                document.getElementById('recordInfo').innerHTML = `Showing ${Math.min(start + 1, totalEntries)} to ${Math.min(end, totalEntries)} of ${totalEntries} entries`;
+            }
+
+            // Open filter modal popup and populate dropdown data
+            // filterModal.addEventListener('shown.bs.modal', function(event) {
+            //     // console.log('Modal is fully visible');
+            //     populateDropdowns(allData);
+            // });
+
+        </script>
