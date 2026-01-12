@@ -1,0 +1,2 @@
+bca_id,first_name,middle_name,last_name,bca_contact_no,bca_email_id,bc_point_name,transaction_module,village,location,district,state,pin,landmark,bca_bank,bca_bank_branch,bc_point_address,abe_name,abm_name,rm_name,zm_name
+BC001,John,KH,Doe,9857646445,john.doe@example.com,Point A,android,Village1,Location1,District1,State1,123456,Near School,ABC Bank,Branch A,Address 1,Alice,Bob,Charlie,David

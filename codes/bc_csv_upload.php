@@ -24,7 +24,7 @@ function uploadCSVFile(): string|false
         return false;
     }
 
-    $dir = __DIR__ . '/uploads/';
+    $dir = __DIR__ . '/upload-csv/';
     if (!is_dir($dir)) {
         mkdir($dir, 0777, true);
     }

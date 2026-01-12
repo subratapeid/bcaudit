@@ -2,62 +2,71 @@
 include "../include/auth.php";
 
 // Function to count the total number of rows in the CSV file
-function countRowsInCSV($csvFile) {
+function countRowsInCSV($csvFile)
+{
     $handle = fopen($csvFile, 'r');
     $rowCount = 0;
 
-    if ($handle !== FALSE) {
-        while (fgetcsv($handle, 1000, ',') !== FALSE) {
+    if ($handle !== false) {
+        while (fgetcsv($handle, 1000, ',') !== false) {
             $rowCount++;
         }
-
         fclose($handle);
     }
 
     return $rowCount;
 }
 
-// Function to upload a CSV file
-function uploadCSVFile() {
-    // Delete previous uploaded files
-    $uploadDir = __DIR__ . '/uploads/';
-    $files = glob($uploadDir . '*'); // Get all file names in the directory
-
-    foreach ($files as $file) {
-        if (is_file($file)) {
-            unlink($file); // Delete the file
-        }
-    }
-
-    if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == UPLOAD_ERR_OK) {
-        $targetDir = __DIR__ . '/uploads/';
-        $targetFile = $targetDir . basename($_FILES['csv_file']['name']);
-
-        // Move the uploaded file to the uploads directory
-        if (move_uploaded_file($_FILES['csv_file']['tmp_name'], $targetFile)) {
-            return $targetFile;
-        } else {
-            return false;
-        }
-    } else {
+// Function to upload a CSV file (WITHOUT deleting old files)
+function uploadCSVFile()
+{
+    if (!isset($_FILES['csv_file']) || $_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
         return false;
     }
+
+    $uploadDir = __DIR__ . '/upload-csv/';
+
+    // Create folder if not exists
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    // Generate unique file name
+    $originalName = pathinfo($_FILES['csv_file']['name'], PATHINFO_FILENAME);
+    $extension = pathinfo($_FILES['csv_file']['name'], PATHINFO_EXTENSION);
+
+    $newFileName = $originalName . '_' . time() . '.' . $extension;
+    $targetFile = $uploadDir . $newFileName;
+
+    // Move uploaded file
+    if (move_uploaded_file($_FILES['csv_file']['tmp_name'], $targetFile)) {
+        return $targetFile;
+    }
+
+    return false;
 }
 
-// Check if a CSV file is uploaded
+// Handle upload request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $csvFile = uploadCSVFile();
 
     if ($csvFile !== false) {
-        // Count the total number of rows in the CSV file-
+
+        // Count total rows
         $totalRows = countRowsInCSV($csvFile);
 
-        // Return the row count as JSON
-        echo json_encode(['totalRows' => $totalRows]);
+        echo json_encode([
+            'success'   => true,
+            'totalRows' => $totalRows,
+            'file'      => basename($csvFile)
+        ]);
     } else {
-        // display error message
-        $errorMessage = 'Error uploading CSV file.';
-        echo json_encode(['error' => true, 'message' => $errorMessage]);
+
+        echo json_encode([
+            'error'   => true,
+            'message' => 'CSV upload failed. Please try again.'
+        ]);
     }
 }
 ?>
